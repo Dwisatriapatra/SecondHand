@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">SecondHand</string>
+
+    <string name="text_masuk">Masuk</string>
+    <string name="text_email">Email</string>
+    <string name="text_contoh_input_email">Contoh: JohnDoe@email.com</string>
+    <string name="text_password">Password</string>
+    <string name="text_hint_masukkan_password">Masukkan password</string>
+    <string name="text_belum_punya_akun">Belum punya akun?</string>
+    <string name="text_daftar_di_sini">Daftar di sini</string>
 </resources>
