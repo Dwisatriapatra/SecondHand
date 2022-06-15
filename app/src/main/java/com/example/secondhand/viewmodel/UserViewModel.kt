@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.secondhand.model.LoginRequestUser
 import com.example.secondhand.model.LoginResponsePostUser
+import com.example.secondhand.model.RegisterResponsePostUser
 import com.example.secondhand.network.ApiServices
 import dagger.hilt.android.lifecycle.HiltViewModel
 import retrofit2.Call
@@ -15,6 +16,9 @@ import javax.inject.Inject
 @HiltViewModel
 class UserViewModel @Inject constructor(api: ApiServices) : ViewModel(){
     private val liveDataUser = MutableLiveData<LoginResponsePostUser>()
+    private val liveDataUserReg = MutableLiveData<RegisterResponsePostUser>()
+
+    val userReg : LiveData<RegisterResponsePostUser> = liveDataUserReg
     val user: LiveData<LoginResponsePostUser> = liveDataUser
     private val apiServices = api
 
@@ -35,6 +39,26 @@ class UserViewModel @Inject constructor(api: ApiServices) : ViewModel(){
 
                 override fun onFailure(call: Call<LoginResponsePostUser>, t: Throwable) {
                     //
+                }
+
+            })
+    }
+
+    fun userRegister(email : String, full_name : String, password : String){
+        apiServices.register(email, full_name, password)
+            .enqueue(object : Callback<RegisterResponsePostUser>{
+                override fun onResponse(
+                    call: Call<RegisterResponsePostUser>,
+                    response: Response<RegisterResponsePostUser>
+                ) {
+                    if (response.isSuccessful){
+                        liveDataUserReg.postValue(response.body())
+                    }else{
+//
+                    }
+                }
+
+                override fun onFailure(call: Call<RegisterResponsePostUser>, t: Throwable) {
                 }
 
             })

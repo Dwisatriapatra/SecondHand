@@ -1,8 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.RegisterActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:layout_marginTop="106dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:text="Daftar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:textSize="12sp"
+        android:layout_marginTop="24dp"
+        android:text="Nama"
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <EditText
+        android:id="@+id/edtNamaLengkap"
+        android:layout_marginTop="4dp"
+        android:hint="Nama Lengkap"
+        android:background="@drawable/custom_edit_text_layout"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"/>
+    <TextView
+        android:textSize="12sp"
+        android:layout_marginTop="16dp"
+        android:text="Email"
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <EditText
+        android:id="@+id/edtEmail"
+        android:layout_marginTop="4dp"
+        android:hint="Contoh: johndee@gmail.com"
+        android:background="@drawable/custom_edit_text_layout"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"/>
+    <TextView
+        android:textSize="12sp"
+        android:layout_marginTop="16dp"
+        android:text="Buat Password"
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <EditText
+
+        android:id="@+id/edtPassword"
+        android:layout_marginTop="4dp"
+        android:hint="Buat password"
+        android:background="@drawable/custom_edit_text_layout"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"/>
+    <Button
+        android:id="@+id/btnDaftar"
+        android:layout_marginTop="24dp"
+        android:textAllCaps="false"
+        android:text="Daftar"
+        android:background="@drawable/custom_button_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:gravity="center"
+        android:layout_marginTop="116dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textColor="@color/black"
+            android:textSize="14dp"
+            android:text="Sudah punya akun?"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/btnLogin"
+            android:textColor="@color/warna_button"
+            android:textStyle="bold"
+            android:textSize="14dp"
+            android:layout_marginLeft="8dp"
+            android:text="Masuk di sini"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+</LinearLayout>
