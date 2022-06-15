@@ -6,17 +6,17 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.lifecycleScope
 import com.example.secondhand.R
 import com.example.secondhand.datastore.UserLoginTokenManager
 import com.example.secondhand.model.LoginRequestUser
+import com.example.secondhand.model.LoginResponsePostUser
 import com.example.secondhand.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import okhttp3.internal.notifyAll
+import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
@@ -40,7 +40,6 @@ class LoginActivity : AppCompatActivity() {
         login_to_register_akun.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
 
-
             //lanjutkan untuk mekanisme register
         }
 
@@ -51,28 +50,36 @@ class LoginActivity : AppCompatActivity() {
         val email = login_input_email.text.toString()
         val password = login_input_password.text.toString()
 
+
         if(email.isNotEmpty() && password.isNotEmpty()){
-            CoroutineScope(Dispatchers.Main).launch {
-                viewModelUser.userLogin(LoginRequestUser(email, password)).also {
-                    GlobalScope.launch {
-                        userLoginTokenManager.setBoolean(true)
+            viewModelUser.userLogin(LoginRequestUser(email, password))
+            viewModelUser.responseMessage.observe(this){responseMessage ->
+                if(responseMessage){
+                    viewModelUser.user.observe(this){
+                        saveToken(it)
                     }
-                    Toast.makeText(this@LoginActivity, "Login Berhasil", Toast.LENGTH_SHORT).show()
-                    saveToken()
-                    startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                }else{
+                    Toast.makeText(this, "Email/password salah", Toast.LENGTH_SHORT).show()
                 }
             }
 
         }else{
-            Toast.makeText(this, "Login gagal", Toast.LENGTH_SHORT).show()
+
+            Toast.makeText(this, "Semua field harus diisi", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun saveToken() {
-        val viewModelUser = ViewModelProvider(this)[UserViewModel::class.java]
-        viewModelUser.user.observe(this){
-            GlobalScope.launch {
-                userLoginTokenManager.saveToken(it.email, it.name, it.access_token)
+    private fun saveToken(loginResponsePostUser: LoginResponsePostUser) {
+        userLoginTokenManager = UserLoginTokenManager(this)
+        lifecycleScope.launch {
+            withContext(Dispatchers.Main){
+                userLoginTokenManager.setBoolean(true)
+                userLoginTokenManager.saveToken(
+                    loginResponsePostUser.email,
+                    loginResponsePostUser.name,
+                    loginResponsePostUser.access_token
+                )
+                startActivity(Intent(this@LoginActivity, MainActivity::class.java))
             }
         }
     }
