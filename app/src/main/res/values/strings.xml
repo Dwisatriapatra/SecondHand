@@ -8,4 +8,6 @@
     <string name="text_hint_masukkan_password">Masukkan password</string>
     <string name="text_belum_punya_akun">Belum punya akun?</string>
     <string name="text_daftar_di_sini">Daftar di sini</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
