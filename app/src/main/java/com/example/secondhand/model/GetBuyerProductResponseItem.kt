@@ -1,5 +1,9 @@
 package com.example.secondhand.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class GetBuyerProductResponseItem(
     val Categories: List<Category>,
     val base_price: Int,
@@ -13,4 +17,4 @@ data class GetBuyerProductResponseItem(
     val status: String,
     val updatedAt: String,
     val user_id: Int
-)
+) : Parcelable

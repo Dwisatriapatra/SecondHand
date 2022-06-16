@@ -1,5 +1,6 @@
 package com.example.secondhand.view.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,9 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.secondhand.R
 import com.example.secondhand.datastore.UserLoginTokenManager
+import com.example.secondhand.view.DetailActivity
 import com.example.secondhand.view.adapter.BuyerProductAdapter
 import com.example.secondhand.viewmodel.BuyerProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,7 +45,17 @@ class HomeFragment : Fragment() {
             viewModelBuyerProduct.getAllBuyerProduct(it)
         }
 
-        adapter = BuyerProductAdapter {
+
+
+        adapter = BuyerProductAdapter(){
+            val pindah = Intent(activity, DetailActivity::class.java)
+            pindah.putExtra("detailbarang", it)
+            startActivity(pindah)
+
+//            val pindah = Bundle()
+//            pindah.putParcelable("detailbarang", it)
+//            view!!.findNavController().navigate(R.id.homeKe_detailFragment)
+
             //do something
             //edit
         }

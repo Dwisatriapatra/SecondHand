@@ -9,7 +9,11 @@
         android:id="@+id/homeFragment"
         android:name="com.example.secondhand.view.fragment.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/homeKe_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/notifikasiFragment"
         android:name="com.example.secondhand.view.fragment.NotifikasiFragment"
@@ -30,4 +34,9 @@
         android:name="com.example.secondhand.view.fragment.AkunFragment"
         android:label="fragment_akun"
         tools:layout="@layout/fragment_akun" />
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.example.secondhand.view.fragment.DetailFragment"
+        android:label="fragment_detail"
+        tools:layout="@layout/fragment_detail" />
 </navigation>
