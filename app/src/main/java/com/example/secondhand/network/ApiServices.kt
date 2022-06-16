@@ -1,19 +1,22 @@
 package com.example.secondhand.network
 
+import com.example.secondhand.model.GetBuyerProductResponseItem
 import com.example.secondhand.model.LoginRequestUser
 import com.example.secondhand.model.LoginResponsePostUser
 import com.example.secondhand.model.RegisterResponsePostUser
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface ApiServices {
-
+    //patra
     @POST("auth/login")
     fun login(@Body requestUser: LoginRequestUser): Call<LoginResponsePostUser>
 
+    @GET("/buyer/product")
+    fun getAllBuyerProduct(@Header("access_token") token: String): Call<List<GetBuyerProductResponseItem>>
+
+
+    //greta
     @POST("auth/register")
     @FormUrlEncoded
     fun register(

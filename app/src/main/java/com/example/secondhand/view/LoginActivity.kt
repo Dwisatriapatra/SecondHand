@@ -2,6 +2,7 @@ package com.example.secondhand.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -23,6 +24,12 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var userLoginTokenManager: UserLoginTokenManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        supportActionBar?.hide() // hide the title bar
+        this.window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        ) //enable full screen
         setContentView(R.layout.activity_login)
 
         userLoginTokenManager = UserLoginTokenManager(this)

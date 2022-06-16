@@ -20,6 +20,7 @@ class UserViewModel @Inject constructor(api: ApiServices) : ViewModel(){
 
     val userReg : LiveData<RegisterResponsePostUser> = liveDataUserReg
     val user: LiveData<LoginResponsePostUser> = liveDataUser
+
     private val liveDataResponseMessage = MutableLiveData<Boolean>()
     val responseMessage : LiveData<Boolean> = liveDataResponseMessage
     private val apiServices = api
@@ -59,11 +60,12 @@ class UserViewModel @Inject constructor(api: ApiServices) : ViewModel(){
                     if (response.isSuccessful){
                         liveDataUserReg.postValue(response.body())
                     }else{
-//
+                        //
                     }
                 }
 
                 override fun onFailure(call: Call<RegisterResponsePostUser>, t: Throwable) {
+                    //
                 }
 
             })

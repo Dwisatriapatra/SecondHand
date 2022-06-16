@@ -11,4 +11,8 @@
 
     <color name="abu_abu">#A09C9C</color>
     <color name="warna_button">#7126B5</color>
+    <color name="bottom_nav_background">#E2A64F</color>
+    <color name="bottom_nav_item">#8c7060</color>
+    <color name="bottom_nav_selected_item">#220006</color>
+
 </resources>
