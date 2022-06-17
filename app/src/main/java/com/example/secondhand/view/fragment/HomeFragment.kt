@@ -2,22 +2,23 @@ package com.example.secondhand.view.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isInvisible
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.secondhand.R
 import com.example.secondhand.datastore.UserLoginTokenManager
+import com.example.secondhand.model.GetBuyerProductResponseItem
 import com.example.secondhand.view.DetailActivity
 import com.example.secondhand.view.adapter.BuyerProductAdapter
 import com.example.secondhand.viewmodel.BuyerProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_home.*
+
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
@@ -45,10 +46,7 @@ class HomeFragment : Fragment() {
         userLoginTokenManager.accessToken.asLiveData().observe(viewLifecycleOwner){
             viewModelBuyerProduct.getAllBuyerProduct(it)
         }
-
-
-
-        adapter = BuyerProductAdapter(){
+        adapter = BuyerProductAdapter {
             val pindah = Intent(activity, DetailActivity::class.java)
             pindah.putExtra("detailbarang", it)
             startActivity(pindah)
@@ -64,11 +62,115 @@ class HomeFragment : Fragment() {
         rv_product_home.adapter = adapter
 
 
+
+        // prevent user to click these button while load data from server
+        home_telusuri_kategori_minuman_button.isClickable = false
+        home_telusuri_kategori_elektronik_button.isClickable = false
+        home_telusuri_kategori_semua_button.isClickable = false
+        home_telusuri_kategori_semua_button.isClickable = false
+
+        home_telusuri_kategori_semua_button.isSelected = true
         viewModelBuyerProduct.buyerProduct.observe(viewLifecycleOwner){
             if(it.isNotEmpty()){
                 adapter.setDataBuyerProduct(it)
                 rv_product_home_progress_bar.isInvisible = true
                 adapter.notifyDataSetChanged()
+                //activate "telusuri kategori" button
+                home_telusuri_kategori_minuman_button.isClickable = true
+                home_telusuri_kategori_elektronik_button.isClickable = true
+                home_telusuri_kategori_semua_button.isClickable = true
+            }
+        }
+
+
+        home_telusuri_kategori_semua_button.setOnClickListener {
+            //button state
+            home_telusuri_kategori_semua_button.isSelected = true
+            home_telusuri_kategori_minuman_button.isSelected = false
+            home_telusuri_kategori_elektronik_button.isSelected = false
+            home_telusuri_kategori_lainnya_button.isSelected = false
+
+            viewModelBuyerProduct.buyerProduct.observe(viewLifecycleOwner){
+                if(it.isNotEmpty()){
+                    adapter.setDataBuyerProduct(it)
+                    rv_product_home_progress_bar.isInvisible = true
+                    adapter.notifyDataSetChanged()
+                }
+            }
+        }
+
+        home_telusuri_kategori_minuman_button.setOnClickListener {
+            //button state
+            home_telusuri_kategori_minuman_button.isSelected = true
+            home_telusuri_kategori_semua_button.isSelected = false
+            home_telusuri_kategori_elektronik_button.isSelected = false
+            home_telusuri_kategori_lainnya_button.isSelected = false
+
+            viewModelBuyerProduct.buyerProduct.observe(viewLifecycleOwner){
+                val listProduct : MutableList<GetBuyerProductResponseItem> = mutableListOf()
+                if(it.isNotEmpty()){
+                    for(i in it.indices){
+                        for(j in it[i].Categories.indices){
+                            if(it[i].Categories[j].name == "Minuman"){
+                                listProduct += it[i]
+                            }
+                        }
+                    }
+                    adapter.setDataBuyerProduct(listProduct)
+                    rv_product_home_progress_bar.isInvisible = true
+                    adapter.notifyDataSetChanged()
+                }
+            }
+        }
+
+
+        home_telusuri_kategori_elektronik_button.setOnClickListener {
+            home_telusuri_kategori_elektronik_button.isSelected = true
+            home_telusuri_kategori_minuman_button.isSelected = false
+            home_telusuri_kategori_semua_button.isSelected = false
+            home_telusuri_kategori_lainnya_button.isSelected = false
+
+            viewModelBuyerProduct.buyerProduct.observe(viewLifecycleOwner){
+                val listProduct : MutableList<GetBuyerProductResponseItem> = mutableListOf()
+                if(it.isNotEmpty()){
+                    for(i in it.indices){
+                        for(j in it[i].Categories.indices){
+                            if(it[i].Categories[j].name == "Electronic"){
+                                listProduct += it[i]
+                            }
+                        }
+                    }
+                    adapter.setDataBuyerProduct(listProduct)
+                    rv_product_home_progress_bar.isInvisible = true
+                    adapter.notifyDataSetChanged()
+                }
+            }
+        }
+
+        home_telusuri_kategori_lainnya_button.setOnClickListener {
+            home_telusuri_kategori_lainnya_button.isSelected = true
+            home_telusuri_kategori_elektronik_button.isSelected = false
+            home_telusuri_kategori_minuman_button.isSelected = false
+            home_telusuri_kategori_semua_button.isSelected = false
+
+            viewModelBuyerProduct.buyerProduct.observe(viewLifecycleOwner){
+                val listProduct : MutableList<GetBuyerProductResponseItem> = mutableListOf()
+                if(it.isNotEmpty()){
+                    for(i in it.indices){
+                        if(it[i].Categories.isNotEmpty()){
+                            for(j in it[i].Categories.indices){
+                                val name = it[i].Categories[j].name
+                                if(name != "Electronic" && name != "Minuman"){
+                                    listProduct += it[i]
+                                }
+                            }
+                        }
+
+                    }
+                    adapter.setDataBuyerProduct(listProduct)
+                    rv_product_home_progress_bar.isInvisible = true
+                    adapter.notifyDataSetChanged()
+                }
             }
         }
     }

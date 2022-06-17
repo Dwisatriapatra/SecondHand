@@ -22,11 +22,10 @@
             android:background="@drawable/custom_edit_text_layout"
             android:queryHint="Cari Barang" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="20dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -39,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:text="BULAN RAMADAN"
                     android:textColor="@color/black"
-                    android:textSize="30sp"
+                    android:textSize="24sp"
                     android:textStyle="bold"
                     tools:ignore="HardcodedText" />
 
@@ -48,16 +47,26 @@
                     android:layout_height="wrap_content"
                     android:text="BANYAK DISKON"
                     android:textColor="@color/black"
-                    android:textSize="30sp"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    tools:ignore="HardcodedText"
+                    android:layout_marginBottom="18dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Diskon hingga 60%"
+                    android:textColor="@color/merah"
+                    android:textSize="22sp"
                     android:textStyle="bold"
                     tools:ignore="HardcodedText" />
             </LinearLayout>
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_launcher_background" />
-        </LinearLayout>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/promo_icon" />
+        </RelativeLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -69,7 +78,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Telusuri Kategori"
+            android:text="@string/telusuri_kategori"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="16sp"
@@ -77,11 +86,51 @@
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <Button
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Minuman"
-                android:background="@color/telusuri_kategori_button_selected_item"/>
+                android:orientation="horizontal">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/kategori_semua"
+                    android:textAllCaps="false"
+                    android:layout_marginEnd="10dp"
+                    android:id="@+id/home_telusuri_kategori_semua_button"
+                    android:backgroundTint="@color/custom_telusuri_kategori_button_background_color"
+                    android:textColor="@color/custom_telusuri_kategori_button_text_color"
+                    style="?android:attr/buttonBarButtonStyle" />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/kategori_minuman"
+                    android:layout_marginEnd="10dp"
+                    android:textAllCaps="false"
+                    android:id="@+id/home_telusuri_kategori_minuman_button"
+                    android:backgroundTint="@color/custom_telusuri_kategori_button_background_color"
+                    android:textColor="@color/custom_telusuri_kategori_button_text_color"
+                    style="?android:attr/buttonBarButtonStyle" />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="false"
+                    android:layout_marginEnd="10dp"
+                    android:text="@string/kategori_elektronik"
+                    android:id="@+id/home_telusuri_kategori_elektronik_button"
+                    android:backgroundTint="@color/custom_telusuri_kategori_button_background_color"
+                    android:textColor="@color/custom_telusuri_kategori_button_text_color"
+                    style="?android:attr/buttonBarButtonStyle" />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="false"
+                    android:layout_marginEnd="10dp"
+                    android:text="@string/kategori_lainnya"
+                    android:id="@+id/home_telusuri_kategori_lainnya_button"
+                    android:backgroundTint="@color/custom_telusuri_kategori_button_background_color"
+                    android:textColor="@color/custom_telusuri_kategori_button_text_color"
+                    style="?android:attr/buttonBarButtonStyle" />
+            </LinearLayout>
         </HorizontalScrollView>
     </LinearLayout>
     <RelativeLayout
