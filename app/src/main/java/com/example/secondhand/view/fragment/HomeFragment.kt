@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.secondhand.R
 import com.example.secondhand.datastore.UserLoginTokenManager
 import com.example.secondhand.model.GetBuyerProductResponseItem
-import com.example.secondhand.view.DetailActivity
+import com.example.secondhand.view.activity.DetailActivity
 import com.example.secondhand.view.adapter.BuyerProductAdapter
 import com.example.secondhand.viewmodel.BuyerProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,7 +43,7 @@ class HomeFragment : Fragment() {
     private fun initView() {
         userLoginTokenManager = UserLoginTokenManager(requireContext())
         val viewModelBuyerProduct = ViewModelProvider(this)[BuyerProductViewModel::class.java]
-        userLoginTokenManager.accessToken.asLiveData().observe(viewLifecycleOwner){
+        userLoginTokenManager.accessToken.asLiveData().observe(viewLifecycleOwner) {
             viewModelBuyerProduct.getAllBuyerProduct(it)
         }
         adapter = BuyerProductAdapter {
@@ -58,9 +58,9 @@ class HomeFragment : Fragment() {
             //do something
             //edit
         }
-        rv_product_home.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        rv_product_home.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         rv_product_home.adapter = adapter
-
 
 
         // prevent user to click these button while load data from server
@@ -70,8 +70,8 @@ class HomeFragment : Fragment() {
         home_telusuri_kategori_semua_button.isClickable = false
 
         home_telusuri_kategori_semua_button.isSelected = true
-        viewModelBuyerProduct.buyerProduct.observe(viewLifecycleOwner){
-            if(it.isNotEmpty()){
+        viewModelBuyerProduct.buyerProduct.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
                 adapter.setDataBuyerProduct(it)
                 rv_product_home_progress_bar.isInvisible = true
                 adapter.notifyDataSetChanged()
@@ -90,8 +90,8 @@ class HomeFragment : Fragment() {
             home_telusuri_kategori_elektronik_button.isSelected = false
             home_telusuri_kategori_lainnya_button.isSelected = false
 
-            viewModelBuyerProduct.buyerProduct.observe(viewLifecycleOwner){
-                if(it.isNotEmpty()){
+            viewModelBuyerProduct.buyerProduct.observe(viewLifecycleOwner) {
+                if (it.isNotEmpty()) {
                     adapter.setDataBuyerProduct(it)
                     rv_product_home_progress_bar.isInvisible = true
                     adapter.notifyDataSetChanged()
@@ -106,12 +106,12 @@ class HomeFragment : Fragment() {
             home_telusuri_kategori_elektronik_button.isSelected = false
             home_telusuri_kategori_lainnya_button.isSelected = false
 
-            viewModelBuyerProduct.buyerProduct.observe(viewLifecycleOwner){
-                val listProduct : MutableList<GetBuyerProductResponseItem> = mutableListOf()
-                if(it.isNotEmpty()){
-                    for(i in it.indices){
-                        for(j in it[i].Categories.indices){
-                            if(it[i].Categories[j].name == "Minuman"){
+            viewModelBuyerProduct.buyerProduct.observe(viewLifecycleOwner) {
+                val listProduct: MutableList<GetBuyerProductResponseItem> = mutableListOf()
+                if (it.isNotEmpty()) {
+                    for (i in it.indices) {
+                        for (j in it[i].Categories.indices) {
+                            if (it[i].Categories[j].name == "Minuman") {
                                 listProduct += it[i]
                             }
                         }
@@ -130,12 +130,12 @@ class HomeFragment : Fragment() {
             home_telusuri_kategori_semua_button.isSelected = false
             home_telusuri_kategori_lainnya_button.isSelected = false
 
-            viewModelBuyerProduct.buyerProduct.observe(viewLifecycleOwner){
-                val listProduct : MutableList<GetBuyerProductResponseItem> = mutableListOf()
-                if(it.isNotEmpty()){
-                    for(i in it.indices){
-                        for(j in it[i].Categories.indices){
-                            if(it[i].Categories[j].name == "Electronic"){
+            viewModelBuyerProduct.buyerProduct.observe(viewLifecycleOwner) {
+                val listProduct: MutableList<GetBuyerProductResponseItem> = mutableListOf()
+                if (it.isNotEmpty()) {
+                    for (i in it.indices) {
+                        for (j in it[i].Categories.indices) {
+                            if (it[i].Categories[j].name == "Electronic") {
                                 listProduct += it[i]
                             }
                         }
@@ -153,14 +153,14 @@ class HomeFragment : Fragment() {
             home_telusuri_kategori_minuman_button.isSelected = false
             home_telusuri_kategori_semua_button.isSelected = false
 
-            viewModelBuyerProduct.buyerProduct.observe(viewLifecycleOwner){
-                val listProduct : MutableList<GetBuyerProductResponseItem> = mutableListOf()
-                if(it.isNotEmpty()){
-                    for(i in it.indices){
-                        if(it[i].Categories.isNotEmpty()){
-                            for(j in it[i].Categories.indices){
+            viewModelBuyerProduct.buyerProduct.observe(viewLifecycleOwner) {
+                val listProduct: MutableList<GetBuyerProductResponseItem> = mutableListOf()
+                if (it.isNotEmpty()) {
+                    for (i in it.indices) {
+                        if (it[i].Categories.isNotEmpty()) {
+                            for (j in it[i].Categories.indices) {
                                 val name = it[i].Categories[j].name
-                                if(name != "Electronic" && name != "Minuman"){
+                                if (name != "Electronic" && name != "Minuman") {
                                     listProduct += it[i]
                                 }
                             }

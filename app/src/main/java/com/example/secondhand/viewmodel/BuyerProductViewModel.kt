@@ -10,23 +10,24 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
+
 @HiltViewModel
 class BuyerProductViewModel @Inject constructor(api: ApiServices) : ViewModel() {
 
     private val liveDataBuyerProduct = MutableLiveData<List<GetBuyerProductResponseItem>>()
-    val buyerProduct : LiveData<List<GetBuyerProductResponseItem>> = liveDataBuyerProduct
+    val buyerProduct: LiveData<List<GetBuyerProductResponseItem>> = liveDataBuyerProduct
     private val apiServices = api
 
-    fun getAllBuyerProduct(token: String){
+    fun getAllBuyerProduct(token: String) {
         apiServices.getAllBuyerProduct(token)
-            .enqueue(object: Callback<List<GetBuyerProductResponseItem>> {
+            .enqueue(object : Callback<List<GetBuyerProductResponseItem>> {
                 override fun onResponse(
                     call: Call<List<GetBuyerProductResponseItem>>,
                     response: Response<List<GetBuyerProductResponseItem>>
                 ) {
-                    if(response.isSuccessful){
+                    if (response.isSuccessful) {
                         liveDataBuyerProduct.value = response.body()
-                    }else{
+                    } else {
                         //
                     }
                 }

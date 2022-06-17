@@ -14,30 +14,30 @@ import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
-class UserViewModel @Inject constructor(api: ApiServices) : ViewModel(){
+class UserViewModel @Inject constructor(api: ApiServices) : ViewModel() {
     private val liveDataUser = MutableLiveData<LoginResponsePostUser>()
     private val liveDataUserReg = MutableLiveData<RegisterResponsePostUser>()
 
-    val userReg : LiveData<RegisterResponsePostUser> = liveDataUserReg
+    val userReg: LiveData<RegisterResponsePostUser> = liveDataUserReg
     val user: LiveData<LoginResponsePostUser> = liveDataUser
     private val liveDataResponseMessage = MutableLiveData<Boolean>()
-    val responseMessage : LiveData<Boolean> = liveDataResponseMessage
+    val responseMessage: LiveData<Boolean> = liveDataResponseMessage
     private val apiServices = api
 
-    fun userLogin(loginRequestUser: LoginRequestUser){
+    fun userLogin(loginRequestUser: LoginRequestUser) {
         apiServices.login(loginRequestUser)
-            .enqueue(object: Callback<LoginResponsePostUser> {
+            .enqueue(object : Callback<LoginResponsePostUser> {
 
                 override fun onResponse(
                     call: Call<LoginResponsePostUser>,
                     response: Response<LoginResponsePostUser>
                 ) {
                     liveDataResponseMessage.value = response.isSuccessful
-                    if(response.isSuccessful){
+                    if (response.isSuccessful) {
 
                         liveDataUser.value = response.body()
 
-                    }else{
+                    } else {
                         liveDataResponseMessage.value = false
                     }
 
@@ -49,16 +49,16 @@ class UserViewModel @Inject constructor(api: ApiServices) : ViewModel(){
             })
     }
 
-    fun userRegister(email : String, full_name : String, password : String){
+    fun userRegister(email: String, full_name: String, password: String) {
         apiServices.register(email, full_name, password)
-            .enqueue(object : Callback<RegisterResponsePostUser>{
+            .enqueue(object : Callback<RegisterResponsePostUser> {
                 override fun onResponse(
                     call: Call<RegisterResponsePostUser>,
                     response: Response<RegisterResponsePostUser>
                 ) {
-                    if (response.isSuccessful){
+                    if (response.isSuccessful) {
                         liveDataUserReg.postValue(response.body())
-                    }else{
+                    } else {
 //
                     }
                 }

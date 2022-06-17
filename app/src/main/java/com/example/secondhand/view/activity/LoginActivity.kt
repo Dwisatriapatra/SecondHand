@@ -1,4 +1,4 @@
-package com.example.secondhand.view
+package com.example.secondhand.view.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -34,10 +34,10 @@ class LoginActivity : AppCompatActivity() {
 
         userLoginTokenManager = UserLoginTokenManager(this)
 
-        userLoginTokenManager.booelan.asLiveData().observe(this){
-            if(it == true){
+        userLoginTokenManager.booelan.asLiveData().observe(this) {
+            if (it == true) {
                 startActivity(Intent(this, MainActivity::class.java))
-            }else{
+            } else {
                 button_login.setOnClickListener {
                     login()
                 }
@@ -52,25 +52,25 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    private fun login(){
+    private fun login() {
         val viewModelUser = ViewModelProvider(this)[UserViewModel::class.java]
         val email = login_input_email.text.toString()
         val password = login_input_password.text.toString()
 
 
-        if(email.isNotEmpty() && password.isNotEmpty()){
+        if (email.isNotEmpty() && password.isNotEmpty()) {
             viewModelUser.userLogin(LoginRequestUser(email, password))
-            viewModelUser.responseMessage.observe(this){responseMessage ->
-                if(responseMessage){
-                    viewModelUser.user.observe(this){
+            viewModelUser.responseMessage.observe(this) { responseMessage ->
+                if (responseMessage) {
+                    viewModelUser.user.observe(this) {
                         saveToken(it)
                     }
-                }else{
+                } else {
                     Toast.makeText(this, "Email/password salah", Toast.LENGTH_SHORT).show()
                 }
             }
 
-        }else{
+        } else {
 
             Toast.makeText(this, "Semua field harus diisi", Toast.LENGTH_SHORT).show()
         }
@@ -79,7 +79,7 @@ class LoginActivity : AppCompatActivity() {
     private fun saveToken(loginResponsePostUser: LoginResponsePostUser) {
         userLoginTokenManager = UserLoginTokenManager(this)
         lifecycleScope.launch {
-            withContext(Dispatchers.Main){
+            withContext(Dispatchers.Main) {
                 userLoginTokenManager.setBoolean(true)
                 userLoginTokenManager.saveToken(
                     loginResponsePostUser.email,

@@ -1,11 +1,11 @@
-package com.example.secondhand.view
+package com.example.secondhand.view.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.asLiveData
 import com.example.secondhand.R
 import com.example.secondhand.datastore.UserLoginTokenManager
@@ -27,10 +27,10 @@ class SplashAcivity : AppCompatActivity() {
         userLoginTokenManager = UserLoginTokenManager(this)
 
         Handler(Looper.getMainLooper()).postDelayed({
-            userLoginTokenManager.booelan.asLiveData().observe(this){
-                if(it == true){
+            userLoginTokenManager.booelan.asLiveData().observe(this) {
+                if (it == true) {
                     startActivity(Intent(this, MainActivity::class.java))
-                }else{
+                } else {
                     startActivity(Intent(this, LoginActivity::class.java))
                 }
             }

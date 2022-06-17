@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:ignore="HardcodedText">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp">
+
+        <!--image view for displaying course image-->
+        <ImageView
+            android:id="@+id/tawarDialogImage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_launcher_background"
+            tools:ignore="ContentDescription" />
+
+        <!--text view for displaying course name-->
+        <TextView
+            android:id="@+id/tawarDialogName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/tawarDialogImage"
+            android:text="NAMA BARANG"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <!--text view for displaying course tracks-->
+        <TextView
+            android:id="@+id/tawarDialogKategori"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tawarDialogName"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/tawarDialogImage"
+            android:text="Kategori: Minuman"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <!--text view for displaying course duration-->
+        <TextView
+            android:id="@+id/tawarDialogHarga"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tawarDialogKategori"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/tawarDialogImage"
+            android:text="Harga: Rp. 45000"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <!--button for dismissing our dialog-->
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Rp. 0"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:padding="10dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="20dp"
+            android:background="@drawable/custom_edit_text_layout"
+            android:layout_below="@id/tawarDialogImage"
+            android:id="@+id/tawarDialogInputHargaTawaran"
+            android:importantForAutofill="no"
+            android:inputType="number"/>
+        <Button
+            android:id="@+id/tawarDialogTawarkanHargaButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tawarDialogInputHargaTawaran"
+            android:layout_marginHorizontal="10dp"
+            android:text="Kirim"
+            android:textAllCaps="false" />
+        <Button
+            android:id="@+id/tawarDialogBatalkanButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tawarDialogTawarkanHargaButton"
+            android:layout_marginHorizontal="10dp"
+            android:text="Batal"
+            android:textAllCaps="false" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
