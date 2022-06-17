@@ -4,18 +4,13 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
-import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.secondhand.R
 import com.example.secondhand.model.GetBuyerProductResponseItem
-import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.android.synthetic.main.item_adapter_buyer_product.view.*
 
 class BuyerProductAdapter (private val onClick: (GetBuyerProductResponseItem) -> Unit) : RecyclerView.Adapter<BuyerProductAdapter.ViewHolder>(){
-
-    private lateinit var progressBar: ProgressBar
 
     private var listBuyerProduct: List<GetBuyerProductResponseItem>? = null
     fun setDataBuyerProduct(list: List<GetBuyerProductResponseItem>) {
@@ -37,7 +32,6 @@ class BuyerProductAdapter (private val onClick: (GetBuyerProductResponseItem) ->
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder.itemView){
             with(listBuyerProduct!![position]){
-
                 card_product_nama.text = name
                 card_product_harga.text =  "Harga: Rp. $base_price"
                 Glide.with(card_image_produk.context)
@@ -67,11 +61,6 @@ class BuyerProductAdapter (private val onClick: (GetBuyerProductResponseItem) ->
                     }
                 }else{
                     card_product_kategori.text = "Kategori: Belum ada kategori"
-                }
-                if(position == itemCount - 1){
-                    //progress bar
-                    progressBar = rv_product_home_progress_bar
-                    progressBar.isInvisible = true
                 }
             }
         }

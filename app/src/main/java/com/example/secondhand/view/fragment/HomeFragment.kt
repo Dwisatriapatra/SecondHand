@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isInvisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.navigation.findNavController
@@ -66,6 +67,7 @@ class HomeFragment : Fragment() {
         viewModelBuyerProduct.buyerProduct.observe(viewLifecycleOwner){
             if(it.isNotEmpty()){
                 adapter.setDataBuyerProduct(it)
+                rv_product_home_progress_bar.isInvisible = true
                 adapter.notifyDataSetChanged()
             }
         }

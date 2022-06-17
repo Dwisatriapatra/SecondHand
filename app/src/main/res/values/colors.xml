@@ -14,5 +14,5 @@
     <color name="bottom_nav_background">#E2A64F</color>
     <color name="bottom_nav_item">#8c7060</color>
     <color name="bottom_nav_selected_item">#220006</color>
-
+    <color name="telusuri_kategori_button_selected_item">#E2D4F0</color>
 </resources>
