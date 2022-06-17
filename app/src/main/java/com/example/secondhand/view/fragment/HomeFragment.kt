@@ -64,7 +64,6 @@ class HomeFragment : Fragment() {
 
 
         // prevent user to click these button while load data from server
-        home_telusuri_kategori_minuman_button.isClickable = false
         home_telusuri_kategori_elektronik_button.isClickable = false
         home_telusuri_kategori_semua_button.isClickable = false
         home_telusuri_kategori_semua_button.isClickable = false
@@ -76,7 +75,6 @@ class HomeFragment : Fragment() {
                 rv_product_home_progress_bar.isInvisible = true
                 adapter.notifyDataSetChanged()
                 //activate "telusuri kategori" button
-                home_telusuri_kategori_minuman_button.isClickable = true
                 home_telusuri_kategori_elektronik_button.isClickable = true
                 home_telusuri_kategori_semua_button.isClickable = true
             }
@@ -86,7 +84,6 @@ class HomeFragment : Fragment() {
         home_telusuri_kategori_semua_button.setOnClickListener {
             //button state
             home_telusuri_kategori_semua_button.isSelected = true
-            home_telusuri_kategori_minuman_button.isSelected = false
             home_telusuri_kategori_elektronik_button.isSelected = false
             home_telusuri_kategori_lainnya_button.isSelected = false
 
@@ -99,34 +96,9 @@ class HomeFragment : Fragment() {
             }
         }
 
-        home_telusuri_kategori_minuman_button.setOnClickListener {
-            //button state
-            home_telusuri_kategori_minuman_button.isSelected = true
-            home_telusuri_kategori_semua_button.isSelected = false
-            home_telusuri_kategori_elektronik_button.isSelected = false
-            home_telusuri_kategori_lainnya_button.isSelected = false
-
-            viewModelBuyerProduct.buyerProduct.observe(viewLifecycleOwner) {
-                val listProduct: MutableList<GetBuyerProductResponseItem> = mutableListOf()
-                if (it.isNotEmpty()) {
-                    for (i in it.indices) {
-                        for (j in it[i].Categories.indices) {
-                            if (it[i].Categories[j].name == "Minuman") {
-                                listProduct += it[i]
-                            }
-                        }
-                    }
-                    adapter.setDataBuyerProduct(listProduct)
-                    rv_product_home_progress_bar.isInvisible = true
-                    adapter.notifyDataSetChanged()
-                }
-            }
-        }
-
 
         home_telusuri_kategori_elektronik_button.setOnClickListener {
             home_telusuri_kategori_elektronik_button.isSelected = true
-            home_telusuri_kategori_minuman_button.isSelected = false
             home_telusuri_kategori_semua_button.isSelected = false
             home_telusuri_kategori_lainnya_button.isSelected = false
 
@@ -150,7 +122,6 @@ class HomeFragment : Fragment() {
         home_telusuri_kategori_lainnya_button.setOnClickListener {
             home_telusuri_kategori_lainnya_button.isSelected = true
             home_telusuri_kategori_elektronik_button.isSelected = false
-            home_telusuri_kategori_minuman_button.isSelected = false
             home_telusuri_kategori_semua_button.isSelected = false
 
             viewModelBuyerProduct.buyerProduct.observe(viewLifecycleOwner) {
