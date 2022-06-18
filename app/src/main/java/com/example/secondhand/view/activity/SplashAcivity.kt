@@ -66,7 +66,6 @@ class SplashAcivity : AppCompatActivity() {
         viewModelUser.responseMessage.observe(this){responseMessage ->
             if(responseMessage){
                 viewModelUser.user.observe(this){
-                    Toast.makeText(this, "Already login", Toast.LENGTH_SHORT).show()
                     saveToken(it, password)
                 }
             }else{
