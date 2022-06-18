@@ -13,18 +13,21 @@ class UserLoginTokenManager(context: Context) {
         val EMAIL = preferencesKey<String>("EMAIL")
         val NAME = preferencesKey<String>("NAME")
         val ACCESS_TOKEN = preferencesKey<String>("ACCESS_TOKEN")
+        val PASSWORD = preferencesKey<String>("PASSWORD")
         val BOOLEAN = preferencesKey<Boolean>("BOOLEAN")
     }
 
     suspend fun saveToken(
         email: String,
         name: String,
-        accessToken: String
+        accessToken: String,
+        password: String
     ) {
         dataStore.edit {
             it[EMAIL] = email
             it[NAME] = name
             it[ACCESS_TOKEN] = accessToken
+            it[PASSWORD] = password
         }
     }
 
@@ -54,5 +57,9 @@ class UserLoginTokenManager(context: Context) {
 
     val booelan: Flow<Boolean> = dataStore.data.map {
         it[BOOLEAN] ?: false
+    }
+
+    val password: Flow<String> = dataStore.data.map {
+        it[PASSWORD] ?: ""
     }
 }

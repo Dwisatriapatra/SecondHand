@@ -63,7 +63,7 @@ class LoginActivity : AppCompatActivity() {
             viewModelUser.responseMessage.observe(this) { responseMessage ->
                 if (responseMessage) {
                     viewModelUser.user.observe(this) {
-                        saveToken(it)
+                        saveToken(it, password)
                     }
                 } else {
                     Toast.makeText(this, "Email/password salah", Toast.LENGTH_SHORT).show()
@@ -76,7 +76,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveToken(loginResponsePostUser: LoginResponsePostUser) {
+    private fun saveToken(loginResponsePostUser: LoginResponsePostUser, password: String) {
         userLoginTokenManager = UserLoginTokenManager(this)
         lifecycleScope.launch {
             withContext(Dispatchers.Main) {
@@ -84,7 +84,8 @@ class LoginActivity : AppCompatActivity() {
                 userLoginTokenManager.saveToken(
                     loginResponsePostUser.email,
                     loginResponsePostUser.name,
-                    loginResponsePostUser.access_token
+                    loginResponsePostUser.access_token,
+                    password
                 )
                 startActivity(Intent(this@LoginActivity, MainActivity::class.java))
             }
