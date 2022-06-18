@@ -11,6 +11,7 @@
         <entry key="app/src/main/res/drawable/custom_app_background.xml" value="0.2115" />
         <entry key="app/src/main/res/drawable/custom_button_layout.xml" value="0.144" />
         <entry key="app/src/main/res/drawable/custom_edit_text_layout.xml" value="0.144" />
+        <entry key="app/src/main/res/drawable/custom_image_picker.xml" value="0.2115" />
         <entry key="app/src/main/res/drawable/custom_judul_detail.xml" value="0.2115" />
         <entry key="app/src/main/res/drawable/custom_telusuri_kategori_button.xml" value="0.2115" />
         <entry key="app/src/main/res/drawable/tawar_harga_bottom_sheet_dialog.xml" value="0.2115" />

@@ -22,9 +22,9 @@ class RegisterActivity : AppCompatActivity() {
         userRegisterManager = UserRegisterManager(this)
 
         btnDaftar.setOnClickListener {
-            if (edtNamaLengkap.text.isNotEmpty() &&
-                edtEmail.text.isNotEmpty() &&
-                edtPassword.text.isNotEmpty()
+            if (edtNamaLengkap.text!!.isNotEmpty() &&
+                edtEmail.text!!.isNotEmpty() &&
+                edtPassword.text!!.isNotEmpty()
             ) {
 
                 dataRegister()

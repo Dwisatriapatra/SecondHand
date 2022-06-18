@@ -22,6 +22,10 @@
     <string name="kategori_minuman">Minuman</string>
     <string name="kategori_elektronik">Elektronik</string>
     <string name="kategori_lainnya">Lainnya</string>
+    <string name="daftar">Daftar</string>
+    <string name="masukkan_nama">Masukkan nama</string>
+    <string name="masukkan_nomor_handphone">Masukkan nomor handphone</string>
+    <string name="masukkan_alamat">Masukkan alamat</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 
