@@ -26,6 +26,9 @@
     <string name="masukkan_nama">Masukkan nama</string>
     <string name="masukkan_nomor_handphone">Masukkan nomor handphone</string>
     <string name="masukkan_alamat">Masukkan alamat</string>
+    <string name="seller">Seller</string>
+    <string name="kategori">Kategori:</string>
+    <string name="harga_produk">harga produk</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 

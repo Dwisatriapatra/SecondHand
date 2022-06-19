@@ -12,6 +12,9 @@ interface ApiServices {
     @GET("/buyer/product")
     fun getAllBuyerProduct(@Header("access_token") token: String): Call<List<GetBuyerProductResponseItem>>
 
+    @GET("notification")
+    fun getAllNotification(@Header("access_token") token: String): Call<List<GetAllNotificationResponseItem>>
+
 
     //greta
     @POST("auth/register")
