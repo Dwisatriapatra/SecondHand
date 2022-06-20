@@ -58,19 +58,19 @@
 
         <!--button for dismissing our dialog-->
         <EditText
+            android:id="@+id/tawarDialogInputHargaTawaran"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Rp. 0"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            android:padding="10dp"
+            android:layout_below="@id/tawarDialogImage"
             android:layout_marginHorizontal="10dp"
             android:layout_marginVertical="20dp"
             android:background="@drawable/custom_edit_text_layout"
-            android:layout_below="@id/tawarDialogImage"
-            android:id="@+id/tawarDialogInputHargaTawaran"
+            android:hint="Rp. 0"
             android:importantForAutofill="no"
-            android:inputType="number"/>
+            android:inputType="number"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
         <Button
             android:id="@+id/tawarDialogTawarkanHargaButton"
             android:layout_width="match_parent"

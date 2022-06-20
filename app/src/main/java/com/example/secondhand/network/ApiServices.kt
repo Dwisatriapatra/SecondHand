@@ -28,5 +28,12 @@ interface ApiServices {
     @POST("auth/register")
     fun postRegister(@Body reqUser: RegisterRequestUser): Call<RegisterResponsePostUser>
 
+    @POST("buyer/order")
+    fun updateBidPrice(@Header("access_token") token : String,
+                        @Body reqBidPrice : PostBuyerOrder) : Call<PostBuyerOrderResponseItem>
 
+//    @PUT("buyer/order/{id}")
+//    fun updateBidPrice(
+//        @Path("productId") productId: Int,
+//        @Body requestOrder : PutBuyerOrder) : Call<List<GetBuyerOrderResponseItem>>
 }
