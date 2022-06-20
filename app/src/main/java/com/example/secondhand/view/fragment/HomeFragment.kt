@@ -106,8 +106,8 @@ class HomeFragment : Fragment() {
                 val listProduct: MutableList<GetBuyerProductResponseItem> = mutableListOf()
                 if (it.isNotEmpty()) {
                     for (i in it.indices) {
-                        for (j in it[i].Categories.indices) {
-                            if (it[i].Categories[j].name == "Electronic") {
+                        for (j in it[i].Categories!!.indices) {
+                            if (it[i].Categories!![j].name == "Electronic") {
                                 listProduct += it[i]
                             }
                         }
@@ -128,9 +128,9 @@ class HomeFragment : Fragment() {
                 val listProduct: MutableList<GetBuyerProductResponseItem> = mutableListOf()
                 if (it.isNotEmpty()) {
                     for (i in it.indices) {
-                        if (it[i].Categories.isNotEmpty()) {
-                            for (j in it[i].Categories.indices) {
-                                val name = it[i].Categories[j].name
+                        if (it[i].Categories!!.isNotEmpty()) {
+                            for (j in it[i].Categories!!.indices) {
+                                val name = it[i].Categories!![j].name
                                 if (name != "Electronic" && name != "Minuman") {
                                     listProduct += it[i]
                                 }

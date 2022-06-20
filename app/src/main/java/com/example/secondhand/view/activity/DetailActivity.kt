@@ -22,9 +22,8 @@ class DetailActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun initDetailsView() {
         val detailbarang = intent.getParcelableExtra<GetBuyerProductResponseItem>("detailbarang")
-
         if (detailbarang != null) {
-            Glide.with(this).load(detailbarang.image_url).into(imgDetail)
+            Glide.with(this).load(detailbarang.image_url).error(R.drawable.ic_launcher_background).into(imgDetail)
             txtNamaBarang.text = detailbarang.name
             txtJenisBarang.text = detailbarang.Categories.toString()
             txtHargaBarang.text = detailbarang.base_price.toString()
@@ -32,7 +31,7 @@ class DetailActivity : AppCompatActivity() {
 
 
             txtJenisBarang.text = ""
-            if (detailbarang.Categories.isNotEmpty()) {
+            if (detailbarang.Categories!!.isNotEmpty()) {
                 for (i in detailbarang.Categories.indices) {
                     if (detailbarang.Categories.lastIndex == 0) {
                         txtJenisBarang.text = detailbarang.Categories[i].name
@@ -74,7 +73,7 @@ class DetailActivity : AppCompatActivity() {
             .error(R.drawable.ic_launcher_background)
             .into(dialogView.tawarDialogImage)
         dialogView.tawarDialogKategori.text = ""
-        if (detailbarang.Categories.isNotEmpty()) {
+        if (detailbarang.Categories!!.isNotEmpty()) {
             for (i in detailbarang.Categories.indices) {
                 if (detailbarang.Categories.lastIndex == 0) {
                     dialogView.tawarDialogKategori.text =
