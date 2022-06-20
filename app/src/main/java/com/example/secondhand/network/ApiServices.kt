@@ -15,6 +15,11 @@ interface ApiServices {
     @GET("notification")
     fun getAllNotification(@Header("access_token") token: String): Call<List<GetAllNotificationResponseItem>>
 
+    @GET("auth/user")
+    fun getSellerData(@Header("access_token") token: String): Call<GetSellerResponse>
+
+    @GET("seller/product")
+    fun getSellerProdcut(@Header("access_token") token: String): Call<List<GetSellerProductItem>>
 
     //greta
     @POST("auth/register")
@@ -29,8 +34,10 @@ interface ApiServices {
     fun postRegister(@Body reqUser: RegisterRequestUser): Call<RegisterResponsePostUser>
 
     @POST("buyer/order")
-    fun updateBidPrice(@Header("access_token") token : String,
-                        @Body reqBidPrice : PostBuyerOrder) : Call<PostBuyerOrderResponseItem>
+    fun updateBidPrice(
+        @Header("access_token") token: String,
+        @Body reqBidPrice: PostBuyerOrder
+    ): Call<PostBuyerOrderResponseItem>
 
 //    @PUT("buyer/order/{id}")
 //    fun updateBidPrice(

@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.tawar_harga_bottom_sheet_dialog.view.*
 
 @AndroidEntryPoint
 class DetailActivity : AppCompatActivity() {
-    lateinit var userLoginTokenManager: UserLoginTokenManager
+    private lateinit var userLoginTokenManager: UserLoginTokenManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -121,9 +121,9 @@ class DetailActivity : AppCompatActivity() {
             val productId = detailbarang.id
             val edtTawar = dialogView.tawarDialogInputHargaTawaran.text.toString().toInt()
 
-            if (edtTawar.toString().isNotEmpty()){
+            if (edtTawar.toString().isNotEmpty()) {
                 val viewModelBuyerOrder = ViewModelProvider(this)[BuyerOrderViewModel::class.java]
-                userLoginTokenManager.accessToken.asLiveData().observe(this){
+                userLoginTokenManager.accessToken.asLiveData().observe(this) {
                     viewModelBuyerOrder.postBuyerOrder(it, PostBuyerOrder(productId!!, edtTawar))
                 }
             }

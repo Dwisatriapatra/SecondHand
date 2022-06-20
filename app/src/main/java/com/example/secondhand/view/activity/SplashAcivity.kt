@@ -24,7 +24,7 @@ import kotlinx.coroutines.withContext
 class SplashAcivity : AppCompatActivity() {
 
     private lateinit var userLoginTokenManager: UserLoginTokenManager
-    private lateinit var email : String
+    private lateinit var email: String
     private lateinit var password: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,10 +43,10 @@ class SplashAcivity : AppCompatActivity() {
             userLoginTokenManager.booelan.asLiveData().observe(this) {
                 if (it == true) {
 
-                    userLoginTokenManager.email.asLiveData().observe(this){result ->
+                    userLoginTokenManager.email.asLiveData().observe(this) { result ->
                         email = result.toString()
                     }
-                    userLoginTokenManager.password.asLiveData().observe(this){result ->
+                    userLoginTokenManager.password.asLiveData().observe(this) { result ->
                         password = result.toString()
                     }
 
@@ -63,12 +63,12 @@ class SplashAcivity : AppCompatActivity() {
     private fun requestNewLoginToken(email: String, password: String) {
         val viewModelUser = ViewModelProvider(this)[UserViewModel::class.java]
         viewModelUser.userLogin(LoginRequestUser(email, password))
-        viewModelUser.responseMessage.observe(this){responseMessage ->
-            if(responseMessage){
-                viewModelUser.user.observe(this){
+        viewModelUser.responseMessage.observe(this) { responseMessage ->
+            if (responseMessage) {
+                viewModelUser.user.observe(this) {
                     saveToken(it, password)
                 }
-            }else{
+            } else {
                 Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
             }
         }

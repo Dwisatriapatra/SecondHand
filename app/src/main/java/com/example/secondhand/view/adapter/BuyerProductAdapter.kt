@@ -47,7 +47,7 @@ class BuyerProductAdapter(private val onClick: (GetBuyerProductResponseItem) -> 
                 }
                 card_product_kategori.text = ""
                 if (Categories!!.isNotEmpty()) {
-                    for (i in Categories!!.indices) {
+                    for (i in Categories.indices) {
                         if (Categories.lastIndex == 0) {
                             card_product_kategori.text = "Kategori: " + Categories[i].name
                             break
