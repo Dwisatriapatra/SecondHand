@@ -2,6 +2,7 @@ package com.example.secondhand.view.activity
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
@@ -126,6 +127,8 @@ class DetailActivity : AppCompatActivity() {
                 userLoginTokenManager.accessToken.asLiveData().observe(this) {
                     viewModelBuyerOrder.postBuyerOrder(it, PostBuyerOrder(productId!!, edtTawar))
                 }
+                Toast.makeText(this, "Tawaran sudah dikirim", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
             }
         }
         dialog.setCancelable(false)

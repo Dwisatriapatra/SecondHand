@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
@@ -71,12 +72,13 @@ class DaftarJualFragment : Fragment() {
             //do something
             //edit
         }
-        rv_daftar_jual_saya.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        rv_daftar_jual_saya.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         rv_daftar_jual_saya.adapter = adapter
 
         viewModelSellerProduct.sellerProduct.observe(viewLifecycleOwner){
             if(it.isNotEmpty()){
                 adapter.setDataSellerProduct(it)
+                daftar_jual_saya_progress_bar.isInvisible = true
                 adapter.notifyDataSetChanged()
             }
         }

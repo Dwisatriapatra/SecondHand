@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.secondhand.R
 import com.example.secondhand.model.GetSellerProductItem
-import kotlinx.android.synthetic.main.item_seller_product_item.view.*
+import kotlinx.android.synthetic.main.item_adapter_seller_product_item.view.*
 
 class SellerProductAdapter(private val onClick: (GetSellerProductItem) -> Unit) :
     RecyclerView.Adapter<SellerProductAdapter.ViewHolder>() {
@@ -25,7 +25,7 @@ class SellerProductAdapter(private val onClick: (GetSellerProductItem) -> Unit) 
         viewType: Int
     ): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_seller_product_item, parent, false)
+            .inflate(R.layout.item_adapter_seller_product_item, parent, false)
         return ViewHolder(view)
     }
 
