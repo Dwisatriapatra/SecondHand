@@ -1,10 +1,12 @@
 package com.example.secondhand.viewmodel
 
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.secondhand.model.LoginRequestUser
 import com.example.secondhand.model.LoginResponsePostUser
+import com.example.secondhand.model.RegisterRequestUser
 import com.example.secondhand.model.RegisterResponsePostUser
 import com.example.secondhand.network.ApiServices
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,6 +22,7 @@ class UserViewModel @Inject constructor(api: ApiServices) : ViewModel() {
 
     val userReg: LiveData<RegisterResponsePostUser> = liveDataUserReg
     val user: LiveData<LoginResponsePostUser> = liveDataUser
+
     private val liveDataResponseMessage = MutableLiveData<Boolean>()
     val responseMessage: LiveData<Boolean> = liveDataResponseMessage
     private val apiServices = api
@@ -50,22 +53,21 @@ class UserViewModel @Inject constructor(api: ApiServices) : ViewModel() {
     }
 
     fun userRegister(email: String, full_name: String, password: String) {
-        apiServices.register(email, full_name, password)
-            .enqueue(object : Callback<RegisterResponsePostUser> {
-                override fun onResponse(
-                    call: Call<RegisterResponsePostUser>,
-                    response: Response<RegisterResponsePostUser>
-                ) {
-                    if (response.isSuccessful) {
-                        liveDataUserReg.postValue(response.body())
-                    } else {
+       apiServices.postRegister(RegisterRequestUser(email, full_name, password))
+           .enqueue(object :Callback<RegisterResponsePostUser>{
+               override fun onResponse(
+                   call: Call<RegisterResponsePostUser>,
+                   response: Response<RegisterResponsePostUser>
+               ) {
+                   if (response.isSuccessful){
+                       liveDataUserReg.value = response.body()
+                   }else{
 //
-                    }
-                }
-
-                override fun onFailure(call: Call<RegisterResponsePostUser>, t: Throwable) {
-                }
-
-            })
+                   }
+               }
+               override fun onFailure(call: Call<RegisterResponsePostUser>, t: Throwable) {
+//
+               }
+           })
     }
 }

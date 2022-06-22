@@ -33,6 +33,7 @@ interface ApiServices {
     @POST("auth/register")
     fun postRegister(@Body reqUser: RegisterRequestUser): Call<RegisterResponsePostUser>
 
+//    fitur tawar menawar
     @POST("buyer/order")
     fun updateBidPrice(
         @Header("access_token") token: String,

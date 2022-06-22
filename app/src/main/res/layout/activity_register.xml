@@ -93,94 +93,6 @@
                 android:textSize="24sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Nomor Handphone"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            tools:ignore="HardcodedText" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edtNomorHandphone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/custom_edit_text_layout"
-                android:hint="@string/masukkan_nomor_handphone"
-                android:textColor="@color/black"
-                android:textSize="24sp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Alamat"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            tools:ignore="HardcodedText" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edtAlamat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/custom_edit_text_layout"
-                android:hint="@string/masukkan_alamat"
-                android:textColor="@color/black"
-                android:textSize="24sp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Foto Profile (choose file)"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            tools:ignore="HardcodedText" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <RelativeLayout
-                android:id="@+id/registerInputImage"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:background="@drawable/custom_image_picker">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/ic_baseline_camera_24"
-                    tools:ignore="ContentDescription" />
-            </RelativeLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:text="File: -"
-                android:textColor="@color/black"
-                android:textSize="24sp"
-                tools:ignore="HardcodedText" />
-        </LinearLayout>
-
-
         <Button
             android:id="@+id/btnDaftar"
             android:layout_width="match_parent"
@@ -207,7 +119,7 @@
                 tools:ignore="HardcodedText" />
 
             <TextView
-                android:id="@+id/btnLogin"
+                android:id="@+id/txtMasukDisini"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
