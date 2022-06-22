@@ -2,9 +2,10 @@ package com.example.secondhand.datastore
 
 import android.content.Context
 import androidx.datastore.DataStore
-import androidx.datastore.preferences.*
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import androidx.datastore.preferences.Preferences
+import androidx.datastore.preferences.createDataStore
+import androidx.datastore.preferences.edit
+import androidx.datastore.preferences.preferencesKey
 
 class UserRegisterManager(context: Context) {
 
@@ -24,32 +25,6 @@ class UserRegisterManager(context: Context) {
             it[PASSWORD] = password
         }
 
-    }
-
-    suspend fun setBoolean(boolean: Boolean) {
-        dataReg.edit {
-            it[BOOLEAN] = boolean
-        }
-    }
-
-
-    val emailReg: Flow<String> = dataReg.data.map {
-        it[EMAIL] ?: ""
-    }
-
-    val nameReg: Flow<String> = dataReg.data.map {
-        it[NAME] ?: ""
-    }
-
-    val passwordReg: Flow<String> = dataReg.data.map {
-        it[PASSWORD] ?: ""
-    }
-
-
-    suspend fun deleteData() {
-        dataReg.edit {
-            it.clear()
-        }
     }
 
 

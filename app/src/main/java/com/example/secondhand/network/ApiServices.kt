@@ -21,6 +21,19 @@ interface ApiServices {
     @GET("seller/product")
     fun getSellerProdcut(@Header("access_token") token: String): Call<List<GetSellerProductItem>>
 
+    @POST("seller/product")
+    @Multipart
+    fun postJualProduct(
+        @Header("access_token") token: String,
+        @Part("base_price") base_price: Int,
+        @Part("categories_ids") categories_ids: List<Int>,
+        @Part("description") description: String,
+        @Part("image") image: String?,
+        @Part("location") location: String,
+        @Part("name") name: String
+    ) : Call<PostJualProductResponse>
+
+
     //greta
     @POST("auth/register")
     @FormUrlEncoded

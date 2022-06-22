@@ -18,7 +18,6 @@ class NotificationViewModel @Inject constructor(api: ApiServices) : ViewModel() 
     val notification: LiveData<List<GetAllNotificationResponseItem>> = liveDataNotification
     private val apiServices = api
     private val responseMsg = MutableLiveData<Boolean>()
-    val responseMessage: LiveData<Boolean> = responseMsg
 
 
     fun getAllNotification(token: String) {

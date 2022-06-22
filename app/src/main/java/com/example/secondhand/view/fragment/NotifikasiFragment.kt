@@ -43,9 +43,7 @@ class NotifikasiFragment : Fragment() {
             viewModelNotification.getAllNotification(it)
         }
 
-        adapter = NotificationAdapter {
-            //take action
-        }
+        adapter = NotificationAdapter()
         rv_notification.layoutManager = LinearLayoutManager(requireContext())
         rv_notification.adapter = adapter
 

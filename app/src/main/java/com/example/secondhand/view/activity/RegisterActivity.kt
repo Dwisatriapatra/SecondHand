@@ -10,8 +10,6 @@ import com.example.secondhand.datastore.UserRegisterManager
 import com.example.secondhand.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_register.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RegisterActivity : AppCompatActivity() {

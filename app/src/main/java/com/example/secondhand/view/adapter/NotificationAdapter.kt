@@ -10,7 +10,7 @@ import com.example.secondhand.model.GetAllNotificationResponseItem
 import kotlinx.android.synthetic.main.item_adapter_notification.view.*
 
 
-class NotificationAdapter(private val onClick: (GetAllNotificationResponseItem) -> Unit) :
+class NotificationAdapter :
     RecyclerView.Adapter<NotificationAdapter.ViewHolder>() {
     private var listNotification: List<GetAllNotificationResponseItem>? = null
     fun setNotificationData(list: List<GetAllNotificationResponseItem>) {

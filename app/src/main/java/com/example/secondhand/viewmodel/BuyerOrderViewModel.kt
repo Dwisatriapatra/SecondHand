@@ -1,6 +1,5 @@
 package com.example.secondhand.viewmodel
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.secondhand.model.PostBuyerOrder
@@ -16,7 +15,6 @@ import javax.inject.Inject
 class BuyerOrderViewModel @Inject constructor(api : ApiServices) : ViewModel() {
 
     private val liveDataBuyerOrder = MutableLiveData<PostBuyerOrderResponseItem>()
-    val buyerOrder : LiveData<PostBuyerOrderResponseItem> = liveDataBuyerOrder
     private val apiServices = api
 
     fun postBuyerOrder(token : String, postBuyerOrder : PostBuyerOrder){
@@ -28,9 +26,6 @@ class BuyerOrderViewModel @Inject constructor(api : ApiServices) : ViewModel() {
                 ) {
                     if (response.isSuccessful){
                         liveDataBuyerOrder.value = response.body()
-                    }else{
-
-
                     }
                 }
 
