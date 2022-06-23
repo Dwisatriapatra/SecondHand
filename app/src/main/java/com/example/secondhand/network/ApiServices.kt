@@ -33,15 +33,17 @@ interface ApiServices {
         @Part("name") name: String
     ) : Call<PostJualProductResponse>
 
+    @PATCH("seller/order/{id}")
+    fun setStatusOrder(@Header("access_token") token: String, @Path("id") id: Int, @Body orderStatus: OrderStatus):Call<Any>
 
     //greta
-    @POST("auth/register")
-    @FormUrlEncoded
-    fun register(
-        @Field("email") email: String,
-        @Field("full_name") full_name: String,
-        @Field("password") password: String
-    ): Call<RegisterResponsePostUser>
+//    @POST("auth/register")
+//    @FormUrlEncoded
+//    fun register(
+//        @Field("email") email: String,
+//        @Field("full_name") full_name: String,
+//        @Field("password") password: String
+//    ): Call<RegisterResponsePostUser>
 
     @POST("auth/register")
     fun postRegister(@Body reqUser: RegisterRequestUser): Call<RegisterResponsePostUser>

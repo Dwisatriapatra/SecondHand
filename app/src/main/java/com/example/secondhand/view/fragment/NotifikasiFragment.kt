@@ -1,5 +1,6 @@
 package com.example.secondhand.view.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.secondhand.R
 import com.example.secondhand.datastore.UserLoginTokenManager
+import com.example.secondhand.view.activity.InfoPenawarActivity
 import com.example.secondhand.view.adapter.NotificationAdapter
 import com.example.secondhand.viewmodel.NotificationViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,7 +45,13 @@ class NotifikasiFragment : Fragment() {
             viewModelNotification.getAllNotification(it)
         }
 
-        adapter = NotificationAdapter()
+        adapter = NotificationAdapter{
+            //action to info penawar
+            val intent = Intent(activity, InfoPenawarActivity::class.java)
+            intent.putExtra("InfoPenawaran", it)
+            startActivity(intent)
+
+        }
         rv_notification.layoutManager = LinearLayoutManager(requireContext())
         rv_notification.adapter = adapter
 

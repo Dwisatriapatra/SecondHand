@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    tools:context=".view.activity.InfoPenawarActivity">
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Info Penawar"
+        android:textStyle="bold"
+        android:id="@+id/title_info_penawar"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:layout_marginBottom="20dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/info_penawar_biodata_pembeli_section"
+        android:layout_below="@id/title_info_penawar">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginEnd="10dp"
+            android:id="@+id/info_penawar_foto_pembeli"
+            android:src="@drawable/ic_launcher_background"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nama Pembeli"
+                android:id="@+id/info_penawar_nama_pembeli"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kota"
+                android:id="@+id/info_penawar_kota"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+    </LinearLayout>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Daftar barangmu yang ditawar"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:layout_below="@id/info_penawar_biodata_pembeli_section"
+        android:id="@+id/label_daftar_produk_saya"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/label_daftar_produk_saya"
+        android:id="@+id/rv_daftar_barang_ditawar"/>
+</RelativeLayout>

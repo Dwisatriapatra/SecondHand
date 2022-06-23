@@ -10,7 +10,7 @@ import com.example.secondhand.model.GetAllNotificationResponseItem
 import kotlinx.android.synthetic.main.item_adapter_notification.view.*
 
 
-class NotificationAdapter :
+class NotificationAdapter(private val onClick: (GetAllNotificationResponseItem) -> Unit) :
     RecyclerView.Adapter<NotificationAdapter.ViewHolder>() {
     private var listNotification: List<GetAllNotificationResponseItem>? = null
     fun setNotificationData(list: List<GetAllNotificationResponseItem>) {
@@ -32,14 +32,18 @@ class NotificationAdapter :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder.itemView) {
             with(listNotification!![position]) {
-                card_notification_seller.text = seller_name
-                card_notification_buyer.text = buyer_name
-                card_notification_status.text = status
+                card_notification_seller.text = "Penjual: $seller_name"
+                card_notification_buyer.text = "Pembeli: $buyer_name"
+                card_notification_status.text = "Status: $status"
+                card_notification_harga_tawar.text = "Harga tawar: $bid_price"
                 Glide.with(card_notification_image.context)
                     .load(image_url)
                     .error(R.drawable.ic_launcher_background)
                     .override(75, 75)
                     .into(card_notification_image)
+                card_notification.setOnClickListener {
+                    onClick(listNotification!![position])
+                }
             }
         }
     }
