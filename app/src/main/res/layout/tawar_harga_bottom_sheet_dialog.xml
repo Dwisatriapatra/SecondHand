@@ -16,7 +16,10 @@
             android:id="@+id/tawarDialogImage"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_margin="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
             android:src="@drawable/ic_launcher_background"
             tools:ignore="ContentDescription" />
 
@@ -30,7 +33,7 @@
             android:text="NAMA BARANG"
             android:textColor="@color/black"
             android:textSize="18sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <!--text view for displaying course tracks-->
         <TextView

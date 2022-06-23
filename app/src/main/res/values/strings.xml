@@ -30,6 +30,11 @@
     <string name="kategori">Kategori:</string>
     <string name="harga_produk">harga produk</string>
     <string name="daftar_jual_saya">Daftar Jual Saya</string>
+    <string name="text_satu_via_wa">Yeay kamu berhasil mendapat harga yang sesuai</string>
+    <string name="text_dua_via_wa">Segera hubungi pembeli melalui whatsapp untuk transaksi selanjutnya</string>
+    <string name="text_produk_match">Produk Match</string>
+    <string name="text_hubungi_via_whatsapp">Hubungi via WhatsApp</string>
+    <string name="text_harga_tawar">Ditawar Rp 200.000</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 
