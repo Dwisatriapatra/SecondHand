@@ -35,6 +35,9 @@
     <string name="text_produk_match">Produk Match</string>
     <string name="text_hubungi_via_whatsapp">Hubungi via WhatsApp</string>
     <string name="text_harga_tawar">Ditawar Rp 200.000</string>
+    <string name="info_penawar">Info Penawar</string>
+    <string name="nama_pembeli">Nama Pembeli</string>
+    <string name="kota">Kota</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 

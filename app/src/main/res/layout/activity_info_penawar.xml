@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,7 +8,7 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Info Penawar"
+        android:text="@string/info_penawar"
         android:textStyle="bold"
         android:id="@+id/title_info_penawar"
         android:textSize="24sp"
@@ -34,14 +33,14 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nama Pembeli"
+                android:text="@string/nama_pembeli"
                 android:id="@+id/info_penawar_nama_pembeli"
                 android:textColor="@color/black"
                 android:textStyle="bold"/>
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Kota"
+                android:text="@string/kota"
                 android:id="@+id/info_penawar_kota"
                 android:textColor="@color/black"/>
         </LinearLayout>
@@ -53,7 +52,8 @@
         android:textColor="@color/black"
         android:textSize="20sp"
         android:layout_below="@id/info_penawar_biodata_pembeli_section"
-        android:id="@+id/label_daftar_produk_saya"/>
+        android:id="@+id/label_daftar_produk_saya"
+        tools:ignore="HardcodedText" />
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
