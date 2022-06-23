@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_marginEnd="32dp"
+            android:id="@+id/txtJudul"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/text_satu_via_wa"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtKeterangan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtJudul"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="32dp"
+            android:text="@string/text_dua_via_wa"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtProdukMatch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtKeterangan"
+            android:layout_marginTop="32dp"
+            android:gravity="center"
+            android:text="@string/text_produk_match"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/imgPenjualWhatsApp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_below="@+id/txtProdukMatch"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/ic_launcher_background"
+            tools:ignore="ContentDescription" />
+
+        <!--text view for displaying course name-->
+        <TextView
+            android:id="@+id/txtNamaPenjualWhatsApp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtProdukMatch"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:layout_toEndOf="@id/imgPenjualWhatsApp"
+            android:text="@string/text_nama_penjual"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <!--text view for displaying course tracks-->
+        <TextView
+            android:layout_marginEnd="32dp"
+            android:id="@+id/txtKotaWhatsApp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtNamaPenjualWhatsApp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/imgPenjualWhatsApp"
+            android:text="@string/text_kota"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/imgBarangWhatsApp"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="32dp"
+            android:layout_below="@id/imgPenjualWhatsApp"
+            android:background="@drawable/ic_launcher_background"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/txtNamaBarangWhatsApp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imgPenjualWhatsApp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:layout_toEndOf="@id/imgBarangWhatsApp"
+            android:text="@string/text_judul"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtHargaBarangWhatsApp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtNamaBarangWhatsApp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="32dp"
+            android:layout_toEndOf="@id/imgBarangWhatsApp"
+            android:text="@string/text_harga"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/txtHargaTawarWhatsApp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtHargaBarangWhatsApp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="32dp"
+            android:layout_toEndOf="@id/imgBarangWhatsApp"
+            android:text="@string/text_harga_tawar"
+            android:textSize="14sp"
+            android:textColor="@color/black"/>
+
+        <Button
+            android:id="@+id/btnHubungiViaWHatsApp"
+            android:textAllCaps="false"
+            android:text="@string/text_hubungi_via_whatsapp"
+            android:layout_marginBottom="24dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginLeft="32dp"
+            android:background="@drawable/custom_button_layout"
+            android:layout_marginTop="38dp"
+            android:layout_below="@+id/imgBarangWhatsApp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
