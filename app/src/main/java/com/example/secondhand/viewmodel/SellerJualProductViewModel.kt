@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.secondhand.model.PostJualProductResponse
-import com.example.secondhand.model.RequestJualProduct
 import com.example.secondhand.network.ApiServices
 import dagger.hilt.android.lifecycle.HiltViewModel
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,16 +21,21 @@ class SellerJualProductViewModel @Inject constructor(api: ApiServices) : ViewMod
 
     fun jualProduct(
         token: String,
-        requestJualProduct: RequestJualProduct
+        basePrice: RequestBody,
+        categories_ids: RequestBody,
+        description: RequestBody,
+        image: RequestBody?,
+        location: RequestBody,
+        name: RequestBody
     ) {
         apiServices.postJualProduct(
             token,
-            requestJualProduct.base_price,
-            requestJualProduct.categories_ids,
-            requestJualProduct.description,
-            requestJualProduct.image,
-            requestJualProduct.location,
-            requestJualProduct.name
+            basePrice,
+            categories_ids,
+            description,
+            image,
+            location,
+            name
         ).enqueue(object : Callback<PostJualProductResponse> {
             override fun onResponse(
                 call: Call<PostJualProductResponse>,

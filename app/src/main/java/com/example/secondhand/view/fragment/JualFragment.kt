@@ -19,11 +19,12 @@ import com.example.secondhand.datastore.UserLoginTokenManager
 import com.example.secondhand.helper.convertBitmapToString
 import com.example.secondhand.helper.convertStringToBinaryString
 import com.example.secondhand.helper.convertStringToBitmap
-import com.example.secondhand.model.RequestJualProduct
 import com.example.secondhand.view.activity.LoginActivity
 import com.example.secondhand.viewmodel.SellerJualProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_jual.*
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
 
 @AndroidEntryPoint
 class JualFragment : Fragment() {
@@ -42,8 +43,8 @@ class JualFragment : Fragment() {
         jual_detail_produk_section.isInvisible = true
 
         userLoginTokenManager = UserLoginTokenManager(requireContext())
-        userLoginTokenManager.isUser.asLiveData().observe(viewLifecycleOwner){isUser ->
-            if(isUser){
+        userLoginTokenManager.isUser.asLiveData().observe(viewLifecycleOwner) { isUser ->
+            if (isUser) {
 
                 jual_belum_login_section.isInvisible = true
 
@@ -57,7 +58,7 @@ class JualFragment : Fragment() {
                 }
 
 
-            }else{
+            } else {
                 jual_jual_produk_baru_button.isInvisible = true
                 jual_to_login_button.setOnClickListener {
                     startActivity(Intent(activity, LoginActivity::class.java))
@@ -76,31 +77,40 @@ class JualFragment : Fragment() {
         }
         jual_terbitkan_button.setOnClickListener {
             //get all input
-            val namaBarang = jual_nama_barang.text.toString()
-            val hargaBarang = jual_harga_barang.text.toString()
-            val lokasiBarang = jual_lokasi_toko.text.toString()
+            val namaBarang =
+                jual_nama_barang.text.toString().toRequestBody("multipart/form-data".toMediaType())
+            val hargaBarang =
+                jual_harga_barang.text.toString().toRequestBody("multipart/form-data".toMediaType())
+            val lokasiBarang =
+                jual_lokasi_toko.text.toString().toRequestBody("multipart/form-data".toMediaType())
             val deskripsiProduk = jual_deskripsi_produk.text.toString()
-            val fotoProdukBitmapDrawable = jual_foto_produk.drawable
-            val fotoProdukStringBinary = fotoProdukBitmapDrawable.toBitmap().convertBitmapToString().convertStringToBinaryString()
+                .toRequestBody("multipart/form-data".toMediaType())
+            //val fotoProdukBitmapDrawable = jual_foto_produk.drawable
+            //val fotoProdukStringBinary = fotoProdukBitmapDrawable.toBitmap().convertBitmapToString()
+                //.convertStringToBinaryString().toRequestBody("multipart/form-data".toMediaType())
 
             userLoginTokenManager = UserLoginTokenManager(requireContext())
-            val viewModelJualProduk = ViewModelProvider(this)[SellerJualProductViewModel::class.java]
+            val viewModelJualProduk =
+                ViewModelProvider(this)[SellerJualProductViewModel::class.java]
             userLoginTokenManager.accessToken.asLiveData().observe(viewLifecycleOwner) {
                 viewModelJualProduk.jualProduct(
                     it,
-                    RequestJualProduct(
-                        hargaBarang.toInt(),
-                        listOf(1),
-                        deskripsiProduk,
-                        fotoProdukStringBinary,
-                        lokasiBarang,
-                        namaBarang
-                    )
+                    hargaBarang,
+                    listOf(1).toString().toRequestBody("multipart/form-data".toMediaType()),
+                    deskripsiProduk,
+                    "image".toRequestBody("multipart/form-data".toMediaType()),
+                    //fotoProdukStringBinary,
+                    lokasiBarang,
+                    namaBarang
                 )
-                viewModelJualProduk.responseMessage.observe(viewLifecycleOwner){responseMsg ->
-                    if(responseMsg == true){
-                        Toast.makeText(requireContext(), "Barang berhasil dijual", Toast.LENGTH_SHORT).show()
-                    }else{
+                viewModelJualProduk.responseMessage.observe(viewLifecycleOwner) { responseMsg ->
+                    if (responseMsg == true) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Barang berhasil dijual",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
                         Toast.makeText(requireContext(), "Gagal", Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -138,7 +148,7 @@ class JualFragment : Fragment() {
             jual_foto_produk.setImageBitmap(stringResult.convertStringToBitmap())
         }
 
-    private fun openImageGallery(){
+    private fun openImageGallery() {
         bitmapResult.launch("image/*")
     }
 }

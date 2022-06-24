@@ -33,7 +33,7 @@ fun Bitmap.convertBitmapToString(): String{
     return Base64.encodeToString(b, Base64.DEFAULT)
 }
 
-fun String.convertStringToBitmap(): Bitmap{
+fun String.convertStringToBitmap(): Bitmap {
     val byteArray1: ByteArray = Base64.decode(this, Base64.DEFAULT)
     return BitmapFactory.decodeByteArray(
         byteArray1, 0,
@@ -41,36 +41,40 @@ fun String.convertStringToBitmap(): Bitmap{
     )
 }
 
-fun String.convertStringToBinaryString(): String{
-    val n = this.length -1
-    var result = ""
-    for(i in 0..n){
-        var a = this[i].code
-        var bin = ""
-        while(a > 0){
-            bin += if(a % 2 == 0){
-                "0"
-            }else{
-                "1"
-            }
-            a /= 2
-        }
-        bin = bin.reverse()
+fun String.convertStringToBinaryString() : String {
+    val n = this.length
+    var a = ""
+    for (i in 0 until n) {
+        // convert each char to
+        // ASCII value
+        var x = Integer.valueOf(this[i].code)
 
-        result += bin
+        // Convert ASCII value to binary
+        var bin = ""
+        while (x > 0) {
+            bin += if (x % 2 == 1) {
+                '1'
+            } else '0'
+            x /= 2
+        }
+        bin = bin.myReverse()
+        a += bin
     }
-    return result
+    return a
 }
 
-fun String.reverse(): String{
-    val a: CharArray = this.toCharArray()
-    var r = a.size - 1
+fun String.myReverse(): String {
+    val a = this.toCharArray()
+    var r: Int = a.size - 1
+    var l= 0
+    while (l < r) {
 
-    for(i in 0..r){
-        val temp = a[i]
-        a[i] = a[r]
+        // Swap values of l and r
+        val temp = a[l]
+        a[l] = a[r]
         a[r] = temp
+        l++
         r--
     }
-    return a.toString()
+    return String(a)
 }

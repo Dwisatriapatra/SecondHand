@@ -26,12 +26,12 @@ interface ApiServices {
     @Multipart
     fun postJualProduct(
         @Header("access_token") token: String,
-        @Part("base_price") base_price: Int,
-        @Part("categories_ids") categories_ids: List<Int>,
-        @Part("description") description: String,
-        @Part("image") image: String?,
-        @Part("location") location: String,
-        @Part("name") name: String
+        @Part("base_price") base_price: RequestBody,
+        @Part("categories_ids") categories_ids: RequestBody,
+        @Part("description") description: RequestBody,
+        @Part("image") image: RequestBody?,
+        @Part("location") location: RequestBody,
+        @Part("name") name: RequestBody
     ): Call<PostJualProductResponse>
 
     @PATCH("seller/order/{id}")

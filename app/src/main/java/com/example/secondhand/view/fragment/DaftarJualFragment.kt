@@ -63,9 +63,6 @@ class DaftarJualFragment : Fragment() {
             }
         }
 
-
-
-
     }
 
     private fun initView() {
@@ -101,6 +98,8 @@ class DaftarJualFragment : Fragment() {
                 adapter.setDataSellerProduct(it)
                 daftar_jual_saya_progress_bar.isInvisible = true
                 adapter.notifyDataSetChanged()
+            }else{
+                daftar_jual_saya_progress_bar.isInvisible = true
             }
         }
 
