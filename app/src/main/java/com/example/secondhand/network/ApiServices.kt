@@ -31,10 +31,14 @@ interface ApiServices {
         @Part("image") image: String?,
         @Part("location") location: String,
         @Part("name") name: String
-    ) : Call<PostJualProductResponse>
+    ): Call<PostJualProductResponse>
 
     @PATCH("seller/order/{id}")
-    fun setStatusOrder(@Header("access_token") token: String, @Path("id") id: Int, @Body orderStatus: OrderStatus):Call<Any>
+    fun setStatusOrder(
+        @Header("access_token") token: String,
+        @Path("id") id: Int,
+        @Body orderStatus: OrderStatus
+    ): Call<Any>
 
     //greta
 //    @POST("auth/register")
@@ -48,7 +52,7 @@ interface ApiServices {
     @POST("auth/register")
     fun postRegister(@Body reqUser: RegisterRequestUser): Call<RegisterResponsePostUser>
 
-//    fitur tawar menawar
+    //    fitur tawar menawar
     @POST("buyer/order")
     fun updateBidPrice(
         @Header("access_token") token: String,

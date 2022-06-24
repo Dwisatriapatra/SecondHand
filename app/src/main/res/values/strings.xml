@@ -38,6 +38,30 @@
     <string name="info_penawar">Info Penawar</string>
     <string name="nama_pembeli">Nama Pembeli</string>
     <string name="kota">Kota</string>
+    <string name="login">LOGIN</string>
+    <string name="anda_belum_login">Anda belum login</string>
+    <string name="nama_barang">Nama barang</string>
+    <string name="harga_barang">Harga barang</string>
+    <string name="kategori_barang">Kategori barang</string>
+    <string name="lokasi_toko">Lokasi toko</string>
+    <string name="deskripsi_produk">Deskripsi produk</string>
+    <string name="foto_produk">Foto produk</string>
+    <string name="img">img</string>
+    <string name="preview">Preview</string>
+    <string name="terbitkan">Terbitkan</string>
+    <string name="jual_produk_baru">Jual Produk Baru</string>
+    <string name="akun_saya">AKUN SAYA</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="pengaturan">Pengaturan</string>
+    <string name="log_out">Log Out</string>
+    <string name="buyer">Buyer</string>
+    <string name="status">status</string>
+    <string name="aksi">Aksi</string>
+    <string name="home">Home</string>
+    <string name="notifikasi">Notifikasi</string>
+    <string name="jual">Jual</string>
+    <string name="daftar_jual">Daftar Jual</string>
+    <string name="akun">Akun</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 

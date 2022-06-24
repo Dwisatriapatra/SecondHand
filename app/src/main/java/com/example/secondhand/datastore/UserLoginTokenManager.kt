@@ -15,6 +15,14 @@ class UserLoginTokenManager(context: Context) {
         val ACCESS_TOKEN = preferencesKey<String>("ACCESS_TOKEN")
         val PASSWORD = preferencesKey<String>("PASSWORD")
         val BOOLEAN = preferencesKey<Boolean>("BOOLEAN")
+        val IS_USER = preferencesKey<Boolean>("IS_USER")
+
+        //save data ewhen update user
+        val FOTOUSER = preferencesKey<String>("FOTOUSER")
+        val KOTA = preferencesKey<String>("KOTA")
+        val ALAMAT = preferencesKey<String>("ALAMAT")
+        val NO_HANDPHONE = preferencesKey<String>("NOHANDPHONE")
+
     }
 
     suspend fun saveToken(
@@ -31,9 +39,29 @@ class UserLoginTokenManager(context: Context) {
         }
     }
 
+    suspend fun saveUpdateAkun(
+        fotoUser: String,
+        kota: String,
+        alamat: String,
+        noHandphone: String
+    ) {
+        dataStore.edit {
+            it[FOTOUSER] = fotoUser
+            it[KOTA] = kota
+            it[ALAMAT] = alamat
+            it[NO_HANDPHONE] = noHandphone
+        }
+    }
+
     suspend fun setBoolean(boolean: Boolean) {
         dataStore.edit {
             it[BOOLEAN] = boolean
+        }
+    }
+
+    suspend fun setIsUser(boolean: Boolean) {
+        dataStore.edit {
+            it[IS_USER] = boolean
         }
     }
 
@@ -61,5 +89,22 @@ class UserLoginTokenManager(context: Context) {
 
     val password: Flow<String> = dataStore.data.map {
         it[PASSWORD] ?: ""
+    }
+
+    val isUser: Flow<Boolean> = dataStore.data.map {
+        it[IS_USER] ?: false
+    }
+
+    val fotoUser: Flow<String> = dataStore.data.map {
+        it[FOTOUSER] ?: ""
+    }
+    val kota: Flow<String> = dataStore.data.map {
+        it[KOTA] ?: ""
+    }
+    val alamat: Flow<String> = dataStore.data.map {
+        it[ALAMAT] ?: ""
+    }
+    val noHandphone: Flow<String> = dataStore.data.map {
+        it[NO_HANDPHONE] ?: ""
     }
 }

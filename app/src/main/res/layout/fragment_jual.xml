@@ -3,22 +3,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.fragment.JualFragment"
-    android:padding="10dp">
+    android:padding="10dp"
+    tools:context=".view.fragment.JualFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <TextView
+            android:id="@+id/title_daftar_jual_saya"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:gravity="center_horizontal"
             android:text="Lengkapi Detail Produk"
             android:textColor="@color/black"
-            android:gravity="center_horizontal"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:layout_marginBottom="20dp"
-            android:id="@+id/title_daftar_jual_saya"/>
+            tools:ignore="HardcodedText" />
 
         <LinearLayout
             android:id="@+id/jual_detail_produk_section"
@@ -30,7 +32,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nama barang" />
+                android:text="@string/nama_barang" />
 
             <EditText
                 android:id="@+id/jual_nama_barang"
@@ -38,14 +40,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/custom_edit_text_layout"
-                android:hint="Nama barang"
+                android:hint="@string/nama_barang"
+                android:importantForAutofill="no"
+                android:inputType="text"
                 android:padding="10dp"
                 android:textColor="@color/black" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Harga barang" />
+                android:text="@string/harga_barang" />
 
             <EditText
                 android:id="@+id/jual_harga_barang"
@@ -54,13 +58,16 @@
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/custom_edit_text_layout"
                 android:hint="Rp. 0.0"
+                android:importantForAutofill="no"
+                android:inputType="number"
                 android:padding="10dp"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Kategori barang" />
+                android:text="@string/kategori_barang" />
 
             <EditText
                 android:id="@+id/jual_kategori_barang"
@@ -68,14 +75,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/custom_edit_text_layout"
-                android:hint="Kategori barang"
+                android:hint="@string/kategori_barang"
+                android:importantForAutofill="no"
+                android:inputType="text"
                 android:padding="10dp"
                 android:textColor="@color/black" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Lokasi toko" />
+                android:text="@string/lokasi_toko" />
 
             <EditText
                 android:id="@+id/jual_lokasi_toko"
@@ -83,13 +92,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/custom_edit_text_layout"
-                android:hint="Lokasi toko"
+                android:hint="@string/lokasi_toko"
+                android:importantForAutofill="no"
+                android:inputType="text"
                 android:padding="10dp"
                 android:textColor="@color/black" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Deskripsi produk" />
+                android:text="@string/deskripsi_produk" />
 
             <EditText
                 android:id="@+id/jual_deskripsi_produk"
@@ -97,13 +109,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/custom_edit_text_layout"
-                android:hint="Deskripsi produk"
+                android:hint="@string/deskripsi_produk"
+                android:importantForAutofill="no"
+                android:inputType="text"
                 android:padding="10dp"
                 android:textColor="@color/black" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Foto produk" />
+                android:text="@string/foto_produk" />
 
             <RelativeLayout
                 android:layout_width="100dp"
@@ -114,7 +129,8 @@
                 <ImageView
                     android:id="@+id/jual_foto_profuk"
                     android:layout_width="100dp"
-                    android:layout_height="100dp" />
+                    android:layout_height="100dp"
+                    android:contentDescription="@string/img" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -123,27 +139,52 @@
                     android:text="+"
                     android:textColor="@color/black"
                     android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:ignore="HardcodedText" />
             </RelativeLayout>
 
             <Button
                 android:id="@+id/jual_preview_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Preview" />
+                android:text="@string/preview" />
 
             <Button
                 android:id="@+id/jual_terbitkan_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Terbitkan" />
+                android:text="@string/terbitkan" />
         </LinearLayout>
+
         <Button
+            android:id="@+id/jual_jual_produk_baru_button"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:id="@+id/jual_jual_produk_baru_button"
-            android:text="Jual Produk Baru"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true"
+            android:text="@string/jual_produk_baru" />
+
+        <LinearLayout
+            android:id="@+id/jual_belum_login_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/anda_belum_login"
+                android:textColor="@color/black"
+                android:textSize="24sp" />
+
+            <Button
+                android:id="@+id/jual_to_login_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/login" />
+        </LinearLayout>
     </RelativeLayout>
 
 </ScrollView>

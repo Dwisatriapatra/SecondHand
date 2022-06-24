@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.fragment.HomeFragment"
     android:background="@drawable/custom_app_background"
-    android:padding="10dp">
+    android:padding="10dp"
+    tools:context=".view.fragment.HomeFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -45,12 +45,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="18dp"
                     android:text="BANYAK DISKON"
                     android:textColor="@color/black"
                     android:textSize="24sp"
                     android:textStyle="bold"
-                    tools:ignore="HardcodedText"
-                    android:layout_marginBottom="18dp"/>
+                    tools:ignore="HardcodedText" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -68,81 +69,90 @@
                 android:src="@drawable/promo_icon" />
         </RelativeLayout>
     </LinearLayout>
+
     <LinearLayout
+        android:id="@+id/home_telusuri_katgeori_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_above="@id/rv_product_home_container"
         android:layout_marginBottom="20dp"
-        android:id="@+id/home_telusuri_katgeori_section"
-        android:layout_above="@id/rv_product_home_container">
+        android:orientation="vertical">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:text="@string/telusuri_kategori"
-            android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="16sp"
-            android:layout_marginBottom="10dp"/>
+            android:textStyle="bold" />
+
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <Button
+                    android:id="@+id/home_telusuri_kategori_semua_button"
+                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:backgroundTint="@color/custom_telusuri_kategori_button_background_color"
                     android:text="@string/kategori_semua"
                     android:textAllCaps="false"
-                    android:layout_marginEnd="10dp"
-                    android:id="@+id/home_telusuri_kategori_semua_button"
-                    android:backgroundTint="@color/custom_telusuri_kategori_button_background_color"
-                    android:textColor="@color/custom_telusuri_kategori_button_text_color"
-                    style="?android:attr/buttonBarButtonStyle" />
-<!--                <Button-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="@string/kategori_minuman"-->
-<!--                    android:layout_marginEnd="10dp"-->
-<!--                    android:textAllCaps="false"-->
-<!--                    android:id="@+id/home_telusuri_kategori_minuman_button"-->
-<!--                    android:backgroundTint="@color/custom_telusuri_kategori_button_background_color"-->
-<!--                    android:textColor="@color/custom_telusuri_kategori_button_text_color"-->
-<!--                    style="?android:attr/buttonBarButtonStyle" />-->
+                    android:textColor="@color/custom_telusuri_kategori_button_text_color" />
+                <!--                <Button-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:text="@string/kategori_minuman"-->
+                <!--                    android:layout_marginEnd="10dp"-->
+                <!--                    android:textAllCaps="false"-->
+                <!--                    android:id="@+id/home_telusuri_kategori_minuman_button"-->
+                <!--                    android:backgroundTint="@color/custom_telusuri_kategori_button_background_color"-->
+                <!--                    android:textColor="@color/custom_telusuri_kategori_button_text_color"-->
+                <!--                    style="?android:attr/buttonBarButtonStyle" />-->
                 <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAllCaps="false"
-                    android:layout_marginEnd="10dp"
-                    android:text="@string/kategori_elektronik"
                     android:id="@+id/home_telusuri_kategori_elektronik_button"
-                    android:backgroundTint="@color/custom_telusuri_kategori_button_background_color"
-                    android:textColor="@color/custom_telusuri_kategori_button_text_color"
-                    style="?android:attr/buttonBarButtonStyle" />
-                <Button
+                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAllCaps="false"
                     android:layout_marginEnd="10dp"
-                    android:text="@string/kategori_lainnya"
-                    android:id="@+id/home_telusuri_kategori_lainnya_button"
                     android:backgroundTint="@color/custom_telusuri_kategori_button_background_color"
-                    android:textColor="@color/custom_telusuri_kategori_button_text_color"
-                    style="?android:attr/buttonBarButtonStyle" />
+                    android:text="@string/kategori_elektronik"
+                    android:textAllCaps="false"
+                    android:textColor="@color/custom_telusuri_kategori_button_text_color" />
+
+                <Button
+                    android:id="@+id/home_telusuri_kategori_lainnya_button"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:backgroundTint="@color/custom_telusuri_kategori_button_background_color"
+                    android:text="@string/kategori_lainnya"
+                    android:textAllCaps="false"
+                    android:textColor="@color/custom_telusuri_kategori_button_text_color" />
             </LinearLayout>
         </HorizontalScrollView>
     </LinearLayout>
+
     <RelativeLayout
+        android:id="@+id/rv_product_home_container"
         android:layout_width="match_parent"
         android:layout_height="350dp"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/rv_product_home_container">
+        android:layout_alignParentBottom="true">
+
         <ProgressBar
+            android:id="@+id/rv_product_home_progress_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:id="@+id/rv_product_home_progress_bar"/>
+            android:layout_centerInParent="true" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_product_home"
             android:layout_width="match_parent"

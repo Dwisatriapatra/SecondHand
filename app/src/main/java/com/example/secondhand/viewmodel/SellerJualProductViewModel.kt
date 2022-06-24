@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class SellerJualProductViewModel @Inject constructor(api: ApiServices): ViewModel() {
+class SellerJualProductViewModel @Inject constructor(api: ApiServices) : ViewModel() {
     private val responseMsg = MutableLiveData<Boolean>()
     val responseMessage: LiveData<Boolean> = responseMsg
     val apiServices = api
@@ -22,7 +22,7 @@ class SellerJualProductViewModel @Inject constructor(api: ApiServices): ViewMode
     fun jualProduct(
         token: String,
         requestJualProduct: RequestJualProduct
-    ){
+    ) {
         apiServices.postJualProduct(
             token,
             requestJualProduct.base_price,
@@ -31,7 +31,7 @@ class SellerJualProductViewModel @Inject constructor(api: ApiServices): ViewMode
             requestJualProduct.image,
             requestJualProduct.location,
             requestJualProduct.name
-        ).enqueue(object: Callback<PostJualProductResponse> {
+        ).enqueue(object : Callback<PostJualProductResponse> {
             override fun onResponse(
                 call: Call<PostJualProductResponse>,
                 response: Response<PostJualProductResponse>

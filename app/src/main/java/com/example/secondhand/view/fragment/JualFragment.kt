@@ -1,5 +1,6 @@
 package com.example.secondhand.view.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.lifecycle.asLiveData
 import com.example.secondhand.R
 import com.example.secondhand.datastore.UserLoginTokenManager
 import com.example.secondhand.model.RequestJualProduct
+import com.example.secondhand.view.activity.LoginActivity
 import com.example.secondhand.viewmodel.SellerJualProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_jual.*
@@ -31,10 +33,26 @@ class JualFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         title_daftar_jual_saya.isInvisible = true
         jual_detail_produk_section.isInvisible = true
-        jual_jual_produk_baru_button.setOnClickListener {
-            jual_jual_produk_baru_button.isInvisible = true
-            initView()
+
+        userLoginTokenManager = UserLoginTokenManager(requireContext())
+        userLoginTokenManager.isUser.asLiveData().observe(viewLifecycleOwner){isUser ->
+            if(isUser){
+
+                jual_belum_login_section.isInvisible = true
+
+                jual_jual_produk_baru_button.setOnClickListener {
+                    jual_jual_produk_baru_button.isInvisible = true
+                    initView()
+                }
+            }else{
+                jual_jual_produk_baru_button.isInvisible = true
+                jual_to_login_button.setOnClickListener {
+                    startActivity(Intent(activity, LoginActivity::class.java))
+                }
+            }
         }
+
+
     }
 
     private fun initView() {

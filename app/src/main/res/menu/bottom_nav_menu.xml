@@ -4,27 +4,27 @@
     <item
         android:id="@+id/homeFragment"
         android:icon="@drawable/ic_baseline_home_24"
-        android:title="Home"
+        android:title="@string/home"
 
-        app:showAsAction="withText"/>
+        app:showAsAction="withText" />
     <item
         android:id="@+id/notifikasiFragment"
         android:icon="@drawable/ic_baseline_notifications_24"
-        android:title="Notifikasi"
-        app:showAsAction="always"/>
+        android:title="@string/notifikasi"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/jualFragment"
-        android:title="Jual"
-        app:showAsAction="withText"
-        android:icon="@drawable/ic_baseline_jual_outline_24"/>
+        android:icon="@drawable/ic_baseline_jual_outline_24"
+        android:title="@string/jual"
+        app:showAsAction="withText" />
     <item
         android:id="@+id/daftarJualFragment"
         android:icon="@drawable/ic_baseline_daftar_jual_24"
-        android:title="Daftar Jual"
-        app:showAsAction="withText"/>
+        android:title="@string/daftar_jual"
+        app:showAsAction="withText" />
     <item
         android:id="@+id/akunFragment"
         android:icon="@drawable/ic_baseline_account_outline_24"
-        android:title="Akun"
-        app:showAsAction="withText"/>
+        android:title="@string/akun"
+        app:showAsAction="withText" />
 </menu>

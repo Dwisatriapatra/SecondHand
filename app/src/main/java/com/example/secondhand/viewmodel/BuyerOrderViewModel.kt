@@ -12,19 +12,19 @@ import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
-class BuyerOrderViewModel @Inject constructor(api : ApiServices) : ViewModel() {
+class BuyerOrderViewModel @Inject constructor(api: ApiServices) : ViewModel() {
 
     private val liveDataBuyerOrder = MutableLiveData<PostBuyerOrderResponseItem>()
     private val apiServices = api
 
-    fun postBuyerOrder(token : String, postBuyerOrder : PostBuyerOrder){
+    fun postBuyerOrder(token: String, postBuyerOrder: PostBuyerOrder) {
         apiServices.updateBidPrice(token, postBuyerOrder)
-            .enqueue(object : Callback<PostBuyerOrderResponseItem>{
+            .enqueue(object : Callback<PostBuyerOrderResponseItem> {
                 override fun onResponse(
                     call: Call<PostBuyerOrderResponseItem>,
                     response: Response<PostBuyerOrderResponseItem>
                 ) {
-                    if (response.isSuccessful){
+                    if (response.isSuccessful) {
                         liveDataBuyerOrder.value = response.body()
                     }
                 }

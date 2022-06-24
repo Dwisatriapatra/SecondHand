@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isInvisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import com.bumptech.glide.Glide
@@ -33,9 +34,10 @@ class DetailActivity : AppCompatActivity() {
     private fun initDetailsView() {
         val detailbarang = intent.getParcelableExtra<GetBuyerProductResponseItem>("detailbarang")
 
-
         if (detailbarang != null) {
-            Glide.with(this).load(detailbarang.image_url).into(imgDetail)
+            Glide.with(this).load(detailbarang.image_url)
+                .error(R.drawable.ic_launcher_background)
+                .into(imgDetail)
             txtNamaBarang.text = detailbarang.name
             txtJenisBarang.text = detailbarang.Categories.toString()
             txtHargaBarang.text = detailbarang.base_price.toString()
@@ -76,63 +78,84 @@ class DetailActivity : AppCompatActivity() {
     private fun initDialogTawarHarga() {
         userLoginTokenManager = UserLoginTokenManager(this)
 
+        userLoginTokenManager.isUser.asLiveData().observe(this) { isUser ->
 
-        val dialog = BottomSheetDialog(this)
-        val dialogView = layoutInflater.inflate(R.layout.tawar_harga_bottom_sheet_dialog, null)
-        val detailbarang = intent.getParcelableExtra<GetBuyerProductResponseItem>("detailbarang")
+            val dialog = BottomSheetDialog(this)
+            val dialogView = layoutInflater.inflate(R.layout.tawar_harga_bottom_sheet_dialog, null)
+            val detailbarang =
+                intent.getParcelableExtra<GetBuyerProductResponseItem>("detailbarang")
 
+            val btnBatal = dialogView.tawarDialogBatalkanButton
+            val btnTawarkan = dialogView.tawarDialogTawarkanHargaButton
 
-        val btnBatal = dialogView.tawarDialogBatalkanButton
-        val btnTawarkan = dialogView.tawarDialogTawarkanHargaButton
-        dialogView.tawarDialogName.text = detailbarang!!.name
-        dialogView.tawarDialogHarga.text = "Harga: Rp. ${detailbarang.base_price}"
-        Glide.with(dialogView.tawarDialogImage.context)
-            .load(detailbarang.image_url)
-            .error(R.drawable.ic_launcher_background)
-            .into(dialogView.tawarDialogImage)
-        dialogView.tawarDialogKategori.text = ""
-        if (detailbarang.Categories!!.isNotEmpty()) {
-            for (i in detailbarang.Categories.indices) {
-                if (detailbarang.Categories.lastIndex == 0) {
-                    dialogView.tawarDialogKategori.text =
-                        "Kategori: ${detailbarang.Categories[i].name}"
-                    break
+            dialogView.tawarDialogName.text = detailbarang!!.name
+            dialogView.tawarDialogHarga.text = "Harga: Rp. ${detailbarang.base_price}"
+            Glide.with(dialogView.tawarDialogImage.context)
+                .load(detailbarang.image_url)
+                .error(R.drawable.ic_launcher_background)
+                .into(dialogView.tawarDialogImage)
+            dialogView.tawarDialogKategori.text = ""
+            if (detailbarang.Categories!!.isNotEmpty()) {
+                for (i in detailbarang.Categories.indices) {
+                    if (detailbarang.Categories.lastIndex == 0) {
+                        dialogView.tawarDialogKategori.text =
+                            "Kategori: ${detailbarang.Categories[i].name}"
+                        break
+                    }
+                    if (i == 0) {
+                        dialogView.tawarDialogKategori.text =
+                            "Kategori: ${detailbarang.Categories[i].name}, "
+                    } else if (i != detailbarang.Categories.lastIndex && i > 0) {
+                        dialogView.tawarDialogKategori.text =
+                            dialogView.tawarDialogKategori.text.toString() + detailbarang.Categories[i].name + ","
+                    } else {
+                        dialogView.tawarDialogKategori.text =
+                            dialogView.tawarDialogKategori.text.toString() +
+                                    detailbarang.Categories[i].name
+                    }
                 }
-                if (i == 0) {
-                    dialogView.tawarDialogKategori.text =
-                        "Kategori: ${detailbarang.Categories[i].name}, "
-                } else if (i != detailbarang.Categories.lastIndex && i > 0) {
-                    dialogView.tawarDialogKategori.text =
-                        dialogView.tawarDialogKategori.text.toString() + detailbarang.Categories[i].name + ","
-                } else {
-                    dialogView.tawarDialogKategori.text =
-                        dialogView.tawarDialogKategori.text.toString() +
-                                detailbarang.Categories[i].name
+            } else {
+                dialogView.tawarDialogKategori.text = "Kategori: Lainnya"
+            }
+
+            if (isUser) {
+                dialogView.tawarDialogProfileTidakLengkapLabel.isInvisible = true
+                dialogView.tawarDialogLengkapiProfilButton.isInvisible = true
+
+                btnBatal.setOnClickListener {
+                    dialog.dismiss()
+                }
+
+                btnTawarkan.setOnClickListener {
+                    val productId = detailbarang.id
+                    val edtTawar = dialogView.tawarDialogInputHargaTawaran.text.toString().toInt()
+
+                    if (edtTawar.toString().isNotEmpty()) {
+                        val viewModelBuyerOrder =
+                            ViewModelProvider(this)[BuyerOrderViewModel::class.java]
+                        userLoginTokenManager.accessToken.asLiveData()
+                            .observe(this) { accessToken ->
+                                viewModelBuyerOrder.postBuyerOrder(
+                                    accessToken,
+                                    PostBuyerOrder(productId!!, edtTawar)
+                                )
+                            }
+                        Toast.makeText(this, "Tawaran sudah dikirim", Toast.LENGTH_SHORT).show()
+                        dialog.dismiss()
+                    }
+                }
+            } else {
+                dialogView.tawarDialogTawarkanHargaButton.isInvisible = true
+                dialogView.tawarDialogLengkapiProfilButton.setOnClickListener {
+                    //ke halaman lengkapi profile
+                }
+                btnBatal.setOnClickListener {
+                    dialog.dismiss()
                 }
             }
-        } else {
-            dialogView.tawarDialogKategori.text = "Kategori: Lainnya"
+            dialog.setCancelable(false)
+            dialog.setContentView(dialogView)
+            dialog.show()
         }
-
-        btnBatal.setOnClickListener {
-            dialog.dismiss()
-        }
-
-        btnTawarkan.setOnClickListener {
-            val productId = detailbarang.id
-            val edtTawar = dialogView.tawarDialogInputHargaTawaran.text.toString().toInt()
-
-            if (edtTawar.toString().isNotEmpty()) {
-                val viewModelBuyerOrder = ViewModelProvider(this)[BuyerOrderViewModel::class.java]
-                userLoginTokenManager.accessToken.asLiveData().observe(this) {
-                    viewModelBuyerOrder.postBuyerOrder(it, PostBuyerOrder(productId!!, edtTawar))
-                }
-                Toast.makeText(this, "Tawaran sudah dikirim", Toast.LENGTH_SHORT).show()
-                dialog.dismiss()
-            }
-        }
-        dialog.setCancelable(false)
-        dialog.setContentView(dialogView)
-        dialog.show()
     }
 }

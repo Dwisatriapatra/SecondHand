@@ -1,5 +1,6 @@
 package com.example.secondhand.view.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +30,7 @@ class NotificationAdapter(private val onClick: (GetAllNotificationResponseItem) 
         return ViewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder.itemView) {
             with(listNotification!![position]) {

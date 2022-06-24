@@ -1,155 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
 
-    android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".view.activity.DetailActivity">
 
     <ImageView
         android:id="@+id/imgDetail"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_launcher_background"
         android:layout_width="match_parent"
-        android:layout_height="300dp"/>
+        android:layout_height="300dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_launcher_background" />
 
-<!--    Membuat Judul Barang-->
+    <!--    Membuat Judul Barang-->
     <LinearLayout
-        android:elevation="5dp"
-        android:padding="16dp"
-        android:orientation="vertical"
-        android:layout_marginTop="-30dp"
-        android:layout_gravity="center"
-        android:background="@drawable/custom_judul_detail"
-        android:layout_marginRight="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_width="328dp"
-        android:layout_height="100dp">
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="-30dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/custom_judul_detail"
+        android:elevation="5dp"
+        android:orientation="vertical"
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/txtNamaBarang"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:textSize="14sp"
-            android:text="@string/text_judul"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="@string/text_judul"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/txtJenisBarang"
-            android:textSize="10sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="@string/text_keterangan"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:textSize="10sp" />
+
         <TextView
             android:id="@+id/txtHargaBarang"
-            android:textColor="@color/black"
-            android:layout_marginTop="8dp"
-            android:textSize="14sp"
-            android:text="@string/text_harga"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/text_harga"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
     </LinearLayout>
 
-<!--    Membuat Nama Penjual-->
+    <!--    Membuat Nama Penjual-->
     <LinearLayout
-        android:elevation="5dp"
-        android:padding="16dp"
-        android:orientation="vertical"
-        android:layout_marginTop="16dp"
-        android:layout_gravity="center"
-        android:background="@drawable/custom_judul_detail"
-        android:layout_marginRight="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_width="328dp"
-        android:layout_height="80dp">
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/custom_judul_detail"
+        android:elevation="5dp"
+        android:orientation="vertical"
+        android:padding="16dp">
+
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
             <ImageView
-                android:src="@drawable/ic_launcher_background"
                 android:id="@+id/imgPenjual"
                 android:layout_width="48dp"
-                android:layout_height="48dp"/>
+                android:layout_height="48dp"
+                android:src="@drawable/ic_launcher_background" />
+
             <LinearLayout
-                android:layout_marginLeft="10dp"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:orientation="vertical">
+
                 <TextView
-                    android:textStyle="bold"
-                    android:textSize="14dp"
-                    android:textColor="@color/black"
-                    android:text="@string/text_nama_penjual"
                     android:id="@+id/txtNamaPenjual"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_nama_penjual"
+                    android:textColor="@color/black"
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
+
                 <TextView
-                    android:text="@string/text_kota"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_kota" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
-<!--    Membuat Deskripsi-->
+    <!--    Membuat Deskripsi-->
     <ScrollView
-        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
             <LinearLayout
-                android:layout_marginBottom="5dp"
-                android:elevation="5dp"
-                android:padding="16dp"
-                android:orientation="vertical"
-                android:layout_marginTop="16dp"
-                android:layout_gravity="center"
-                android:background="@drawable/custom_judul_detail"
-                android:layout_marginRight="16dp"
-                android:layout_marginLeft="16dp"
                 android:layout_width="328dp"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/custom_judul_detail"
+                android:elevation="5dp"
+                android:orientation="vertical"
+                android:padding="16dp">
+
                 <TextView
-                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_judul_deskripsi"
                     android:textColor="@color/black"
                     android:textSize="14dp"
-                    android:text="@string/text_judul_deskripsi"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/txtDeskripsi"
-                    android:textSize="14dp"
-                    android:text="@string/text_deskripsi"
-                    android:layout_marginTop="16dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/text_deskripsi"
+                    android:textSize="14dp" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
-<!--    Button-->
+    <!--    Button-->
     <Button
         android:id="@+id/btnNego"
-        android:textAllCaps="false"
-        android:text="Saya Tertarik dan ingin Nego"
-        android:background="@drawable/custom_button_layout"
-        android:layout_marginBottom="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-
-
-
-
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/custom_button_layout"
+        android:text="Saya Tertarik dan ingin Nego"
+        android:textAllCaps="false" />
 
 
 </LinearLayout>

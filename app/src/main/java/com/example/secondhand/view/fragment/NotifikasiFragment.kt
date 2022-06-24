@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.secondhand.R
 import com.example.secondhand.datastore.UserLoginTokenManager
 import com.example.secondhand.view.activity.InfoPenawarActivity
+import com.example.secondhand.view.activity.LoginActivity
 import com.example.secondhand.view.adapter.NotificationAdapter
 import com.example.secondhand.viewmodel.NotificationViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,26 +41,41 @@ class NotifikasiFragment : Fragment() {
 
     private fun initView() {
         userLoginTokenManager = UserLoginTokenManager(requireContext())
-        val viewModelNotification = ViewModelProvider(this)[NotificationViewModel::class.java]
-        userLoginTokenManager.accessToken.asLiveData().observe(viewLifecycleOwner) {
-            viewModelNotification.getAllNotification(it)
+
+        userLoginTokenManager.isUser.asLiveData().observe(viewLifecycleOwner){isUser ->
+            if(isUser){
+                notifikasi_belum_login_section.isInvisible = true
+
+                val viewModelNotification = ViewModelProvider(this)[NotificationViewModel::class.java]
+                userLoginTokenManager.accessToken.asLiveData().observe(viewLifecycleOwner) {
+                    viewModelNotification.getAllNotification(it)
+                }
+
+                adapter = NotificationAdapter{
+                    //action to info penawar
+                    val intent = Intent(activity, InfoPenawarActivity::class.java)
+                    intent.putExtra("InfoPenawaran", it)
+                    startActivity(intent)
+
+                }
+                rv_notification.layoutManager = LinearLayoutManager(requireContext())
+                rv_notification.adapter = adapter
+
+                viewModelNotification.notification.observe(viewLifecycleOwner) {
+                    adapter.setNotificationData(it)
+                    notifikasi_progress_bar.isInvisible = true
+                    adapter.notifyDataSetChanged()
+                }
+            }else{
+                rv_notification.isInvisible = true
+                notifikasi_progress_bar.isInvisible = true
+
+                notifikasi_to_login_button.setOnClickListener {
+                    startActivity(Intent(activity, LoginActivity::class.java))
+                }
+            }
         }
 
-        adapter = NotificationAdapter{
-            //action to info penawar
-            val intent = Intent(activity, InfoPenawarActivity::class.java)
-            intent.putExtra("InfoPenawaran", it)
-            startActivity(intent)
-
-        }
-        rv_notification.layoutManager = LinearLayoutManager(requireContext())
-        rv_notification.adapter = adapter
-
-        viewModelNotification.notification.observe(viewLifecycleOwner) {
-            adapter.setNotificationData(it)
-            notifikasi_progress_bar.isInvisible = true
-            adapter.notifyDataSetChanged()
-        }
     }
 
 

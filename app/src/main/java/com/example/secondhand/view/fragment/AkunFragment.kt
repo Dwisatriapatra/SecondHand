@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.asLiveData
 import com.example.secondhand.R
 import com.example.secondhand.datastore.UserLoginTokenManager
 import com.example.secondhand.view.activity.SplashAcivity
@@ -34,23 +35,30 @@ class AkunFragment : Fragment() {
 
         //tested
         akun_logout_section.setOnClickListener{
-            AlertDialog.Builder(requireContext())
-                .setTitle("LOG OUT")
-                .setMessage("Anda yakin ingin logout?")
-                .setNegativeButton("Tidak"){dialogInterface: DialogInterface, _: Int ->
-                    dialogInterface.dismiss()
-                }
-                .setPositiveButton("Ya"){_: DialogInterface, _:Int ->
-                    GlobalScope.launch {
-                        userLoginTokenManager.clearToken()
-                        // code for refreshing apps
-                        // tested
-                        val mIntent = Intent(requireContext(), SplashAcivity::class.java)
-                        startActivity(mIntent)
+            userLoginTokenManager.isUser.asLiveData().observe(viewLifecycleOwner){isUser ->
+                if(isUser){
+                    AlertDialog.Builder(requireContext())
+                        .setTitle("LOG OUT")
+                        .setMessage("Anda yakin ingin logout?")
+                        .setNegativeButton("Tidak"){dialogInterface: DialogInterface, _: Int ->
+                            dialogInterface.dismiss()
+                        }
+                        .setPositiveButton("Ya"){_: DialogInterface, _:Int ->
+                            GlobalScope.launch {
+                                userLoginTokenManager.clearToken()
+                                // code for refreshing apps
+                                // tested
+                                val mIntent = Intent(requireContext(), SplashAcivity::class.java)
+                                startActivity(mIntent)
 
-                    }
+                            }
+                        }
+                        .show()
+                }else{
+                    //
                 }
-                .show()
+            }
+
         }
 
     }

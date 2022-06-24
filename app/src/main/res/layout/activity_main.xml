@@ -7,15 +7,15 @@
     tools:context=".view.activity.MainActivity">
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/main_bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/main_bottom_navigation"
+        android:layout_alignParentBottom="true"
         android:background="@color/bottom_nav_background"
-        app:menu="@menu/bottom_nav_menu"
-        app:labelVisibilityMode="labeled"
-        app:itemTextColor="@drawable/bottom_nav_colors"
         app:itemIconTint="@drawable/bottom_nav_colors"
-        android:layout_alignParentBottom="true"/>
+        app:itemTextColor="@drawable/bottom_nav_colors"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_nav_menu" />
 
     <fragment
         android:id="@+id/fragmentContainerView"
@@ -24,5 +24,6 @@
         android:layout_height="match_parent"
         android:layout_above="@id/main_bottom_navigation"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/main_navigation_layout" />
+        app:navGraph="@navigation/main_navigation_layout"
+        tools:ignore="FragmentTagUsage" />
 </RelativeLayout>

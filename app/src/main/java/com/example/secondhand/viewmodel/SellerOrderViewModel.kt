@@ -17,9 +17,9 @@ class SellerOrderViewModel @Inject constructor(api: ApiServices) : ViewModel() {
     val responseMessage: LiveData<Boolean> = responseMsg
     val apiServices = api
 
-    fun setOrderStatus(token: String, id: Int, orderStatus: OrderStatus){
+    fun setOrderStatus(token: String, id: Int, orderStatus: OrderStatus) {
         apiServices.setStatusOrder(token, id, orderStatus)
-            .enqueue(object: Callback<Any>{
+            .enqueue(object : Callback<Any> {
                 override fun onResponse(call: Call<Any>, response: Response<Any>) {
                     responseMsg.value = response.isSuccessful
                 }

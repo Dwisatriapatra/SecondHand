@@ -22,7 +22,6 @@ import kotlinx.android.synthetic.main.fragment_home.*
 class HomeFragment : Fragment() {
 
     private lateinit var adapter: BuyerProductAdapter
-    private lateinit var userLoginTokenManager: UserLoginTokenManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -3,6 +3,7 @@ package com.example.secondhand.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.secondhand.helper.SingleLiveEvent
 import com.example.secondhand.model.LoginRequestUser
 import com.example.secondhand.model.LoginResponsePostUser
 import com.example.secondhand.model.RegisterRequestUser
@@ -17,13 +18,9 @@ import javax.inject.Inject
 @HiltViewModel
 class UserViewModel @Inject constructor(api: ApiServices) : ViewModel() {
     private val liveDataUser = MutableLiveData<LoginResponsePostUser>()
-    private val liveDataUserReg = MutableLiveData<RegisterResponsePostUser>()
-
-    val userReg: LiveData<RegisterResponsePostUser> = liveDataUserReg
     val user: LiveData<LoginResponsePostUser> = liveDataUser
 
-    private val liveDataResponseMessage = MutableLiveData<Boolean>()
-    val responseMessage: LiveData<Boolean> = liveDataResponseMessage
+    val responseMessage = SingleLiveEvent<Boolean>()
     private val apiServices = api
 
     fun userLogin(loginRequestUser: LoginRequestUser) {
@@ -34,39 +31,36 @@ class UserViewModel @Inject constructor(api: ApiServices) : ViewModel() {
                     call: Call<LoginResponsePostUser>,
                     response: Response<LoginResponsePostUser>
                 ) {
-                    liveDataResponseMessage.value = response.isSuccessful
+                    responseMessage.value = response.isSuccessful
                     if (response.isSuccessful) {
 
                         liveDataUser.value = response.body()
 
                     } else {
-                        liveDataResponseMessage.value = false
+                        responseMessage.value = false
                     }
 
                 }
 
                 override fun onFailure(call: Call<LoginResponsePostUser>, t: Throwable) {
-                    liveDataResponseMessage.value = false
+                    responseMessage.value = false
                 }
             })
     }
 
     fun userRegister(email: String, full_name: String, password: String) {
-       apiServices.postRegister(RegisterRequestUser(email, full_name, password))
-           .enqueue(object :Callback<RegisterResponsePostUser>{
-               override fun onResponse(
-                   call: Call<RegisterResponsePostUser>,
-                   response: Response<RegisterResponsePostUser>
-               ) {
-                   if (response.isSuccessful){
-                       liveDataUserReg.value = response.body()
-                   }else{
+        apiServices.postRegister(RegisterRequestUser(email, full_name, password))
+            .enqueue(object : Callback<RegisterResponsePostUser> {
+                override fun onResponse(
+                    call: Call<RegisterResponsePostUser>,
+                    response: Response<RegisterResponsePostUser>
+                ) {
+                    //
+                }
+
+                override fun onFailure(call: Call<RegisterResponsePostUser>, t: Throwable) {
 //
-                   }
-               }
-               override fun onFailure(call: Call<RegisterResponsePostUser>, t: Throwable) {
-//
-               }
-           })
+                }
+            })
     }
 }

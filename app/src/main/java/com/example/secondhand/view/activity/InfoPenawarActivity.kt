@@ -50,36 +50,46 @@ class InfoPenawarActivity : AppCompatActivity() {
 
         userLoginTokenManager = UserLoginTokenManager(this)
         val viewModelProdukDitawar = ViewModelProvider(this)[NotificationViewModel::class.java]
-        userLoginTokenManager.accessToken.asLiveData().observe(this){
+        userLoginTokenManager.accessToken.asLiveData().observe(this) {
             viewModelProdukDitawar.getAllNotification(it)
         }
         val viewModelSellerOrder = ViewModelProvider(this)[SellerOrderViewModel::class.java]
-        adapter = ProdukDitawarAdapter{
+        adapter = ProdukDitawarAdapter {
             AlertDialog.Builder(this)
                 .setTitle("Terima/tolak tawaran")
                 .setMessage("Silahkan memilih untuk menerima/menolak tawaran")
-                .setNegativeButton("Tolak"){dialogInterface: DialogInterface, _: Int ->
-                    userLoginTokenManager.accessToken.asLiveData().observe(this){acessToken ->
-                        viewModelSellerOrder.setOrderStatus(acessToken, it.product_id!!, OrderStatus("Ditolak"))
-                        viewModelSellerOrder.responseMessage.observe(this){
-                            if(it){
+                .setNegativeButton("Tolak") { dialogInterface: DialogInterface, _: Int ->
+                    userLoginTokenManager.accessToken.asLiveData().observe(this) { acessToken ->
+                        viewModelSellerOrder.setOrderStatus(
+                            acessToken,
+                            it.product_id!!,
+                            OrderStatus("Ditolak")
+                        )
+                        viewModelSellerOrder.responseMessage.observe(this) {
+                            if (it) {
                                 Toast.makeText(this, "Berhasil ditolak", Toast.LENGTH_SHORT).show()
-                            }else{
-                                Toast.makeText(this, "Permintaan anda gagal", Toast.LENGTH_SHORT).show()
+                            } else {
+                                Toast.makeText(this, "Permintaan anda gagal", Toast.LENGTH_SHORT)
+                                    .show()
                             }
                         }
                         dialogInterface.dismiss()
                     }
                 }
-                .setPositiveButton("Terima"){dialoInterface: DialogInterface, _: Int ->
-                    userLoginTokenManager.accessToken.asLiveData().observe(this){acessToken ->
-                        viewModelSellerOrder.setOrderStatus(acessToken, it.product_id!!, OrderStatus("Diterima"))
-                        viewModelSellerOrder.responseMessage.observe(this){bool ->
-                            if(bool){
+                .setPositiveButton("Terima") { dialoInterface: DialogInterface, _: Int ->
+                    userLoginTokenManager.accessToken.asLiveData().observe(this) { acessToken ->
+                        viewModelSellerOrder.setOrderStatus(
+                            acessToken,
+                            it.product_id!!,
+                            OrderStatus("Diterima")
+                        )
+                        viewModelSellerOrder.responseMessage.observe(this) { bool ->
+                            if (bool) {
                                 Toast.makeText(this, "Berhasil diterima", Toast.LENGTH_SHORT).show()
                                 initDialogToWhatsApp(it.image_url, it.bid_price)
-                            }else{
-                                Toast.makeText(this, "Permintaan anda gagal", Toast.LENGTH_SHORT).show()
+                            } else {
+                                Toast.makeText(this, "Permintaan anda gagal", Toast.LENGTH_SHORT)
+                                    .show()
                             }
                         }
                         dialoInterface.dismiss()
@@ -91,11 +101,11 @@ class InfoPenawarActivity : AppCompatActivity() {
         rv_daftar_barang_ditawar.adapter = adapter
 
 
-        viewModelProdukDitawar.notification.observe(this){
-            val list : MutableList<GetAllNotificationResponseItem> = mutableListOf()
-            if(it.isNotEmpty()){
-                for(i in it.indices){
-                    if(it[i].seller_name == sellerName && it[i].buyer_name == buyerName){
+        viewModelProdukDitawar.notification.observe(this) {
+            val list: MutableList<GetAllNotificationResponseItem> = mutableListOf()
+            if (it.isNotEmpty()) {
+                for (i in it.indices) {
+                    if (it[i].seller_name == sellerName && it[i].buyer_name == buyerName) {
                         list += it[i]
                     }
                 }

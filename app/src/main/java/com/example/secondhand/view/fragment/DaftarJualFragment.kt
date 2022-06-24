@@ -1,5 +1,6 @@
 package com.example.secondhand.view.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.secondhand.R
 import com.example.secondhand.datastore.UserLoginTokenManager
+import com.example.secondhand.view.activity.LoginActivity
 import com.example.secondhand.view.adapter.SellerProductAdapter
 import com.example.secondhand.viewmodel.SellerProductViewModel
 import com.example.secondhand.viewmodel.SellerViewModel
@@ -38,11 +40,30 @@ class DaftarJualFragment : Fragment() {
 
         userLoginTokenManager = UserLoginTokenManager(requireContext())
 
-        userLoginTokenManager.accessToken.asLiveData().observe(viewLifecycleOwner){
-            viewModelSeller.getSeller(it)
+        userLoginTokenManager.isUser.asLiveData().observe(viewLifecycleOwner){isUser ->
+            if(isUser){
+                daftar_jual_saya_belum_login_section.isInvisible = true
+                userLoginTokenManager.accessToken.asLiveData().observe(viewLifecycleOwner){
+                    viewModelSeller.getSeller(it)
+                }
+
+                initView()
+            }else{
+                daftar_jual_saya_title.isInvisible = true
+                daftar_jual_saya_profile_penjual_section.isInvisible = true
+                daftar_jual_saya_filter_produk_section.isInvisible = true
+                rv_daftar_jual_saya.isInvisible = true
+                daftar_jual_saya_progress_bar.isInvisible = true
+
+                daftar_jual_saya_to_login.setOnClickListener {
+                    startActivity(Intent(activity, LoginActivity::class.java))
+                }
+
+
+            }
         }
 
-        initView()
+
 
 
     }

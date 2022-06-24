@@ -6,17 +6,39 @@
     tools:context=".view.fragment.NotifikasiFragment">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_notification"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/rv_notification"
-        android:layout_alignParentTop="true"/>
+        android:layout_alignParentTop="true" />
 
     <ProgressBar
         android:id="@+id/notifikasi_progress_bar"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true" />
 
+    <LinearLayout
+        android:id="@+id/notifikasi_belum_login_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/anda_belum_login"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/notifikasi_to_login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/login" />
+    </LinearLayout>
 
 </RelativeLayout>

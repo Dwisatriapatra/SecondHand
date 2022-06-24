@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -10,12 +9,12 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:layout_marginEnd="32dp"
             android:id="@+id/txtJudul"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="10dp"
+            android:layout_marginEnd="32dp"
             android:text="@string/text_satu_via_wa"
             android:textColor="@color/black"
             android:textSize="16sp"
@@ -73,24 +72,24 @@
 
         <!--text view for displaying course tracks-->
         <TextView
-            android:layout_marginEnd="32dp"
             android:id="@+id/txtKotaPembeliWhatsApp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/txtNamaPembeliWhatsApp"
             android:layout_marginTop="10dp"
+            android:layout_marginEnd="32dp"
             android:layout_toEndOf="@id/imgPembeliWhatsApp"
             android:text="@string/text_kota"
             android:textSize="15sp" />
 
         <ImageView
             android:id="@+id/imgBarangWhatsApp"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="32dp"
-            android:layout_below="@id/imgPembeliWhatsApp"
-            android:background="@drawable/ic_launcher_background"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_below="@id/imgPembeliWhatsApp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/ic_launcher_background"
             tools:ignore="ContentDescription" />
 
         <TextView
@@ -130,20 +129,20 @@
             android:layout_marginEnd="32dp"
             android:layout_toEndOf="@id/imgBarangWhatsApp"
             android:text="@string/text_harga_tawar"
-            android:textSize="14sp"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/btnHubungiViaWHatsApp"
-            android:textAllCaps="false"
-            android:text="@string/text_hubungi_via_whatsapp"
-            android:layout_marginBottom="24dp"
-            android:layout_marginRight="32dp"
-            android:layout_marginLeft="32dp"
-            android:background="@drawable/custom_button_layout"
-            android:layout_marginTop="38dp"
-            android:layout_below="@+id/imgBarangWhatsApp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imgBarangWhatsApp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="38dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/custom_button_layout"
+            android:text="@string/text_hubungi_via_whatsapp"
+            android:textAllCaps="false" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

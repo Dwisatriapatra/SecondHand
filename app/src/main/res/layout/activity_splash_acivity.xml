@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.activity.SplashAcivity">
 
     <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/splash_screen_animation"
         android:layout_width="300dp"
         android:layout_height="300dp"
+        android:layout_centerInParent="true"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/second_hand_store_animation"
-        android:layout_centerInParent="true"
-        android:id="@+id/splash_screen_animation"/>
+        app:lottie_rawRes="@raw/second_hand_store_animation" />
 
     <ProgressBar
         android:id="@+id/splash_screen_progress_bar"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
-        android:layout_below="@id/splash_screen_animation"/>
+        android:layout_below="@id/splash_screen_animation"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Loading..."
-        android:textSize="22sp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
         android:layout_below="@id/splash_screen_progress_bar"
         android:layout_centerHorizontal="true"
+        android:text="Loading..."
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:textStyle="bold"
         tools:ignore="HardcodedText" />
 
 </RelativeLayout>
