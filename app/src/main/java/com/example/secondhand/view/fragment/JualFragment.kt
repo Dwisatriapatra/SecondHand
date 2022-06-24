@@ -17,6 +17,7 @@ import androidx.lifecycle.asLiveData
 import com.example.secondhand.R
 import com.example.secondhand.datastore.UserLoginTokenManager
 import com.example.secondhand.helper.convertBitmapToString
+import com.example.secondhand.helper.convertStringToBinaryString
 import com.example.secondhand.helper.convertStringToBitmap
 import com.example.secondhand.model.RequestJualProduct
 import com.example.secondhand.view.activity.LoginActivity
@@ -80,7 +81,7 @@ class JualFragment : Fragment() {
             val lokasiBarang = jual_lokasi_toko.text.toString()
             val deskripsiProduk = jual_deskripsi_produk.text.toString()
             val fotoProdukBitmapDrawable = jual_foto_produk.drawable
-            val fotoProdukStringBinary = fotoProdukBitmapDrawable.toBitmap().convertBitmapToString()
+            val fotoProdukStringBinary = fotoProdukBitmapDrawable.toBitmap().convertBitmapToString().convertStringToBinaryString()
 
             userLoginTokenManager = UserLoginTokenManager(requireContext())
             val viewModelJualProduk = ViewModelProvider(this)[SellerJualProductViewModel::class.java]
