@@ -1,17 +1,23 @@
 package com.example.secondhand.view.fragment
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import com.example.secondhand.R
 import com.example.secondhand.datastore.UserLoginTokenManager
+import com.example.secondhand.helper.convertBitmapToString
+import com.example.secondhand.helper.convertStringToBitmap
 import com.example.secondhand.model.RequestJualProduct
 import com.example.secondhand.view.activity.LoginActivity
 import com.example.secondhand.viewmodel.SellerJualProductViewModel
@@ -44,6 +50,12 @@ class JualFragment : Fragment() {
                     jual_jual_produk_baru_button.isInvisible = true
                     initView()
                 }
+
+                jual_foto_produk.setOnClickListener {
+                    openImageGallery()
+                }
+
+
             }else{
                 jual_jual_produk_baru_button.isInvisible = true
                 jual_to_login_button.setOnClickListener {
@@ -65,9 +77,10 @@ class JualFragment : Fragment() {
             //get all input
             val namaBarang = jual_nama_barang.text.toString()
             val hargaBarang = jual_harga_barang.text.toString()
-            //val kategoriBarang = jual_kategori_barang.text.toString()
             val lokasiBarang = jual_lokasi_toko.text.toString()
             val deskripsiProduk = jual_deskripsi_produk.text.toString()
+            val fotoProdukBitmapDrawable = jual_foto_produk.drawable
+            val fotoProdukStringBinary = fotoProdukBitmapDrawable.toBitmap().convertBitmapToString()
 
             userLoginTokenManager = UserLoginTokenManager(requireContext())
             val viewModelJualProduk = ViewModelProvider(this)[SellerJualProductViewModel::class.java]
@@ -78,7 +91,7 @@ class JualFragment : Fragment() {
                         hargaBarang.toInt(),
                         listOf(1),
                         deskripsiProduk,
-                        "string",
+                        fotoProdukStringBinary,
                         lokasiBarang,
                         namaBarang
                     )
@@ -92,5 +105,39 @@ class JualFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private val bitmapResult =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { result ->
+            val originBitmap =
+                MediaStore.Images.Media.getBitmap(requireContext().contentResolver, result)
+            val editedBitmap: Bitmap
+
+            if (originBitmap.width >= originBitmap.height) {
+                editedBitmap = Bitmap.createBitmap(
+                    originBitmap,
+                    originBitmap.width / 2 - originBitmap.height / 2,
+                    0,
+                    originBitmap.height,
+                    originBitmap.height
+                )
+
+            } else {
+                editedBitmap = Bitmap.createBitmap(
+                    originBitmap,
+                    0,
+                    originBitmap.height / 2 - originBitmap.width / 2,
+                    originBitmap.width,
+                    originBitmap.width
+                )
+            }
+            val bitmaps = Bitmap.createScaledBitmap(editedBitmap, 720, 720, true)
+            val stringResult = bitmaps.convertBitmapToString()
+
+            jual_foto_produk.setImageBitmap(stringResult.convertStringToBitmap())
+        }
+
+    private fun openImageGallery(){
+        bitmapResult.launch("image/*")
     }
 }

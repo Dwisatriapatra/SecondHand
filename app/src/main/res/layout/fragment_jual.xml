@@ -127,7 +127,7 @@
                 android:background="@color/telusuri_kategori_button_selected_item">
 
                 <ImageView
-                    android:id="@+id/jual_foto_profuk"
+                    android:id="@+id/jual_foto_produk"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:contentDescription="@string/img" />
