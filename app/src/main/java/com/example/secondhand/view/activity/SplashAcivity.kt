@@ -57,7 +57,7 @@ class SplashAcivity : AppCompatActivity() {
                     startActivity(Intent(this, MainActivity::class.java))
                 }
             }
-        }, 10000)
+        }, 6000)
 
     }
 
