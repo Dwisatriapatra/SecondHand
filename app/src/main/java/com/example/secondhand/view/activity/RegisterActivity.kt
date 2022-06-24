@@ -9,6 +9,8 @@ import com.example.secondhand.R
 import com.example.secondhand.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_register.*
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
 
 @AndroidEntryPoint
 class RegisterActivity : AppCompatActivity() {
@@ -26,19 +28,36 @@ class RegisterActivity : AppCompatActivity() {
                 edtPassword.text!!.isNotEmpty()
             ) {
                 dataRegister()
-                Toast.makeText(this, "Data tersimpan", Toast.LENGTH_LONG).show()
-            } else {
-                Toast.makeText(this, "Data kosong", Toast.LENGTH_LONG).show()
             }
         }
     }
 
     private fun dataRegister() {
-        val fullName = edtNamaLengkap.text.toString()
-        val email = edtEmail.text.toString()
-        val password = edtPassword.text.toString()
+
+        val fullName = edtNamaLengkap.text.toString().toRequestBody("multipart/form-data".toMediaType())
+        val email = edtEmail.text.toString().toRequestBody("multipart/form-data".toMediaType())
+        val password = edtPassword.text.toString().toRequestBody("multipart/form-data".toMediaType())
+
+        //fake data
+        val phone = "+6282144444899".toRequestBody("multipart/form-data".toMediaType())
+        val address = "ini address".toRequestBody("multipart/form-data".toMediaType())
+        val city = "ini city".toRequestBody("multipart/form-data".toMediaType())
+
+        //val requestImage = RequestBody.create("multipart/form-data".toMediaType(), File(""))
+        //val body: MultipartBody.Part = MultipartBody.Part.createFormData("image", "", requestImage)
 
         val viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-        viewModel.userRegister(fullName, email, password)
+
+        viewModel.userRegister(email, fullName, password, address, city, phone)
+
+        viewModel.responseMessage.observe(this){
+            if(it!!){
+                Toast.makeText(this, "Registrasi berhasil", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this, LoginActivity::class.java))
+            }else{
+                Toast.makeText(this, "Registrasi gagal", Toast.LENGTH_SHORT).show()
+            }
+        }
+
     }
 }

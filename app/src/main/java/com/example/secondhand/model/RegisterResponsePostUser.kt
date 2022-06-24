@@ -11,6 +11,8 @@ data class RegisterResponsePostUser(
     val address: String,
     @SerializedName("createdAt")
     val createdAt: String,
+    @SerializedName("city")
+    val city: String,
     @SerializedName("email")
     val email: String,
     @SerializedName("full_name")

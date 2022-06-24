@@ -1,6 +1,7 @@
 package com.example.secondhand.network
 
 import com.example.secondhand.model.*
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -41,26 +42,24 @@ interface ApiServices {
     ): Call<Any>
 
     //greta
-//    @POST("auth/register")
-//    @FormUrlEncoded
-//    fun register(
-//        @Field("email") email: String,
-//        @Field("full_name") full_name: String,
-//        @Field("password") password: String
-//    ): Call<RegisterResponsePostUser>
 
     @POST("auth/register")
-    fun postRegister(@Body reqUser: RegisterRequestUser): Call<RegisterResponsePostUser>
+    @Multipart
+    fun postRegister(
+        @Part("address") address: RequestBody?,
+        @Part("city") city: RequestBody?,
+        @Part("email") email: RequestBody?,
+        @Part("full_name") name: RequestBody?,
+        //@Part image: MultipartBody.Part,
+        @Part("password") password: RequestBody?,
+        @Part("phone_number") phone: RequestBody?
+    ): Call<RegisterResponsePostUser>
 
-    //    fitur tawar menawar
+    //fitur tawar menawar
     @POST("buyer/order")
     fun updateBidPrice(
         @Header("access_token") token: String,
         @Body reqBidPrice: PostBuyerOrder
     ): Call<PostBuyerOrderResponseItem>
 
-//    @PUT("buyer/order/{id}")
-//    fun updateBidPrice(
-//        @Path("productId") productId: Int,
-//        @Body requestOrder : PutBuyerOrder) : Call<List<GetBuyerOrderResponseItem>>
 }

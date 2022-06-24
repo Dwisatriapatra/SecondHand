@@ -6,10 +6,10 @@ import androidx.lifecycle.ViewModel
 import com.example.secondhand.helper.SingleLiveEvent
 import com.example.secondhand.model.LoginRequestUser
 import com.example.secondhand.model.LoginResponsePostUser
-import com.example.secondhand.model.RegisterRequestUser
 import com.example.secondhand.model.RegisterResponsePostUser
 import com.example.secondhand.network.ApiServices
 import dagger.hilt.android.lifecycle.HiltViewModel
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -48,19 +48,29 @@ class UserViewModel @Inject constructor(api: ApiServices) : ViewModel() {
             })
     }
 
-    fun userRegister(email: String, full_name: String, password: String) {
-        apiServices.postRegister(RegisterRequestUser(email, full_name, password))
+    fun userRegister(
+        email: RequestBody?,
+        fullName: RequestBody?,
+        password: RequestBody?,
+        address: RequestBody?,
+        city: RequestBody?,
+        phone: RequestBody?,
+        //image: MultipartBody.Part
+    ) {
+        apiServices.postRegister(address, city, email, fullName, password, phone)
             .enqueue(object : Callback<RegisterResponsePostUser> {
                 override fun onResponse(
                     call: Call<RegisterResponsePostUser>,
                     response: Response<RegisterResponsePostUser>
                 ) {
-                    //
+                    responseMessage.value = response.isSuccessful
                 }
 
                 override fun onFailure(call: Call<RegisterResponsePostUser>, t: Throwable) {
-//
+                    responseMessage.value = false
+
                 }
             })
     }
 }
+

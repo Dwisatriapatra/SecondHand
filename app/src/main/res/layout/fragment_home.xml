@@ -106,16 +106,6 @@
                     android:text="@string/kategori_semua"
                     android:textAllCaps="false"
                     android:textColor="@color/custom_telusuri_kategori_button_text_color" />
-                <!--                <Button-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:text="@string/kategori_minuman"-->
-                <!--                    android:layout_marginEnd="10dp"-->
-                <!--                    android:textAllCaps="false"-->
-                <!--                    android:id="@+id/home_telusuri_kategori_minuman_button"-->
-                <!--                    android:backgroundTint="@color/custom_telusuri_kategori_button_background_color"-->
-                <!--                    android:textColor="@color/custom_telusuri_kategori_button_text_color"-->
-                <!--                    style="?android:attr/buttonBarButtonStyle" />-->
                 <Button
                     android:id="@+id/home_telusuri_kategori_elektronik_button"
                     style="?android:attr/buttonBarButtonStyle"
@@ -126,7 +116,26 @@
                     android:text="@string/kategori_elektronik"
                     android:textAllCaps="false"
                     android:textColor="@color/custom_telusuri_kategori_button_text_color" />
-
+                <Button
+                    android:id="@+id/home_telusuri_kategori_kendaraan_button"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:backgroundTint="@color/custom_telusuri_kategori_button_background_color"
+                    android:text="@string/kendaraan"
+                    android:textAllCaps="false"
+                    android:textColor="@color/custom_telusuri_kategori_button_text_color" />
+                <Button
+                    android:id="@+id/home_telusuri_kategori_hobbi_button"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:backgroundTint="@color/custom_telusuri_kategori_button_background_color"
+                    android:text="@string/hobbi"
+                    android:textAllCaps="false"
+                    android:textColor="@color/custom_telusuri_kategori_button_text_color" />
                 <Button
                     android:id="@+id/home_telusuri_kategori_lainnya_button"
                     style="?android:attr/buttonBarButtonStyle"
