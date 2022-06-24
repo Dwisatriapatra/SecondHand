@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.secondhand.R
 import com.example.secondhand.datastore.UserLoginTokenManager
@@ -39,11 +38,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun initView() {
-        userLoginTokenManager = UserLoginTokenManager(requireContext())
         val viewModelBuyerProduct = ViewModelProvider(this)[BuyerProductViewModel::class.java]
-        userLoginTokenManager.accessToken.asLiveData().observe(viewLifecycleOwner) {
-            viewModelBuyerProduct.getAllBuyerProduct(it)
-        }
+        viewModelBuyerProduct.getAllBuyerProduct()
         adapter = BuyerProductAdapter {
             val pindah = Intent(activity, DetailActivity::class.java)
             pindah.putExtra("detailbarang", it)

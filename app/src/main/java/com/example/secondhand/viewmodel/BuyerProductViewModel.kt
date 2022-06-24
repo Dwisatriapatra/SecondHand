@@ -18,8 +18,8 @@ class BuyerProductViewModel @Inject constructor(api: ApiServices) : ViewModel() 
     val buyerProduct: LiveData<List<GetBuyerProductResponseItem>> = liveDataBuyerProduct
     private val apiServices = api
 
-    fun getAllBuyerProduct(token: String) {
-        apiServices.getAllBuyerProduct(token)
+    fun getAllBuyerProduct() {
+        apiServices.getAllBuyerProduct()
             .enqueue(object : Callback<List<GetBuyerProductResponseItem>> {
                 override fun onResponse(
                     call: Call<List<GetBuyerProductResponseItem>>,

@@ -10,7 +10,7 @@ interface ApiServices {
     fun login(@Body requestUser: LoginRequestUser): Call<LoginResponsePostUser>
 
     @GET("/buyer/product")
-    fun getAllBuyerProduct(@Header("access_token") token: String): Call<List<GetBuyerProductResponseItem>>
+    fun getAllBuyerProduct(): Call<List<GetBuyerProductResponseItem>>
 
     @GET("notification")
     fun getAllNotification(@Header("access_token") token: String): Call<List<GetAllNotificationResponseItem>>
