@@ -99,5 +99,26 @@
             android:textSize="24sp"
             android:textStyle="bold" />
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/akun_belum_login_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/anda_belum_login"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/akun_to_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/login" />
+    </LinearLayout>
 </RelativeLayout>

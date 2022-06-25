@@ -7,10 +7,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.asLiveData
 import com.example.secondhand.R
 import com.example.secondhand.datastore.UserLoginTokenManager
+import com.example.secondhand.view.activity.LoginActivity
 import com.example.secondhand.view.activity.SplashAcivity
 import kotlinx.android.synthetic.main.fragment_akun.*
 import kotlinx.coroutines.GlobalScope
@@ -33,7 +35,22 @@ class AkunFragment : Fragment() {
 
         userLoginTokenManager = UserLoginTokenManager(requireContext())
 
-        //tested
+        userLoginTokenManager.isUser.asLiveData().observe(viewLifecycleOwner){isUser ->
+            if(isUser){
+                akun_belum_login_section.isInvisible = true
+            }else{
+                text_akun_saya.isInvisible = true
+                akun_image.isInvisible = true
+                akun_edit_profile_section.isInvisible = true
+                akun_pengaturan_section.isInvisible = true
+                akun_logout_section.isInvisible = true
+                akun_to_login.setOnClickListener {
+                    startActivity(Intent(activity, LoginActivity::class.java))
+                }
+            }
+        }
+
+
         akun_logout_section.setOnClickListener{
             userLoginTokenManager.isUser.asLiveData().observe(viewLifecycleOwner){isUser ->
                 if(isUser){
@@ -47,7 +64,6 @@ class AkunFragment : Fragment() {
                             GlobalScope.launch {
                                 userLoginTokenManager.clearToken()
                                 // code for refreshing apps
-                                // tested
                                 val mIntent = Intent(requireContext(), SplashAcivity::class.java)
                                 startActivity(mIntent)
 

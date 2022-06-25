@@ -54,18 +54,6 @@ class NotifikasiFragment : Fragment(), NotificationItemClickListener {
                 userLoginTokenManager.accessToken.asLiveData().observe(viewLifecycleOwner) {
                     viewModelNotification.getAllNotification(it)
                 }
-
-//                adapter = NotificationAdapter{item ->
-//                    userLoginTokenManager.name.asLiveData().observe(viewLifecycleOwner){
-//                        if(item.seller_name == it){
-//                            val intent = Intent(activity, InfoPenawarActivity::class.java)
-//                            intent.putExtra("InfoPenawaran", item)
-//                            startActivity(intent)
-//                        }else{
-//                            //take action
-//                        }
-//                    }
-//                }
                 adapter = NotificationAdapter(this@NotifikasiFragment)
                 val myLm = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, true)
                 myLm.stackFromEnd = true
