@@ -51,12 +51,16 @@ class NotifikasiFragment : Fragment() {
                     viewModelNotification.getAllNotification(it)
                 }
 
-                adapter = NotificationAdapter{
-                    //action to info penawar
-                    val intent = Intent(activity, InfoPenawarActivity::class.java)
-                    intent.putExtra("InfoPenawaran", it)
-                    startActivity(intent)
-
+                adapter = NotificationAdapter{item ->
+                    userLoginTokenManager.name.asLiveData().observe(viewLifecycleOwner){
+                        if(item.seller_name == it){
+                            val intent = Intent(activity, InfoPenawarActivity::class.java)
+                            intent.putExtra("InfoPenawaran", item)
+                            startActivity(intent)
+                        }else{
+                            //take action
+                        }
+                    }
                 }
                 rv_notification.layoutManager = LinearLayoutManager(requireContext())
                 rv_notification.adapter = adapter

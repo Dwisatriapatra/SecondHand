@@ -35,11 +35,24 @@ interface ApiServices {
     ): Call<PostJualProductResponse>
 
     @PATCH("seller/order/{id}")
-    fun setStatusOrder(
+    fun updateStatusOrder(
         @Header("access_token") token: String,
         @Path("id") id: Int,
         @Body orderStatus: OrderStatus
     ): Call<Any>
+
+    @GET("seller/order/product/{product_id}")
+    fun getInfoSellerOrderProductById(
+        @Header("access_token") token: String,
+        @Path("product_id") productId: Int
+    ) : Call<List<GetSellerOrderProductInfoItem>>
+
+    @PATCH("notification/{id}")
+    fun updateNotificationStatus(
+        @Header("access_token") token: String,
+        @Path("id") notificationId: Int,
+        @Body notificationStatus: NotificationStatus
+    ) : Call<UpdateNotificationStatusResponse>
 
     //greta
 

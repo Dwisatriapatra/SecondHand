@@ -63,16 +63,29 @@
             </LinearLayout>
         </LinearLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
             <Button
-                android:id="@+id/card_daftar_produk_ditawar_aksi_button"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:text="@string/aksi" />
-        </RelativeLayout>
+                android:text="@string/tolak"
+                android:id="@+id/card_daftar_produk_ditawar_tolak_button"
+                android:layout_marginEnd="10dp"
+                android:textColor="@color/white"
+                android:layout_weight="0.5"
+                android:backgroundTint="@color/telusuri_kategori_button_not_selected_item"
+                style="?android:attr/buttonBarButtonStyle" />
+            <Button
+                android:id="@+id/card_daftar_produk_ditawar_terima_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/terima"
+                android:textColor="@color/white"
+                android:layout_weight="0.5"
+                android:backgroundTint="@color/telusuri_kategori_button_selected_item"
+                style="?android:attr/buttonBarButtonStyle" />
+        </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

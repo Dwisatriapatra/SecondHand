@@ -2,5 +2,5 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_selected="true" android:color="@color/telusuri_kategori_button_selected_item" />
     <!--Default Background Color -->
-    <item android:color="#FFCF89" android:state_selected="false"/>
+    <item android:color="@color/telusuri_kategori_button_not_selected_item" android:state_selected="false"/>
 </selector>

@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.secondhand.R
 import com.example.secondhand.datastore.UserLoginTokenManager
+import com.example.secondhand.helper.PenawaranItemClickListener
 import com.example.secondhand.model.GetAllNotificationResponseItem
+import com.example.secondhand.model.NotificationStatus
 import com.example.secondhand.model.OrderStatus
 import com.example.secondhand.view.adapter.ProdukDitawarAdapter
 import com.example.secondhand.viewmodel.NotificationViewModel
@@ -25,7 +27,7 @@ import kotlinx.android.synthetic.main.hubungi_via_whatsapp_bottom_sheet.view.*
 
 
 @AndroidEntryPoint
-class InfoPenawarActivity : AppCompatActivity() {
+class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
 
     private lateinit var userLoginTokenManager: UserLoginTokenManager
     private lateinit var adapter: ProdukDitawarAdapter
@@ -53,50 +55,8 @@ class InfoPenawarActivity : AppCompatActivity() {
         userLoginTokenManager.accessToken.asLiveData().observe(this) {
             viewModelProdukDitawar.getAllNotification(it)
         }
-        val viewModelSellerOrder = ViewModelProvider(this)[SellerOrderViewModel::class.java]
-        adapter = ProdukDitawarAdapter {
-            AlertDialog.Builder(this)
-                .setTitle("Terima/tolak tawaran")
-                .setMessage("Silahkan memilih untuk menerima/menolak tawaran")
-                .setNegativeButton("Tolak") { dialogInterface: DialogInterface, _: Int ->
-                    userLoginTokenManager.accessToken.asLiveData().observe(this) { acessToken ->
-                        viewModelSellerOrder.setOrderStatus(
-                            acessToken,
-                            it.product_id!!,
-                            OrderStatus("Ditolak")
-                        )
-                        viewModelSellerOrder.responseMessage.observe(this) {
-                            if (it) {
-                                Toast.makeText(this, "Berhasil ditolak", Toast.LENGTH_SHORT).show()
-                            } else {
-                                Toast.makeText(this, "Permintaan anda gagal", Toast.LENGTH_SHORT)
-                                    .show()
-                            }
-                        }
-                        dialogInterface.dismiss()
-                    }
-                }
-                .setPositiveButton("Terima") { dialoInterface: DialogInterface, _: Int ->
-                    userLoginTokenManager.accessToken.asLiveData().observe(this) { acessToken ->
-                        viewModelSellerOrder.setOrderStatus(
-                            acessToken,
-                            it.product_id!!,
-                            OrderStatus("Diterima")
-                        )
-                        viewModelSellerOrder.responseMessage.observe(this) { bool ->
-                            if (bool) {
-                                Toast.makeText(this, "Berhasil diterima", Toast.LENGTH_SHORT).show()
-                                initDialogToWhatsApp(it.image_url, it.bid_price)
-                            } else {
-                                Toast.makeText(this, "Permintaan anda gagal", Toast.LENGTH_SHORT)
-                                    .show()
-                            }
-                        }
-                        dialoInterface.dismiss()
-                    }
-                }
-                .show()
-        }
+        ViewModelProvider(this)[SellerOrderViewModel::class.java]
+        adapter = ProdukDitawarAdapter(this@InfoPenawarActivity)
         rv_daftar_barang_ditawar.layoutManager = LinearLayoutManager(this)
         rv_daftar_barang_ditawar.adapter = adapter
 
@@ -150,4 +110,69 @@ class InfoPenawarActivity : AppCompatActivity() {
         bottomSheetDialog.setContentView(dialogView)
         bottomSheetDialog.show()
     }
+
+    override fun terima(item: GetAllNotificationResponseItem, position: Int) {
+        userLoginTokenManager = UserLoginTokenManager(this)
+        val viewModelSellerOrder = ViewModelProvider(this)[SellerOrderViewModel::class.java]
+        val viewModelNotification = ViewModelProvider(this)[NotificationViewModel::class.java]
+
+        AlertDialog.Builder(this)
+            .setTitle("Terima tawaran")
+            .setMessage("Anda yakin ingin menerima tawaran?")
+            .setNegativeButton("Batal"){dialogInterface: DialogInterface, _: Int ->
+                dialogInterface.dismiss()
+            }
+            .setPositiveButton("Ya"){dialogInterface: DialogInterface, _: Int ->
+                userLoginTokenManager.accessToken.asLiveData().observe(this) { acessToken ->
+                    viewModelSellerOrder.getSellerOrderProductInfo(acessToken, item.product_id!!, item.buyer_name!!)
+                    viewModelSellerOrder.sellerProductInfo.observe(this){productInfo ->
+                        viewModelSellerOrder.updateOrderStatus(acessToken, productInfo.id, OrderStatus("accepted"))
+                        viewModelNotification.updateNotificationStatus(acessToken, item.id!!, NotificationStatus("true", "accepted"))
+                        viewModelSellerOrder.responseMessage.observe(this) {
+                            if (it) {
+                                Toast.makeText(this, "Berhasil menerima", Toast.LENGTH_SHORT).show()
+                                initDialogToWhatsApp(productInfo.Product.image_url, item.bid_price)
+                            } else {
+                                Toast.makeText(this, "Permintaan anda gagal", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+                        }
+                        dialogInterface.dismiss()
+                    }
+                }
+            }.show()
+    }
+
+    override fun tolak(item: GetAllNotificationResponseItem, position: Int) {
+        userLoginTokenManager = UserLoginTokenManager(this)
+        val viewModelSellerOrder = ViewModelProvider(this)[SellerOrderViewModel::class.java]
+        val viewModelNotification = ViewModelProvider(this)[NotificationViewModel::class.java]
+
+        AlertDialog.Builder(this)
+            .setTitle("Tolak tawaran")
+            .setMessage("Anda yakin ingin menolak tawaran?")
+            .setNegativeButton("Batal"){dialogInterface: DialogInterface, _: Int ->
+                dialogInterface.dismiss()
+            }
+            .setPositiveButton("Ya"){dialogInterface: DialogInterface, _: Int ->
+                userLoginTokenManager.accessToken.asLiveData().observe(this) { acessToken ->
+                    viewModelSellerOrder.getSellerOrderProductInfo(acessToken, item.product_id!!, item.buyer_name!!)
+                    viewModelSellerOrder.sellerProductInfo.observe(this){productInfo ->
+                        viewModelSellerOrder.updateOrderStatus(acessToken, productInfo.id, OrderStatus("declined"))
+                        viewModelNotification.updateNotificationStatus(acessToken, item.id!!, NotificationStatus("true", "declined"))
+                        viewModelSellerOrder.responseMessage.observe(this) {
+                            if (it) {
+                                Toast.makeText(this, "Berhasil menolak", Toast.LENGTH_SHORT).show()
+                            } else {
+                                Toast.makeText(this, "Permintaan anda gagal", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+                        }
+                        dialogInterface.dismiss()
+                    }
+                }
+            }.show()
+    }
+
+
 }
