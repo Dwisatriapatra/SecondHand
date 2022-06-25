@@ -130,6 +130,7 @@
                     android:id="@+id/jual_foto_produk"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
+                    android:scaleType="centerCrop"
                     android:contentDescription="@string/img" />
 
                 <TextView

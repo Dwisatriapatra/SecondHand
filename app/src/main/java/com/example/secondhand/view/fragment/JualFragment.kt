@@ -1,39 +1,43 @@
 package com.example.secondhand.view.fragment
 
+import android.app.Activity.RESULT_OK
 import android.content.Intent
-import android.graphics.Bitmap
+import android.content.Intent.ACTION_GET_CONTENT
+import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import com.example.secondhand.R
 import com.example.secondhand.datastore.UserLoginTokenManager
-import com.example.secondhand.helper.convertBitmapToString
-import com.example.secondhand.helper.convertStringToBinaryString
-import com.example.secondhand.helper.convertStringToBitmap
+import com.example.secondhand.helper.reduceFileImage
+import com.example.secondhand.helper.uriToFile
 import com.example.secondhand.view.activity.LoginActivity
 import com.example.secondhand.viewmodel.SellerJualProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_jual.*
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.File
 
 @AndroidEntryPoint
 class JualFragment : Fragment() {
     private lateinit var userLoginTokenManager: UserLoginTokenManager
+    private var fileImage: File? = null
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_jual, container, false)
     }
 
@@ -54,7 +58,7 @@ class JualFragment : Fragment() {
                 }
 
                 jual_foto_produk.setOnClickListener {
-                    openImageGallery()
+                    startGallery()
                 }
 
 
@@ -85,9 +89,11 @@ class JualFragment : Fragment() {
                 jual_lokasi_toko.text.toString().toRequestBody("multipart/form-data".toMediaType())
             val deskripsiProduk = jual_deskripsi_produk.text.toString()
                 .toRequestBody("multipart/form-data".toMediaType())
-            //val fotoProdukBitmapDrawable = jual_foto_produk.drawable
-            //val fotoProdukStringBinary = fotoProdukBitmapDrawable.toBitmap().convertBitmapToString()
-                //.convertStringToBinaryString().toRequestBody("multipart/form-data".toMediaType())
+
+            val file = reduceFileImage(fileImage as File)
+            val requestImageFile = file.asRequestBody("multipart/form-data".toMediaType())
+            val imageMultiPart = MultipartBody.Part.createFormData("image", file.name, requestImageFile)
+
 
             userLoginTokenManager = UserLoginTokenManager(requireContext())
             val viewModelJualProduk =
@@ -98,7 +104,7 @@ class JualFragment : Fragment() {
                     hargaBarang,
                     listOf(1).toString().toRequestBody("multipart/form-data".toMediaType()),
                     deskripsiProduk,
-                    "image".toRequestBody("multipart/form-data".toMediaType()),
+                    imageMultiPart,
                     //fotoProdukStringBinary,
                     lokasiBarang,
                     namaBarang
@@ -118,37 +124,23 @@ class JualFragment : Fragment() {
         }
     }
 
-    private val bitmapResult =
-        registerForActivityResult(ActivityResultContracts.GetContent()) { result ->
-            val originBitmap =
-                MediaStore.Images.Media.getBitmap(requireContext().contentResolver, result)
-            val editedBitmap: Bitmap
-
-            if (originBitmap.width >= originBitmap.height) {
-                editedBitmap = Bitmap.createBitmap(
-                    originBitmap,
-                    originBitmap.width / 2 - originBitmap.height / 2,
-                    0,
-                    originBitmap.height,
-                    originBitmap.height
-                )
-
-            } else {
-                editedBitmap = Bitmap.createBitmap(
-                    originBitmap,
-                    0,
-                    originBitmap.height / 2 - originBitmap.width / 2,
-                    originBitmap.width,
-                    originBitmap.width
-                )
-            }
-            val bitmaps = Bitmap.createScaledBitmap(editedBitmap, 720, 720, true)
-            val stringResult = bitmaps.convertBitmapToString()
-
-            jual_foto_produk.setImageBitmap(stringResult.convertStringToBitmap())
-        }
-
-    private fun openImageGallery() {
-        bitmapResult.launch("image/*")
+    private fun startGallery(){
+        val intent = Intent()
+        intent.action = ACTION_GET_CONTENT
+        intent.type = "image/*"
+        val chooser = Intent.createChooser(intent, "Choose picture")
+        launcherIntentGallery.launch(chooser)
     }
+
+    private val launcherIntentGallery = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ){result ->
+        if(result.resultCode == RESULT_OK){
+            val selectedImg = result.data?.data as Uri
+            val myImageFile = uriToFile(selectedImg, requireContext())
+            fileImage = myImageFile
+            jual_foto_produk.setImageURI(selectedImg)
+        }
+    }
+
 }

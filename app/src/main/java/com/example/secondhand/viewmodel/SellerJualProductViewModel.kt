@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.secondhand.model.PostJualProductResponse
 import com.example.secondhand.network.ApiServices
 import dagger.hilt.android.lifecycle.HiltViewModel
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -24,7 +25,7 @@ class SellerJualProductViewModel @Inject constructor(api: ApiServices) : ViewMod
         basePrice: RequestBody,
         categories_ids: RequestBody,
         description: RequestBody,
-        image: RequestBody?,
+        image: MultipartBody.Part,
         location: RequestBody,
         name: RequestBody
     ) {

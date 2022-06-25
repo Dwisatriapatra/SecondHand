@@ -1,6 +1,7 @@
 package com.example.secondhand.network
 
 import com.example.secondhand.model.*
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -29,7 +30,7 @@ interface ApiServices {
         @Part("base_price") base_price: RequestBody,
         @Part("categories_ids") categories_ids: RequestBody,
         @Part("description") description: RequestBody,
-        @Part("image") image: RequestBody?,
+        @Part fileImage: MultipartBody.Part,
         @Part("location") location: RequestBody,
         @Part("name") name: RequestBody
     ): Call<PostJualProductResponse>

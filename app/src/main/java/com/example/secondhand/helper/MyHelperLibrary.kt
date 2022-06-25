@@ -1,80 +1,72 @@
 package com.example.secondhand.helper
 
+import android.content.ContentResolver
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.util.Base64
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
-import java.io.ByteArrayOutputStream
+import android.net.Uri
+import android.os.Environment
+import java.io.*
+import java.text.SimpleDateFormat
+import java.util.*
 
-fun <T> LiveData<T>.observeOnce(observer: (T) -> Unit) {
-    observeForever(object : Observer<T> {
-        override fun onChanged(value: T) {
-            removeObserver(this)
-            observer(value)
-        }
-    })
+fun uriToFile(selectedImg: Uri, context: Context): File {
+    val contentResolver: ContentResolver = context.contentResolver
+    val myFile = createTempFile(context)
+
+    val inputStream = contentResolver.openInputStream(selectedImg) as InputStream
+    val outputStream: OutputStream = FileOutputStream(myFile)
+    val buf = ByteArray(1024)
+    var len: Int
+    while (inputStream.read(buf).also { len = it } > 0) outputStream.write(buf, 0, len)
+    outputStream.close()
+    inputStream.close()
+
+    return myFile
 }
 
-fun <T> LiveData<T>.observeOnce(owner: LifecycleOwner, observer: (T) -> Unit) {
-    observe(owner, object : Observer<T> {
-        override fun onChanged(value: T) {
-            removeObserver(this)
-            observer(value)
-        }
-    })
+fun createTempFile(context: Context): File {
+    val storageDir: File? = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+    return File.createTempFile(timeStamp, ".jpg", storageDir)
 }
 
-fun Bitmap.convertBitmapToString(): String{
-    val byteArray = ByteArrayOutputStream()
-    compress(Bitmap.CompressFormat.PNG, 100, byteArray)
-    val b: ByteArray = byteArray.toByteArray()
-    return Base64.encodeToString(b, Base64.DEFAULT)
+private const val FILENAME_FORMAT = "dd-MMM-yyyy"
+
+val timeStamp: String = SimpleDateFormat(
+    FILENAME_FORMAT,
+    Locale.US
+).format(System.currentTimeMillis())
+
+fun reduceFileImage(file: File): File {
+    val bitmap = BitmapFactory.decodeFile(file.path)
+    var compressQuality = 100
+    var streamLength: Int
+    do {
+        val bmpStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, bmpStream)
+        val bmpPicByteArray = bmpStream.toByteArray()
+        streamLength = bmpPicByteArray.size
+        compressQuality -= 5
+    } while (streamLength > 1000000)
+    bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, FileOutputStream(file))
+    return file
 }
 
-fun String.convertStringToBitmap(): Bitmap {
-    val byteArray1: ByteArray = Base64.decode(this, Base64.DEFAULT)
-    return BitmapFactory.decodeByteArray(
-        byteArray1, 0,
-        byteArray1.size
-    )
-}
+//fun <T> LiveData<T>.observeOnce(observer: (T) -> Unit) {
+//    observeForever(object : Observer<T> {
+//        override fun onChanged(value: T) {
+//            removeObserver(this)
+//            observer(value)
+//        }
+//    })
+//}
+//
+//fun <T> LiveData<T>.observeOnce(owner: LifecycleOwner, observer: (T) -> Unit) {
+//    observe(owner, object : Observer<T> {
+//        override fun onChanged(value: T) {
+//            removeObserver(this)
+//            observer(value)
+//        }
+//    })
+//}
 
-fun String.convertStringToBinaryString() : String {
-    val n = this.length
-    var a = ""
-    for (i in 0 until n) {
-        // convert each char to
-        // ASCII value
-        var x = Integer.valueOf(this[i].code)
-
-        // Convert ASCII value to binary
-        var bin = ""
-        while (x > 0) {
-            bin += if (x % 2 == 1) {
-                '1'
-            } else '0'
-            x /= 2
-        }
-        bin = bin.myReverse()
-        a += bin
-    }
-    return a
-}
-
-fun String.myReverse(): String {
-    val a = this.toCharArray()
-    var r: Int = a.size - 1
-    var l= 0
-    while (l < r) {
-
-        // Swap values of l and r
-        val temp = a[l]
-        a[l] = a[r]
-        a[r] = temp
-        l++
-        r--
-    }
-    return String(a)
-}
