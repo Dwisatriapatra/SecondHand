@@ -12,6 +12,9 @@ import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.secondhand.R
 import com.example.secondhand.datastore.UserLoginTokenManager
+import com.example.secondhand.helper.NotificationItemClickListener
+import com.example.secondhand.model.GetAllNotificationResponseItem
+import com.example.secondhand.model.NotificationStatus
 import com.example.secondhand.view.activity.InfoPenawarActivity
 import com.example.secondhand.view.activity.LoginActivity
 import com.example.secondhand.view.adapter.NotificationAdapter
@@ -20,7 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_notifikasi.*
 
 @AndroidEntryPoint
-class NotifikasiFragment : Fragment() {
+class NotifikasiFragment : Fragment(), NotificationItemClickListener {
 
     private lateinit var userLoginTokenManager: UserLoginTokenManager
     private lateinit var adapter: NotificationAdapter
@@ -42,27 +45,31 @@ class NotifikasiFragment : Fragment() {
     private fun initView() {
         userLoginTokenManager = UserLoginTokenManager(requireContext())
 
-        userLoginTokenManager.isUser.asLiveData().observe(viewLifecycleOwner){isUser ->
-            if(isUser){
+        userLoginTokenManager.isUser.asLiveData().observe(viewLifecycleOwner) { isUser ->
+            if (isUser) {
                 notifikasi_belum_login_section.isInvisible = true
 
-                val viewModelNotification = ViewModelProvider(this)[NotificationViewModel::class.java]
+                val viewModelNotification =
+                    ViewModelProvider(this)[NotificationViewModel::class.java]
                 userLoginTokenManager.accessToken.asLiveData().observe(viewLifecycleOwner) {
                     viewModelNotification.getAllNotification(it)
                 }
 
-                adapter = NotificationAdapter{item ->
-                    userLoginTokenManager.name.asLiveData().observe(viewLifecycleOwner){
-                        if(item.seller_name == it){
-                            val intent = Intent(activity, InfoPenawarActivity::class.java)
-                            intent.putExtra("InfoPenawaran", item)
-                            startActivity(intent)
-                        }else{
-                            //take action
-                        }
-                    }
-                }
-                rv_notification.layoutManager = LinearLayoutManager(requireContext())
+//                adapter = NotificationAdapter{item ->
+//                    userLoginTokenManager.name.asLiveData().observe(viewLifecycleOwner){
+//                        if(item.seller_name == it){
+//                            val intent = Intent(activity, InfoPenawarActivity::class.java)
+//                            intent.putExtra("InfoPenawaran", item)
+//                            startActivity(intent)
+//                        }else{
+//                            //take action
+//                        }
+//                    }
+//                }
+                adapter = NotificationAdapter(this@NotifikasiFragment)
+                val myLm = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, true)
+                myLm.stackFromEnd = true
+                rv_notification.layoutManager = myLm
                 rv_notification.adapter = adapter
 
                 viewModelNotification.notification.observe(viewLifecycleOwner) {
@@ -70,7 +77,7 @@ class NotifikasiFragment : Fragment() {
                     notifikasi_progress_bar.isInvisible = true
                     adapter.notifyDataSetChanged()
                 }
-            }else{
+            } else {
                 rv_notification.isInvisible = true
                 notifikasi_progress_bar.isInvisible = true
 
@@ -80,6 +87,35 @@ class NotifikasiFragment : Fragment() {
             }
         }
 
+    }
+
+    override fun clickOnNotificationReadStatus(
+        item: GetAllNotificationResponseItem,
+        position: Int
+    ) {
+        userLoginTokenManager = UserLoginTokenManager(requireContext())
+        val viewModelNotification = ViewModelProvider(this)[NotificationViewModel::class.java]
+        userLoginTokenManager.accessToken.asLiveData().observe(viewLifecycleOwner) { accessToken ->
+            viewModelNotification.updateNotificationStatus(
+                accessToken,
+                item.id!!,
+                NotificationStatus(true, item.status!!)
+            )
+        }
+    }
+
+    override fun clickOnNotificationBodySection(
+        item: GetAllNotificationResponseItem,
+        position: Int
+    ) {
+        userLoginTokenManager = UserLoginTokenManager(requireContext())
+        userLoginTokenManager.name.asLiveData().observe(viewLifecycleOwner) { sellerName ->
+            if (item.seller_name == sellerName) {
+                val intent = Intent(activity, InfoPenawarActivity::class.java)
+                intent.putExtra("InfoPenawaran", item)
+                startActivity(intent)
+            }
+        }
     }
 
 

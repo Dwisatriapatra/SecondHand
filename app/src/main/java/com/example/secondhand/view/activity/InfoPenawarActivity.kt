@@ -127,7 +127,6 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
                     viewModelSellerOrder.getSellerOrderProductInfo(acessToken, item.product_id!!, item.buyer_name!!)
                     viewModelSellerOrder.sellerProductInfo.observe(this){productInfo ->
                         viewModelSellerOrder.updateOrderStatus(acessToken, productInfo.id, OrderStatus("accepted"))
-                        viewModelNotification.updateNotificationStatus(acessToken, item.id!!, NotificationStatus("true", "accepted"))
                         viewModelSellerOrder.responseMessage.observe(this) {
                             if (it) {
                                 Toast.makeText(this, "Berhasil menerima", Toast.LENGTH_SHORT).show()
@@ -137,6 +136,7 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
                                     .show()
                             }
                         }
+                        viewModelNotification.updateNotificationStatus(acessToken, item.id!!, NotificationStatus(true, "accepted"))
                         dialogInterface.dismiss()
                     }
                 }
@@ -159,7 +159,6 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
                     viewModelSellerOrder.getSellerOrderProductInfo(acessToken, item.product_id!!, item.buyer_name!!)
                     viewModelSellerOrder.sellerProductInfo.observe(this){productInfo ->
                         viewModelSellerOrder.updateOrderStatus(acessToken, productInfo.id, OrderStatus("declined"))
-                        viewModelNotification.updateNotificationStatus(acessToken, item.id!!, NotificationStatus("true", "declined"))
                         viewModelSellerOrder.responseMessage.observe(this) {
                             if (it) {
                                 Toast.makeText(this, "Berhasil menolak", Toast.LENGTH_SHORT).show()
@@ -168,6 +167,7 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
                                     .show()
                             }
                         }
+                        viewModelNotification.updateNotificationStatus(acessToken, item.id!!, NotificationStatus(true, "declined"))
                         dialogInterface.dismiss()
                     }
                 }
