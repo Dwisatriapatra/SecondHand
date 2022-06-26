@@ -2,60 +2,84 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/card_seller_product"
-    android:layout_width="320dp"
+    android:layout_width="match_parent"
     android:layout_height="140dp"
     android:layout_margin="10dp"
     app:cardCornerRadius="8dp"
     app:cardElevation="5dp">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/card_daftar_jual_produk_image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_margin="20dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_launcher_background" />
-
+        android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:orientation="horizontal"
+            android:id="@+id/card_daftar_jual_saya_product_body"
+            android:layout_toStartOf="@id/card_daftar_jual_saya_action_section">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/card_daftar_jual_produk_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="10dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_launcher_background" />
 
-            <TextView
-                android:id="@+id/card_daftar_jual_produk_nama"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nama produk"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                tools:ignore="HardcodedText" />
+                android:orientation="vertical"
+                android:id="@+id/card_daftar_jual_saya_info_product_section"
+                android:padding="10dp">
 
-            <TextView
-                android:id="@+id/card_daftar_jual_produk_harga"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Harga: "
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                tools:ignore="HardcodedText" />
+                <TextView
+                    android:id="@+id/card_daftar_jual_produk_nama"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nama produk"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:ignore="HardcodedText" />
 
-            <TextView
-                android:id="@+id/card_daftar_jual_produk_lokasi"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Lokasi: "
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                tools:ignore="HardcodedText" />
+                <TextView
+                    android:id="@+id/card_daftar_jual_produk_harga"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Harga: "
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/card_daftar_jual_produk_lokasi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Lokasi: "
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText" />
+            </LinearLayout>
         </LinearLayout>
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/card_daftar_jual_saya_action_section"
+            android:layout_alignParentEnd="true">
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_edit_product_saya"
+                android:id="@+id/card_daftar_jual_edit_button"
+                android:contentDescription="@string/img" />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_hapus_product_saya"
+                android:id="@+id/card_daftar_jual_hapus_button"
+                android:contentDescription="@string/img"/>
+        </LinearLayout>
+    </RelativeLayout>
 </androidx.cardview.widget.CardView>

@@ -1,10 +1,12 @@
 package com.example.secondhand.view.fragment
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -13,6 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.secondhand.R
 import com.example.secondhand.datastore.UserLoginTokenManager
+import com.example.secondhand.helper.DaftarJualProductSayaItemClickListener
+import com.example.secondhand.model.GetSellerProductItem
 import com.example.secondhand.view.activity.LoginActivity
 import com.example.secondhand.view.adapter.SellerProductAdapter
 import com.example.secondhand.viewmodel.SellerProductViewModel
@@ -21,7 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_daftar_jual.*
 
 @AndroidEntryPoint
-class DaftarJualFragment : Fragment() {
+class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
     private lateinit var userLoginTokenManager: UserLoginTokenManager
     private lateinit var adapter: SellerProductAdapter
 
@@ -86,10 +90,7 @@ class DaftarJualFragment : Fragment() {
         userLoginTokenManager.accessToken.asLiveData().observe(viewLifecycleOwner){
             viewModelSellerProduct.getAllSellerProduct(it)
         }
-        adapter = SellerProductAdapter {
-            //do something
-            //edit
-        }
+        adapter = SellerProductAdapter(this@DaftarJualFragment)
         rv_daftar_jual_saya.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         rv_daftar_jual_saya.adapter = adapter
 
@@ -102,6 +103,29 @@ class DaftarJualFragment : Fragment() {
                 daftar_jual_saya_progress_bar.isInvisible = true
             }
         }
+
+    }
+
+    override fun editProductInDaftarJualSaya(item: GetSellerProductItem, position: Int) {
+        // do edit
+    }
+
+    override fun deleteProductFromDaftarJualSaya(item: GetSellerProductItem, position: Int) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Hapus Produk")
+            .setMessage("Anda yakin ingin menghapus produk ini?")
+            .setNegativeButton("Batal"){dialogInterface: DialogInterface, _: Int ->
+                dialogInterface.dismiss()
+            }
+            .setPositiveButton("Ya"){_: DialogInterface, _: Int ->
+                userLoginTokenManager = UserLoginTokenManager(requireContext())
+                val viewModelSellerProduct = ViewModelProvider(this)[SellerProductViewModel::class.java]
+                userLoginTokenManager.accessToken.asLiveData().observe(viewLifecycleOwner){accessToken ->
+                    viewModelSellerProduct.deleteProductFromDaftarJualSaya(accessToken, item.id)
+                }
+                adapter.deleteSellerProductByPosition(position)
+                adapter.notifyItemRemoved(position)
+            }.show()
 
     }
 }

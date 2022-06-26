@@ -6,17 +6,20 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.secondhand.R
+import com.example.secondhand.helper.DaftarJualProductSayaItemClickListener
 import com.example.secondhand.model.GetSellerProductItem
 import kotlinx.android.synthetic.main.item_adapter_seller_product_item.view.*
 
-class SellerProductAdapter(private val onClick: (GetSellerProductItem) -> Unit) :
+class SellerProductAdapter(private val clickListener: DaftarJualProductSayaItemClickListener) :
     RecyclerView.Adapter<SellerProductAdapter.ViewHolder>() {
 
-    private var listSellerProduct: List<GetSellerProductItem>? = null
+    private var listSellerProduct: MutableList<GetSellerProductItem>? = null
     fun setDataSellerProduct(list: List<GetSellerProductItem>) {
-        this.listSellerProduct = list
+        this.listSellerProduct = list as MutableList<GetSellerProductItem>
     }
-
+    fun deleteSellerProductByPosition(position: Int){
+        listSellerProduct!!.removeAt(position)
+    }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
@@ -41,10 +44,12 @@ class SellerProductAdapter(private val onClick: (GetSellerProductItem) -> Unit) 
                     .into(card_daftar_jual_produk_image)
                 card_daftar_jual_produk_lokasi.text = location
 
-                card_seller_product.setOnClickListener {
-                    onClick(listSellerProduct!![position])
+                card_daftar_jual_edit_button.setOnClickListener {
+                    clickListener.editProductInDaftarJualSaya(listSellerProduct!![position], position)
                 }
-
+                card_daftar_jual_hapus_button.setOnClickListener {
+                    clickListener.deleteProductFromDaftarJualSaya(listSellerProduct!![position], position)
+                }
             }
         }
 

@@ -55,6 +55,11 @@ interface ApiServices {
         @Body notificationStatus: NotificationStatus
     ) : Call<UpdateNotificationStatusResponse>
 
+    @DELETE("seller/product/{id}")
+    fun deleteProductFromDaftarJualSaya(
+        @Header("access_token") token: String,
+        @Path("id") id: Int
+    ) : Call<GetSellerProductDeleteItemResponse>
     //greta
 
     @POST("auth/register")
