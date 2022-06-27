@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.secondhand.R
-import com.example.secondhand.datastore.UserLoginTokenManager
 import com.example.secondhand.model.GetBuyerProductResponseItem
 import com.example.secondhand.view.activity.DetailActivity
 import com.example.secondhand.view.adapter.BuyerProductAdapter
@@ -43,13 +42,6 @@ class HomeFragment : Fragment() {
             val pindah = Intent(activity, DetailActivity::class.java)
             pindah.putExtra("detailbarang", it)
             startActivity(pindah)
-
-//            val pindah = Bundle()
-//            pindah.putParcelable("detailbarang", it)
-//            view!!.findNavController().navigate(R.id.homeKe_detailFragment)
-
-            //do something
-            //edit
         }
         rv_product_home.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)

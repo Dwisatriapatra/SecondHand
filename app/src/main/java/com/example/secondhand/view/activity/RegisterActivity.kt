@@ -43,9 +43,6 @@ class RegisterActivity : AppCompatActivity() {
         val address = "ini address".toRequestBody("multipart/form-data".toMediaType())
         val city = "ini city".toRequestBody("multipart/form-data".toMediaType())
 
-        //val requestImage = RequestBody.create("multipart/form-data".toMediaType(), File(""))
-        //val body: MultipartBody.Part = MultipartBody.Part.createFormData("image", "", requestImage)
-
         val viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
 
         viewModel.userRegister(email, fullName, password, address, city, phone)

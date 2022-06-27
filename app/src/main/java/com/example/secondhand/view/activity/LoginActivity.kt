@@ -2,6 +2,7 @@ package com.example.secondhand.view.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -35,8 +36,6 @@ class LoginActivity : AppCompatActivity() {
 
         login_to_register_akun.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
-
-            //lanjutkan untuk mekanisme register
         }
 
     }
@@ -51,7 +50,10 @@ class LoginActivity : AppCompatActivity() {
             viewModelUser.responseMessage.observe(this) { responseMessage ->
                 if (responseMessage!!) {
                     viewModelUser.user.observe(this) {
-                        saveToken(it, password)
+                        //need to get updated password that input by user
+                        //better update email if val email is needed here
+                        val getUpdatedPassword = login_input_password.text.toString()
+                        saveToken(it, getUpdatedPassword)
                     }
                 } else {
                     Toast.makeText(this, "Email/password salah", Toast.LENGTH_SHORT).show()
@@ -64,6 +66,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun saveToken(loginResponsePostUser: LoginResponsePostUser, password: String) {
         userLoginTokenManager = UserLoginTokenManager(this)
+        Log.d("ceking3", "${loginResponsePostUser.email}, $password")
         lifecycleScope.launch {
             withContext(Dispatchers.Main) {
                 userLoginTokenManager.clearToken()

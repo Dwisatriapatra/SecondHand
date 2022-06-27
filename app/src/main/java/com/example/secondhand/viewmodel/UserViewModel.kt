@@ -31,9 +31,8 @@ class UserViewModel @Inject constructor(api: ApiServices) : ViewModel() {
                     call: Call<LoginResponsePostUser>,
                     response: Response<LoginResponsePostUser>
                 ) {
-                    responseMessage.value = response.isSuccessful
                     if (response.isSuccessful) {
-
+                        responseMessage.value = true
                         liveDataUser.value = response.body()
 
                     } else {
