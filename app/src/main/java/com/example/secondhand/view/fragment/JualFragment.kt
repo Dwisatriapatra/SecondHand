@@ -18,7 +18,9 @@ import com.example.secondhand.R
 import com.example.secondhand.datastore.UserLoginTokenManager
 import com.example.secondhand.helper.reduceFileImage
 import com.example.secondhand.helper.uriToFile
+import com.example.secondhand.model.PostJualProduct
 import com.example.secondhand.view.activity.LoginActivity
+import com.example.secondhand.view.activity.PreviewActivity
 import com.example.secondhand.viewmodel.SellerJualProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_jual.*
@@ -32,7 +34,7 @@ import java.io.File
 class JualFragment : Fragment() {
     private lateinit var userLoginTokenManager: UserLoginTokenManager
     private var fileImage: File? = null
-
+    private var imageProduct: Uri? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -78,6 +80,21 @@ class JualFragment : Fragment() {
         jual_detail_produk_section.isInvisible = false
         jual_preview_button.setOnClickListener {
             //action
+            val namaBarang =
+                jual_nama_barang.text.toString()
+            val hargaBarang =
+                jual_harga_barang.text.toString()
+            val lokasiToko =
+                jual_lokasi_toko.text.toString()
+            val deskripsiProduk = jual_deskripsi_produk.text.toString()
+            val kategori = "kategorinya"
+
+            val file = reduceFileImage(fileImage as File)
+
+            val intent = Intent(activity, PreviewActivity::class.java)
+            intent.putExtra("dataprodukjual", PostJualProduct(namaBarang, hargaBarang.toInt(), lokasiToko, deskripsiProduk, imageProduct!!.toString(), kategori, file))
+            startActivity(intent)
+
         }
         jual_terbitkan_button.setOnClickListener {
             //get all input
@@ -92,8 +109,8 @@ class JualFragment : Fragment() {
 
             val file = reduceFileImage(fileImage as File)
             val requestImageFile = file.asRequestBody("multipart/form-data".toMediaType())
-            val imageMultiPart = MultipartBody.Part.createFormData("image", file.name, requestImageFile)
-
+            val imageMultiPart =
+                MultipartBody.Part.createFormData("image", file.name, requestImageFile)
 
             userLoginTokenManager = UserLoginTokenManager(requireContext())
             val viewModelJualProduk =
@@ -105,7 +122,6 @@ class JualFragment : Fragment() {
                     listOf(1).toString().toRequestBody("multipart/form-data".toMediaType()),
                     deskripsiProduk,
                     imageMultiPart,
-                    //fotoProdukStringBinary,
                     lokasiBarang,
                     namaBarang
                 )
@@ -124,7 +140,7 @@ class JualFragment : Fragment() {
         }
     }
 
-    private fun startGallery(){
+    private fun startGallery() {
         val intent = Intent()
         intent.action = ACTION_GET_CONTENT
         intent.type = "image/*"
@@ -134,11 +150,12 @@ class JualFragment : Fragment() {
 
     private val launcherIntentGallery = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
-    ){result ->
-        if(result.resultCode == RESULT_OK){
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
             val selectedImg = result.data?.data as Uri
             val myImageFile = uriToFile(selectedImg, requireContext())
             fileImage = myImageFile
+            imageProduct = selectedImg
             jual_foto_produk.setImageURI(selectedImg)
         }
     }
