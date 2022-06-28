@@ -60,6 +60,20 @@ interface ApiServices {
         @Header("access_token") token: String,
         @Path("id") id: Int
     ) : Call<GetSellerProductDeleteItemResponse>
+
+    @PUT("auth/user")
+    @Multipart
+    fun updateUserProfile(
+       @Header("access_token") token: String,
+       @Part("address") address: RequestBody?,
+       @Part("city") city: RequestBody?,
+       @Part("email") email: RequestBody?,
+       @Part("full_name") fullName: RequestBody?,
+       @Part image: MultipartBody.Part,
+       @Part("password") password: RequestBody?,
+       @Part("phone_number") phoneNumber: RequestBody?
+    ): Call<UpdateProfileUserResponse>
+
     //greta
 
     @POST("auth/register")

@@ -3,6 +3,7 @@ package com.example.secondhand.view.fragment
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.asLiveData
 import com.example.secondhand.R
 import com.example.secondhand.datastore.UserLoginTokenManager
+import com.example.secondhand.view.activity.LengkapiInfoAkun
 import com.example.secondhand.view.activity.LoginActivity
 import com.example.secondhand.view.activity.SplashAcivity
 import kotlinx.android.synthetic.main.fragment_akun.*
@@ -38,6 +40,7 @@ class AkunFragment : Fragment() {
         userLoginTokenManager.isUser.asLiveData().observe(viewLifecycleOwner){isUser ->
             if(isUser){
                 akun_belum_login_section.isInvisible = true
+                initView()
             }else{
                 text_akun_saya.isInvisible = true
                 akun_image.isInvisible = true
@@ -49,7 +52,17 @@ class AkunFragment : Fragment() {
                 }
             }
         }
+    }
 
+    private fun initView() {
+
+        userLoginTokenManager = UserLoginTokenManager(requireContext())
+
+        userLoginTokenManager.fotoUser.asLiveData().observe(viewLifecycleOwner){
+            if(it.isNotEmpty()){
+                akun_image.setImageURI(Uri.parse(it))
+            }
+        }
 
         akun_logout_section.setOnClickListener{
             userLoginTokenManager.isUser.asLiveData().observe(viewLifecycleOwner){isUser ->
@@ -77,5 +90,8 @@ class AkunFragment : Fragment() {
 
         }
 
+        akun_edit_profile_section.setOnClickListener {
+            startActivity(Intent(activity, LengkapiInfoAkun::class.java))
+        }
     }
 }

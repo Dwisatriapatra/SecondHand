@@ -24,7 +24,7 @@ data class RegisterResponsePostUser(
     @SerializedName("password")
     val password: String,
     @SerializedName("phone_number")
-    val phoneNumber: String,
+    val phoneNumber: Int,
     @SerializedName("updatedAt")
     val updatedAt: String
 ) : Parcelable

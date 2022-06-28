@@ -67,6 +67,10 @@
     <string name="tolak">Tolak</string>
     <string name="terima">Terima</string>
     <string name="tanggal_transaksi">tanggal_transaksi</string>
+    <string name="nama">Nama</string>
+    <string name="alamat">Alamat</string>
+    <string name="nomor_handphone">Nomor handphone</string>
+    <string name="simpan">Simpan</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 

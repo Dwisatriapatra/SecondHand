@@ -118,8 +118,6 @@ class JualFragment : Fragment() {
             }
         }
         jual_terbitkan_button.setOnClickListener {
-
-
             if (jual_nama_barang.text.toString().isNotEmpty() &&
                 jual_harga_barang.text.toString().isNotEmpty() &&
                 jual_lokasi_toko.text.toString().isNotEmpty() &&

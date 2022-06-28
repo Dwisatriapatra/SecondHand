@@ -1,6 +1,7 @@
 package com.example.secondhand.view.activity
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -119,38 +120,41 @@ class DetailActivity : AppCompatActivity() {
             }
 
             if (isUser) {
-                dialogView.tawarDialogProfileTidakLengkapLabel.isInvisible = true
-                dialogView.tawarDialogLengkapiProfilButton.isInvisible = true
+
+                dialogView.tawarDialogBelumLoginLabel.isInvisible = true
 
                 btnBatal.setOnClickListener {
                     dialog.dismiss()
                 }
 
                 btnTawarkan.setOnClickListener {
-                    val productId = detailbarang.id
-                    val edtTawar = dialogView.tawarDialogInputHargaTawaran.text.toString().toInt()
-
-                    if (edtTawar.toString().isNotEmpty()) {
-                        val viewModelBuyerOrder =
-                            ViewModelProvider(this)[BuyerOrderViewModel::class.java]
-                        userLoginTokenManager.accessToken.asLiveData()
-                            .observe(this) { accessToken ->
-                                viewModelBuyerOrder.postBuyerOrder(
-                                    accessToken,
-                                    PostBuyerOrder(productId!!, edtTawar)
-                                )
+                    userLoginTokenManager.alamat.asLiveData().observe(this){alamat ->
+                        val productId = detailbarang.id
+                        val edtTawar = dialogView.tawarDialogInputHargaTawaran.text.toString().toInt()
+                        if(alamat.isNullOrEmpty()){
+                            Toast.makeText(this, "Lengkapi profile anda terlebih dahulu", Toast.LENGTH_LONG).show()
+                            startActivity(Intent(this, LengkapiInfoAkun::class.java))
+                        }else{
+                            if (edtTawar.toString().isNotEmpty()) {
+                                val viewModelBuyerOrder =
+                                    ViewModelProvider(this)[BuyerOrderViewModel::class.java]
+                                userLoginTokenManager.accessToken.asLiveData()
+                                    .observe(this) { accessToken ->
+                                        viewModelBuyerOrder.postBuyerOrder(
+                                            accessToken,
+                                            PostBuyerOrder(productId!!, edtTawar)
+                                        )
+                                    }
+                                Toast.makeText(this, "Tawaran sudah dikirim", Toast.LENGTH_SHORT).show()
+                                dialog.dismiss()
+                            }else{
+                                Toast.makeText(this, "Field harga tawar harus diisi", Toast.LENGTH_SHORT).show()
                             }
-                        Toast.makeText(this, "Tawaran sudah dikirim", Toast.LENGTH_SHORT).show()
-                        dialog.dismiss()
-                    }else{
-                        Toast.makeText(this, "Field harga tawar harus diisi", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
             } else {
                 dialogView.tawarDialogTawarkanHargaButton.isInvisible = true
-                dialogView.tawarDialogLengkapiProfilButton.setOnClickListener {
-                    //ke halaman lengkapi profile
-                }
                 btnBatal.setOnClickListener {
                     dialog.dismiss()
                 }

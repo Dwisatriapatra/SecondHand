@@ -43,9 +43,9 @@ class RegisterActivity : AppCompatActivity() {
         val password = edtPassword.text.toString().toRequestBody("multipart/form-data".toMediaType())
 
         //fake data
-        val phone = "+6282144444899".toRequestBody("multipart/form-data".toMediaType())
-        val address = "ini address".toRequestBody("multipart/form-data".toMediaType())
-        val city = "ini city".toRequestBody("multipart/form-data".toMediaType())
+        val phone = 6282144.toString().toRequestBody("multipart/form-data".toMediaType())
+        val address = "init address".toRequestBody("multipart/form-data".toMediaType())
+        val city = "init city".toRequestBody("multipart/form-data".toMediaType())
 
         val viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
 
