@@ -142,6 +142,8 @@ class DetailActivity : AppCompatActivity() {
                             }
                         Toast.makeText(this, "Tawaran sudah dikirim", Toast.LENGTH_SHORT).show()
                         dialog.dismiss()
+                    }else{
+                        Toast.makeText(this, "Field harga tawar harus diisi", Toast.LENGTH_SHORT).show()
                     }
                 }
             } else {

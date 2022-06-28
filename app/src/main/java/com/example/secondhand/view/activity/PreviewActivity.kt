@@ -1,5 +1,6 @@
 package com.example.secondhand.view.activity
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
@@ -90,8 +91,10 @@ class PreviewActivity : AppCompatActivity() {
                             "Barang berhasil dijual",
                             Toast.LENGTH_SHORT
                         ).show()
+                        startActivity(Intent(this, MainActivity::class.java))
                     } else {
                         Toast.makeText(this, "Gagal", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this, MainActivity::class.java))
                     }
                 }
             }

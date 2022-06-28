@@ -46,17 +46,21 @@ class LoginActivity : AppCompatActivity() {
         val password = login_input_password.text.toString()
 
         if (email.isNotEmpty() && password.isNotEmpty()) {
-            viewModelUser.userLogin(LoginRequestUser(email, password))
-            viewModelUser.responseMessage.observe(this) { responseMessage ->
-                if (responseMessage!!) {
-                    viewModelUser.user.observe(this) {
-                        //need to get updated password that input by user
-                        //better update email if val email is needed here
-                        val getUpdatedPassword = login_input_password.text.toString()
-                        saveToken(it, getUpdatedPassword)
+            if(password.length < 6){
+                Toast.makeText(this, "Password minimal 6 karakter", Toast.LENGTH_SHORT).show()
+            }else{
+                viewModelUser.userLogin(LoginRequestUser(email, password))
+                viewModelUser.responseMessage.observe(this) { responseMessage ->
+                    if (responseMessage!!) {
+                        viewModelUser.user.observe(this) {
+                            //need to get updated password that input by user
+                            //better update email if val email is needed here
+                            val getUpdatedPassword = login_input_password.text.toString()
+                            saveToken(it, getUpdatedPassword)
+                        }
+                    } else {
+                        Toast.makeText(this, "Email/password salah", Toast.LENGTH_SHORT).show()
                     }
-                } else {
-                    Toast.makeText(this, "Email/password salah", Toast.LENGTH_SHORT).show()
                 }
             }
         } else {

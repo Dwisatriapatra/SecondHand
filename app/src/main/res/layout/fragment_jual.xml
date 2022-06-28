@@ -11,7 +11,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/title_daftar_jual_saya"
+            android:id="@+id/title_lengkapi_detail_produk"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
@@ -26,7 +26,7 @@
             android:id="@+id/jual_detail_produk_section"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/title_daftar_jual_saya"
+            android:layout_below="@id/title_lengkapi_detail_produk"
             android:orientation="vertical">
 
             <TextView

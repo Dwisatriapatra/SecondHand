@@ -45,7 +45,7 @@ class JualFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        title_daftar_jual_saya.isInvisible = true
+        title_lengkapi_detail_produk.isInvisible = true
         jual_detail_produk_section.isInvisible = true
 
         userLoginTokenManager = UserLoginTokenManager(requireContext())
@@ -76,7 +76,7 @@ class JualFragment : Fragment() {
     }
 
     private fun initView() {
-        title_daftar_jual_saya.isInvisible = false
+        title_lengkapi_detail_produk.isInvisible = false
         jual_detail_produk_section.isInvisible = false
         jual_preview_button.setOnClickListener {
             //action
@@ -89,53 +89,92 @@ class JualFragment : Fragment() {
             val deskripsiProduk = jual_deskripsi_produk.text.toString()
             val kategori = "kategorinya"
 
-            val file = reduceFileImage(fileImage as File)
+            if (namaBarang.isNotEmpty() &&
+                hargaBarang.isNotEmpty() &&
+                lokasiToko.isNotEmpty() &&
+                deskripsiProduk.isNotEmpty() &&
+                imageProduct != Uri.EMPTY &&
+                        fileImage != null
+            ) {
+                val intent = Intent(activity, PreviewActivity::class.java)
+                val file = reduceFileImage(fileImage as File)
 
-            val intent = Intent(activity, PreviewActivity::class.java)
-            intent.putExtra("dataprodukjual", PostJualProduct(namaBarang, hargaBarang.toInt(), lokasiToko, deskripsiProduk, imageProduct!!.toString(), kategori, file))
-            startActivity(intent)
-
+                intent.putExtra(
+                    "dataprodukjual",
+                    PostJualProduct(
+                        namaBarang,
+                        hargaBarang.toInt(),
+                        lokasiToko,
+                        deskripsiProduk,
+                        imageProduct!!.toString(),
+                        kategori,
+                        file
+                    )
+                )
+                startActivity(intent)
+            } else {
+                Toast.makeText(requireContext(), "Semua field harus diisi", Toast.LENGTH_SHORT)
+                    .show()
+            }
         }
         jual_terbitkan_button.setOnClickListener {
-            //get all input
-            val namaBarang =
-                jual_nama_barang.text.toString().toRequestBody("multipart/form-data".toMediaType())
-            val hargaBarang =
-                jual_harga_barang.text.toString().toRequestBody("multipart/form-data".toMediaType())
-            val lokasiBarang =
-                jual_lokasi_toko.text.toString().toRequestBody("multipart/form-data".toMediaType())
-            val deskripsiProduk = jual_deskripsi_produk.text.toString()
-                .toRequestBody("multipart/form-data".toMediaType())
 
-            val file = reduceFileImage(fileImage as File)
-            val requestImageFile = file.asRequestBody("multipart/form-data".toMediaType())
-            val imageMultiPart =
-                MultipartBody.Part.createFormData("image", file.name, requestImageFile)
 
-            userLoginTokenManager = UserLoginTokenManager(requireContext())
-            val viewModelJualProduk =
-                ViewModelProvider(this)[SellerJualProductViewModel::class.java]
-            userLoginTokenManager.accessToken.asLiveData().observe(viewLifecycleOwner) {
-                viewModelJualProduk.jualProduct(
-                    it,
-                    hargaBarang,
-                    listOf(1).toString().toRequestBody("multipart/form-data".toMediaType()),
-                    deskripsiProduk,
-                    imageMultiPart,
-                    lokasiBarang,
-                    namaBarang
-                )
-                viewModelJualProduk.responseMessage.observe(viewLifecycleOwner) { responseMsg ->
-                    if (responseMsg == true) {
-                        Toast.makeText(
-                            requireContext(),
-                            "Barang berhasil dijual",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    } else {
-                        Toast.makeText(requireContext(), "Gagal", Toast.LENGTH_SHORT).show()
+            if (jual_nama_barang.text.toString().isNotEmpty() &&
+                jual_harga_barang.text.toString().isNotEmpty() &&
+                jual_lokasi_toko.text.toString().isNotEmpty() &&
+                jual_deskripsi_produk.text.toString().isNotEmpty() &&
+                imageProduct != Uri.EMPTY &&
+                fileImage != null
+            ) {
+
+                //get all input
+                val file = reduceFileImage(fileImage as File)
+                val namaBarang =
+                    jual_nama_barang.text.toString()
+                        .toRequestBody("multipart/form-data".toMediaType())
+                val hargaBarang =
+                    jual_harga_barang.text.toString()
+                        .toRequestBody("multipart/form-data".toMediaType())
+                val lokasiBarang =
+                    jual_lokasi_toko.text.toString()
+                        .toRequestBody("multipart/form-data".toMediaType())
+                val deskripsiProduk = jual_deskripsi_produk.text.toString()
+                    .toRequestBody("multipart/form-data".toMediaType())
+
+                val requestImageFile = file.asRequestBody("multipart/form-data".toMediaType())
+                val imageMultiPart =
+                    MultipartBody.Part.createFormData("image", file.name, requestImageFile)
+
+                userLoginTokenManager = UserLoginTokenManager(requireContext())
+                val viewModelJualProduk =
+                    ViewModelProvider(this)[SellerJualProductViewModel::class.java]
+
+                userLoginTokenManager.accessToken.asLiveData().observe(viewLifecycleOwner) {
+                    viewModelJualProduk.jualProduct(
+                        it,
+                        hargaBarang,
+                        listOf(1).toString().toRequestBody("multipart/form-data".toMediaType()),
+                        deskripsiProduk,
+                        imageMultiPart,
+                        lokasiBarang,
+                        namaBarang
+                    )
+                    viewModelJualProduk.responseMessage.observe(viewLifecycleOwner) { responseMsg ->
+                        if (responseMsg == true) {
+                            Toast.makeText(
+                                requireContext(),
+                                "Barang berhasil dijual",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            Toast.makeText(requireContext(), "Gagal", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
+            } else {
+                Toast.makeText(requireContext(), "Semua field harus diisi", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }

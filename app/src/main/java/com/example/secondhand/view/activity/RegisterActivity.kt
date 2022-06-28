@@ -27,7 +27,11 @@ class RegisterActivity : AppCompatActivity() {
                 edtEmail.text!!.isNotEmpty() &&
                 edtPassword.text!!.isNotEmpty()
             ) {
-                dataRegister()
+                if(edtPassword.text!!.toString().length < 6){
+                    Toast.makeText(this, "Password minimal 6 karakter", Toast.LENGTH_SHORT).show()
+                }else{
+                    dataRegister()
+                }
             }
         }
     }
