@@ -1,5 +1,6 @@
 package com.example.secondhand.view.activity
 
+import android.content.ContentResolver
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -10,8 +11,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import com.example.secondhand.R
 import com.example.secondhand.datastore.UserLoginTokenManager
-import com.example.secondhand.helper.reduceFileImage
-import com.example.secondhand.helper.uriToFile
 import com.example.secondhand.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_lengkapi_info_akun.*
@@ -30,6 +29,7 @@ class LengkapiInfoAkun : AppCompatActivity() {
     private lateinit var userLoginTokenManager: UserLoginTokenManager
     private var imageFile: File? = null
     private var imageUri: Uri? = null
+    private var imageMultiPart: MultipartBody.Part? = null
     private var email: RequestBody? = null
     private var password: RequestBody? = null
 
@@ -62,10 +62,6 @@ class LengkapiInfoAkun : AppCompatActivity() {
                 update_nomor_handphone_user.text.toString().isNotEmpty()
                 && imageFile != null
             ) {
-                val file = reduceFileImage(imageFile as File)
-                val requestImageFile = file.asRequestBody("multipart/form-data".toMediaType())
-                val imageMultiPart =
-                    MultipartBody.Part.createFormData("image", file.name, requestImageFile)
                 userLoginTokenManager = UserLoginTokenManager(this)
                 userLoginTokenManager.email.asLiveData().observe(this) {
                     email = it.toRequestBody("multipart/form-data".toMediaType())
@@ -83,7 +79,7 @@ class LengkapiInfoAkun : AppCompatActivity() {
                         kota,
                         email!!,
                         nama,
-                        //imageMultiPart,
+                        imageMultiPart!!,
                         password!!,
                         nomorHandphone
                     )
@@ -112,25 +108,28 @@ class LengkapiInfoAkun : AppCompatActivity() {
         }
     }
 
-    private fun startGallery() {
-        val intent = Intent()
-        intent.action = Intent.ACTION_GET_CONTENT
-        intent.type = "image/*"
-        intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        val chooser = Intent.createChooser(intent, "Choose picture")
-        launcherIntentGallery.launch(chooser)
+    private fun startGallery(){
+        getContent.launch("image/*")
     }
 
-    private val launcherIntentGallery = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == RESULT_OK) {
-            val selectedImg = result.data?.data as Uri
-            val myImageFile = uriToFile(selectedImg, this)
-            imageFile = myImageFile
-            imageUri = selectedImg
-            update_image_user_uri.setImageURI(selectedImg)
+    private val getContent =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            uri?.let {
+                // image/png or jpeg or gif
+                val contentResolver: ContentResolver = this.contentResolver
+                val type = contentResolver.getType(it)
+                imageUri = it
+                update_image_user_uri.setImageURI(it)
+
+                val tempFile = File.createTempFile("temp-", null, null)
+                imageFile = tempFile
+                val inputstream = contentResolver.openInputStream(uri)
+                tempFile.outputStream().use { result ->
+                    inputstream?.copyTo(result)
+                }
+                val requestBody: RequestBody = tempFile.asRequestBody(type?.toMediaType())
+                imageMultiPart =
+                    MultipartBody.Part.createFormData("image", tempFile.name, requestBody)
+            }
         }
-    }
 }

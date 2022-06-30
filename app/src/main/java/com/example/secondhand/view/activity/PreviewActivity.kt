@@ -1,5 +1,6 @@
 package com.example.secondhand.view.activity
 
+import android.content.ContentResolver
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -17,6 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_preview.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 
@@ -64,23 +66,32 @@ class PreviewActivity : AppCompatActivity() {
                 dataProduk.namaBarang.toRequestBody("multipart/form-data".toMediaType())
             val hargaProduk =
                 dataProduk.harga.toString().toRequestBody("multipart/form-data".toMediaType())
-            val kategori = listOf(1).toString().toRequestBody("multipart/form-data".toMediaType())
             val deskripsiProduk =
                 dataProduk.deskripsiProduct.toRequestBody("multipart/form-data".toMediaType())
+            val lokasiToko = dataProduk.lokasi.toRequestBody("multipart/form-data".toMediaType())
 
             val file = dataProduk.imageProduct
-            val requestImageFile = file.asRequestBody("multipart/form-data".toMediaType())
-            val imageProduk = MultipartBody.Part.createFormData("image", file.name, requestImageFile)
+            val contentResolver: ContentResolver = this.contentResolver
+            val inputstream = contentResolver.openInputStream(Uri.parse(dataProduk.imageUri))
+            file.outputStream().use { result ->
+                inputstream?.copyTo(result)
+            }
+            val type = contentResolver.getType(Uri.parse(dataProduk.imageUri))
+            val requestBody: RequestBody = file.asRequestBody(type?.toMediaType())
+            val imageMultiPart =
+                MultipartBody.Part.createFormData("image", file.name, requestBody)
 
-            val lokasiToko = dataProduk.lokasi.toRequestBody("multipart/form-data".toMediaType())
+            val kategoriList = ArrayList<MultipartBody.Part>()
+            kategoriList.add(MultipartBody.Part.createFormData("category_ids", "1"))
+            kategoriList.add(MultipartBody.Part.createFormData("category_ids", "2"))
 
             userLoginTokenManager.accessToken.asLiveData().observe(this) {
                 viewModelSellerJualProduct.jualProduct(
                     it,
                     hargaProduk,
-                    kategori,
+                    kategoriList,
                     deskripsiProduk,
-                    imageProduk,
+                    imageMultiPart,
                     lokasiToko,
                     namaProduk
                 )
@@ -98,8 +109,6 @@ class PreviewActivity : AppCompatActivity() {
                     }
                 }
             }
-
-
         }
     }
 }

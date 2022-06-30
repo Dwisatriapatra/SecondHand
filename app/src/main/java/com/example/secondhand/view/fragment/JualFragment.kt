@@ -1,8 +1,7 @@
 package com.example.secondhand.view.fragment
 
-import android.app.Activity.RESULT_OK
+import android.content.ContentResolver
 import android.content.Intent
-import android.content.Intent.ACTION_GET_CONTENT
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,8 +15,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import com.example.secondhand.R
 import com.example.secondhand.datastore.UserLoginTokenManager
-import com.example.secondhand.helper.reduceFileImage
-import com.example.secondhand.helper.uriToFile
 import com.example.secondhand.model.PostJualProduct
 import com.example.secondhand.view.activity.LoginActivity
 import com.example.secondhand.view.activity.PreviewActivity
@@ -26,6 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_jual.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
@@ -33,8 +31,9 @@ import java.io.File
 @AndroidEntryPoint
 class JualFragment : Fragment() {
     private lateinit var userLoginTokenManager: UserLoginTokenManager
-    private var fileImage: File? = null
-    private var imageProduct: Uri? = null
+    private var imageMultiPart: MultipartBody.Part? = null
+    private var imageUri: Uri? = Uri.EMPTY
+    private var imageFile: File? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,7 +59,7 @@ class JualFragment : Fragment() {
                 }
 
                 jual_foto_produk.setOnClickListener {
-                    startGallery()
+                    getContent.launch("image/*")
                 }
 
 
@@ -79,7 +78,6 @@ class JualFragment : Fragment() {
         title_lengkapi_detail_produk.isInvisible = false
         jual_detail_produk_section.isInvisible = false
         jual_preview_button.setOnClickListener {
-            //action
             val namaBarang =
                 jual_nama_barang.text.toString()
             val hargaBarang =
@@ -93,12 +91,9 @@ class JualFragment : Fragment() {
                 hargaBarang.isNotEmpty() &&
                 lokasiToko.isNotEmpty() &&
                 deskripsiProduk.isNotEmpty() &&
-                imageProduct != Uri.EMPTY &&
-                        fileImage != null
+                imageUri != Uri.EMPTY
             ) {
                 val intent = Intent(activity, PreviewActivity::class.java)
-                val file = reduceFileImage(fileImage as File)
-
                 intent.putExtra(
                     "dataprodukjual",
                     PostJualProduct(
@@ -106,9 +101,9 @@ class JualFragment : Fragment() {
                         hargaBarang.toInt(),
                         lokasiToko,
                         deskripsiProduk,
-                        imageProduct!!.toString(),
+                        imageUri!!.toString(),
                         kategori,
-                        file
+                        imageFile!!
                     )
                 )
                 startActivity(intent)
@@ -122,12 +117,10 @@ class JualFragment : Fragment() {
                 jual_harga_barang.text.toString().isNotEmpty() &&
                 jual_lokasi_toko.text.toString().isNotEmpty() &&
                 jual_deskripsi_produk.text.toString().isNotEmpty() &&
-                imageProduct != Uri.EMPTY &&
-                fileImage != null
+                imageMultiPart != null
             ) {
 
                 //get all input
-                val file = reduceFileImage(fileImage as File)
                 val namaBarang =
                     jual_nama_barang.text.toString()
                         .toRequestBody("multipart/form-data".toMediaType())
@@ -140,21 +133,21 @@ class JualFragment : Fragment() {
                 val deskripsiProduk = jual_deskripsi_produk.text.toString()
                     .toRequestBody("multipart/form-data".toMediaType())
 
-                val requestImageFile = file.asRequestBody("multipart/form-data".toMediaType())
-                val imageMultiPart =
-                    MultipartBody.Part.createFormData("image", file.name, requestImageFile)
-
                 userLoginTokenManager = UserLoginTokenManager(requireContext())
                 val viewModelJualProduk =
                     ViewModelProvider(this)[SellerJualProductViewModel::class.java]
+
+                val kategoriList = ArrayList<MultipartBody.Part>()
+                kategoriList.add(MultipartBody.Part.createFormData("category_ids", "1"))
+                kategoriList.add(MultipartBody.Part.createFormData("category_ids", "2"))
 
                 userLoginTokenManager.accessToken.asLiveData().observe(viewLifecycleOwner) {
                     viewModelJualProduk.jualProduct(
                         it,
                         hargaBarang,
-                        listOf(1).toString().toRequestBody("multipart/form-data".toMediaType()),
+                        kategoriList,
                         deskripsiProduk,
-                        imageMultiPart,
+                        imageMultiPart!!,
                         lokasiBarang,
                         namaBarang
                     )
@@ -176,25 +169,25 @@ class JualFragment : Fragment() {
             }
         }
     }
+    private val getContent =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            uri?.let {
+                // image/png or jpeg or gif
+                val contentResolver: ContentResolver = context!!.contentResolver
+                val type = contentResolver.getType(it)
+                imageUri = it
 
-    private fun startGallery() {
-        val intent = Intent()
-        intent.action = ACTION_GET_CONTENT
-        intent.type = "image/*"
-        val chooser = Intent.createChooser(intent, "Choose picture")
-        launcherIntentGallery.launch(chooser)
-    }
+                jual_foto_produk.setImageURI(it)
 
-    private val launcherIntentGallery = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == RESULT_OK) {
-            val selectedImg = result.data?.data as Uri
-            val myImageFile = uriToFile(selectedImg, requireContext())
-            fileImage = myImageFile
-            imageProduct = selectedImg
-            jual_foto_produk.setImageURI(selectedImg)
+                val tempFile = File.createTempFile("temp-", null, null)
+                imageFile = tempFile
+                val inputstream = contentResolver.openInputStream(uri)
+                tempFile.outputStream().use { result ->
+                    inputstream?.copyTo(result)
+                }
+                val requestBody: RequestBody = tempFile.asRequestBody(type?.toMediaType())
+                imageMultiPart =
+                    MultipartBody.Part.createFormData("image", tempFile.name, requestBody)
+            }
         }
-    }
-
 }

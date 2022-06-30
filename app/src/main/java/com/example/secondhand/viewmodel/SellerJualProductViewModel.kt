@@ -23,7 +23,7 @@ class SellerJualProductViewModel @Inject constructor(api: ApiServices) : ViewMod
     fun jualProduct(
         token: String,
         basePrice: RequestBody,
-        categories_ids: RequestBody,
+        categories_ids: List<MultipartBody.Part>,
         description: RequestBody,
         image: MultipartBody.Part,
         location: RequestBody,

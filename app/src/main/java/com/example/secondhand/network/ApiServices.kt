@@ -28,7 +28,7 @@ interface ApiServices {
     fun postJualProduct(
         @Header("access_token") token: String,
         @Part("base_price") base_price: RequestBody,
-        @Part("categories_ids") categories_ids: RequestBody,
+        @Part categories_ids: List<MultipartBody.Part>,
         @Part("description") description: RequestBody,
         @Part fileImage: MultipartBody.Part,
         @Part("location") location: RequestBody,
@@ -69,7 +69,7 @@ interface ApiServices {
        @Part("city") city: RequestBody?,
        @Part("email") email: RequestBody?,
        @Part("full_name") fullName: RequestBody?,
-       //@Part image: MultipartBody.Part,
+       @Part image: MultipartBody.Part,
        @Part("password") password: RequestBody?,
        @Part("phone_number") phoneNumber: RequestBody?
     ): Call<UpdateProfileUserResponse>
@@ -82,7 +82,7 @@ interface ApiServices {
         @Part("base_price") basePrice: RequestBody,
         @Part("category_ids") category: RequestBody,
         @Part("description") description: RequestBody,
-        //@Part ImageProdct: MultipartBody.Part,
+        //@Part ImageProduct: MultipartBody.Part,
         @Part("location") location: RequestBody
     ) : Call<GetSellerProductUpdateResponse>
 
