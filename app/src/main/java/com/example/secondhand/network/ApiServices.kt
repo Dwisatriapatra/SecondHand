@@ -69,10 +69,22 @@ interface ApiServices {
        @Part("city") city: RequestBody?,
        @Part("email") email: RequestBody?,
        @Part("full_name") fullName: RequestBody?,
-       @Part image: MultipartBody.Part,
+       //@Part image: MultipartBody.Part,
        @Part("password") password: RequestBody?,
        @Part("phone_number") phoneNumber: RequestBody?
     ): Call<UpdateProfileUserResponse>
+
+    @PUT("seller/product/{id}")
+    @Multipart
+    fun updateProduct(
+        @Header("access_token") token: String,
+        @Path("id") id: Int,
+        @Part("base_price") basePrice: RequestBody,
+        @Part("category_ids") category: RequestBody,
+        @Part("description") description: RequestBody,
+        //@Part ImageProdct: MultipartBody.Part,
+        @Part("location") location: RequestBody
+    ) : Call<GetSellerProductUpdateResponse>
 
     //greta
 

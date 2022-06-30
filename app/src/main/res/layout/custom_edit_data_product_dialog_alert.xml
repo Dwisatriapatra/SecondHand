@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:orientation="vertical">
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/nama_produk"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textStyle="bold"-->
+<!--        android:textSize="16sp"/>-->
+<!--    <EditText-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:inputType="text"-->
+<!--        android:hint="@string/masukkan_nama_produk"-->
+<!--        android:background="@drawable/custom_edit_text_layout"-->
+<!--        android:id="@+id/edit_product_nama"-->
+<!--        android:padding="10dp"-->
+<!--        android:importantForAutofill="no" />-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Harga produk"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        tools:ignore="HardcodedText" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="Rp. 0.0"
+        android:background="@drawable/custom_edit_text_layout"
+        android:id="@+id/edit_product_harga"
+        android:padding="10dp"
+        android:importantForAutofill="no"
+        tools:ignore="HardcodedText" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/kategori_produk"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="16sp"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="@string/masukkan_kategori_produk"
+        android:background="@drawable/custom_edit_text_layout"
+        android:id="@+id/edit_product_kategori"
+        android:padding="10dp"
+        android:importantForAutofill="no" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/lokasi_toko"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="16sp"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="@string/masukkan_lokasi_toko"
+        android:background="@drawable/custom_edit_text_layout"
+        android:id="@+id/edit_product_lokasi_toko"
+        android:padding="10dp"
+        android:importantForAutofill="no" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/deskripsi_produk"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="16sp"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="@string/masukkan_deskripsi_produk"
+        android:background="@drawable/custom_edit_text_layout"
+        android:id="@+id/edit_product_deskripsi"
+        android:padding="10dp"
+        android:importantForAutofill="no" />
+    <RelativeLayout
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/edit_product_foto_button"
+        android:layout_gravity="center_horizontal">
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/edit_product_foto"
+            android:background="@color/telusuri_kategori_button_selected_item"
+            android:contentDescription="@string/img" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add"
+            android:textColor="@color/black"
+            android:layout_centerInParent="true"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+    </RelativeLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/update_produk"
+        android:textAllCaps="false"
+        android:id="@+id/edit_product_update_button"/>
+</LinearLayout>

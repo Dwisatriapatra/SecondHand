@@ -83,7 +83,7 @@ class LengkapiInfoAkun : AppCompatActivity() {
                         kota,
                         email!!,
                         nama,
-                        imageMultiPart,
+                        //imageMultiPart,
                         password!!,
                         nomorHandphone
                     )
@@ -116,6 +116,8 @@ class LengkapiInfoAkun : AppCompatActivity() {
         val intent = Intent()
         intent.action = Intent.ACTION_GET_CONTENT
         intent.type = "image/*"
+        intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         val chooser = Intent.createChooser(intent, "Choose picture")
         launcherIntentGallery.launch(chooser)
     }

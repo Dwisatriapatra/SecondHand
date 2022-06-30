@@ -71,13 +71,21 @@
     <string name="alamat">Alamat</string>
     <string name="nomor_handphone">Nomor handphone</string>
     <string name="simpan">Simpan</string>
+    <string name="nama_produk">Nama produk</string>
+    <string name="masukkan_nama_produk">Masukkan nama produk</string>
+    <string name="kategori_produk">Kategori produk</string>
+    <string name="masukkan_kategori_produk">Masukkan kategori produk</string>
+    <string name="masukkan_lokasi_toko">Masukkan lokasi toko</string>
+    <string name="add">+</string>
+    <string name="update_produk">Update Produk</string>
+    <string name="masukkan_deskripsi_produk">Masukkan deskripsi produk</string>
+
     <string name="text_perbarui_status">Perbarui status penjualan produkmu</string>
     <string name="text_berhasil_terjual">Berhasil terjual</string>
     <string name="text_ket_berhasil_terjual">Kamu telah sepakat menjual produk ini kepada pembeli</string>
     <string name="text_batalkan_transaksi">Batalkan transaksi</string>
     <string name="text_ket_batalkan_transaksi">Kamu membatalkan transaksi produk ini dengan pembeli</string>
     <string name="text_kirim">Kirim</string>
-
 
     <!-- TODO: Remove or change this placeholder text -->
 

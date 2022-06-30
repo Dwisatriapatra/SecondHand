@@ -5,8 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.secondhand.model.GetSellerProductDeleteItemResponse
 import com.example.secondhand.model.GetSellerProductItem
+import com.example.secondhand.model.GetSellerProductUpdateResponse
+import com.example.secondhand.model.SellerProductUpdateRequest
 import com.example.secondhand.network.ApiServices
 import dagger.hilt.android.lifecycle.HiltViewModel
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,6 +22,9 @@ class SellerProductViewModel @Inject constructor(api: ApiServices) : ViewModel()
     private val liveDataSellerProduct = MutableLiveData<List<GetSellerProductItem>>()
     val sellerProduct: LiveData<List<GetSellerProductItem>> = liveDataSellerProduct
     val apiServices = api
+
+    private val liveDataResponseMsg = MutableLiveData<Boolean>()
+    val responseMessage: LiveData<Boolean> = liveDataResponseMsg
 
     fun getAllSellerProduct(token: String) {
         apiServices.getSellerProdcut(token)
@@ -56,5 +63,29 @@ class SellerProductViewModel @Inject constructor(api: ApiServices) : ViewModel()
                 }
 
             })
+    }
+
+    fun updateProductInDaftarJualSaya(token: String, id: Int, sellerProductUpdateRequest: SellerProductUpdateRequest){
+        apiServices.updateProduct(
+            token,
+            id,
+            sellerProductUpdateRequest.basePrice!!,
+            sellerProductUpdateRequest.category!!,
+            sellerProductUpdateRequest.description!!,
+            //sellerProductUpdateRequest.imageProduct,
+            sellerProductUpdateRequest.location!!
+        ).enqueue(object: Callback<GetSellerProductUpdateResponse>{
+            override fun onResponse(
+                call: Call<GetSellerProductUpdateResponse>,
+                response: Response<GetSellerProductUpdateResponse>
+            ) {
+                liveDataResponseMsg.value = response.isSuccessful
+            }
+
+            override fun onFailure(call: Call<GetSellerProductUpdateResponse>, t: Throwable) {
+                liveDataResponseMsg.value = false
+            }
+
+        })
     }
 }
