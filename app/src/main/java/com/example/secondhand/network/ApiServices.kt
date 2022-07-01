@@ -80,10 +80,11 @@ interface ApiServices {
         @Header("access_token") token: String,
         @Path("id") id: Int,
         @Part("base_price") basePrice: RequestBody,
-        @Part("category_ids") category: RequestBody,
+        @Part category: List<MultipartBody.Part>,
         @Part("description") description: RequestBody,
         //@Part ImageProduct: MultipartBody.Part,
-        @Part("location") location: RequestBody
+        @Part("location") location: RequestBody,
+        @Part("name") name: RequestBody
     ) : Call<GetSellerProductUpdateResponse>
 
     //greta

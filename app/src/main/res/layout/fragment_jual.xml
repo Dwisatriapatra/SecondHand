@@ -69,15 +69,13 @@
                 android:layout_height="wrap_content"
                 android:text="@string/kategori_barang" />
 
-            <EditText
+            <TextView
                 android:id="@+id/jual_kategori_barang"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/custom_edit_text_layout"
-                android:hint="@string/kategori_barang"
-                android:importantForAutofill="no"
-                android:inputType="text"
+                android:drawableEnd="@drawable/ic_drop_down_arrow"
                 android:padding="10dp"
                 android:textColor="@color/black" />
 

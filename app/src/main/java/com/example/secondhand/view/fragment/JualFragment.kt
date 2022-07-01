@@ -1,6 +1,7 @@
 package com.example.secondhand.view.fragment
 
 import android.content.ContentResolver
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -34,6 +36,20 @@ class JualFragment : Fragment() {
     private var imageMultiPart: MultipartBody.Part? = null
     private var imageUri: Uri? = Uri.EMPTY
     private var imageFile: File? = null
+    private lateinit var selectedCategory: BooleanArray
+    private var categoryList = arrayListOf<Int>()
+    private var availableCategory = arrayOf(
+        "Makanan",
+        "Minuman",
+        "Fashion",
+        "Alat dapur",
+        "Kesehatan",
+        "Olahraga",
+        "Hobi",
+        "Kendaraan",
+        "Lainnya"
+    )
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,7 +75,7 @@ class JualFragment : Fragment() {
                 }
 
                 jual_foto_produk.setOnClickListener {
-                    getContent.launch("image/*")
+                    openGallery()
                 }
 
 
@@ -77,6 +93,11 @@ class JualFragment : Fragment() {
     private fun initView() {
         title_lengkapi_detail_produk.isInvisible = false
         jual_detail_produk_section.isInvisible = false
+
+        jual_kategori_barang.setOnClickListener {
+            initMultiChoicesAlertDialog()
+        }
+
         jual_preview_button.setOnClickListener {
             val namaBarang =
                 jual_nama_barang.text.toString()
@@ -138,8 +159,12 @@ class JualFragment : Fragment() {
                     ViewModelProvider(this)[SellerJualProductViewModel::class.java]
 
                 val kategoriList = ArrayList<MultipartBody.Part>()
-                kategoriList.add(MultipartBody.Part.createFormData("category_ids", "1"))
-                kategoriList.add(MultipartBody.Part.createFormData("category_ids", "2"))
+
+                if(categoryList.isNotEmpty()){
+                    for(i in categoryList.indices){
+                        kategoriList.add(MultipartBody.Part.createFormData("category_ids", categoryList[i].toString()))
+                    }
+                }
 
                 userLoginTokenManager.accessToken.asLiveData().observe(viewLifecycleOwner) {
                     viewModelJualProduk.jualProduct(
@@ -169,10 +194,14 @@ class JualFragment : Fragment() {
             }
         }
     }
+
+    private fun openGallery(){
+        getContent.launch("image/*")
+    }
+
     private val getContent =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             uri?.let {
-                // image/png or jpeg or gif
                 val contentResolver: ContentResolver = context!!.contentResolver
                 val type = contentResolver.getType(it)
                 imageUri = it
@@ -190,4 +219,54 @@ class JualFragment : Fragment() {
                     MultipartBody.Part.createFormData("image", tempFile.name, requestBody)
             }
         }
+
+    private fun initMultiChoicesAlertDialog(){
+        selectedCategory = BooleanArray(availableCategory.size)
+
+        val alertDialogBuilder = AlertDialog.Builder(requireContext())
+        alertDialogBuilder.setTitle("Pilih kategori (maks. 4)")
+        alertDialogBuilder.setCancelable(false)
+        alertDialogBuilder.setMultiChoiceItems(availableCategory, selectedCategory
+        ) { _: DialogInterface, i: Int, b: Boolean ->
+            if (b) {
+                if(categoryList.isEmpty()){
+                    categoryList.add(i)
+                }else{
+                    if(categoryList.size >= 4){
+                        Toast.makeText(requireContext(), "Maksimal 4 kategori", Toast.LENGTH_SHORT).show()
+                    }else{
+                        categoryList.add(i)
+                    }
+                }
+            } else {
+                categoryList.remove(Integer.valueOf(i))
+            }
+        }
+        alertDialogBuilder.setPositiveButton("OK"
+        ) { _, _ -> // Initialize string builder
+            val stringBuilder = StringBuilder()
+            for (j in 0 until categoryList.size) {
+                stringBuilder.append(availableCategory[categoryList[j]])
+                if (j != categoryList.size - 1) {
+                    stringBuilder.append(", ")
+                }
+            }
+            jual_kategori_barang.text = stringBuilder.toString()
+        }
+
+        alertDialogBuilder.setNegativeButton("Cancel"
+        ) { dialogInterface, _ ->
+            dialogInterface.dismiss()
+        }
+        alertDialogBuilder.setNeutralButton("Clear All"
+        ) { _, _ ->
+            // use for loop
+            for (j in selectedCategory.indices) {
+                selectedCategory[j] = false
+                categoryList.clear()
+                jual_kategori_barang.text = ""
+            }
+        }
+        alertDialogBuilder.show()
+    }
 }

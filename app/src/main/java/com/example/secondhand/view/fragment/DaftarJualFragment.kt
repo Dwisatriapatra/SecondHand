@@ -28,7 +28,6 @@ import com.example.secondhand.view.adapter.SellerProductAdapter
 import com.example.secondhand.viewmodel.SellerProductViewModel
 import com.example.secondhand.viewmodel.SellerViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.custom_edit_data_product_dialog_alert.*
 import kotlinx.android.synthetic.main.custom_edit_data_product_dialog_alert.view.*
 import kotlinx.android.synthetic.main.fragment_daftar_jual.*
 import okhttp3.MediaType.Companion.toMediaType
@@ -44,6 +43,20 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
 
     private var imageUri: Uri? = Uri.EMPTY
     private var imageFile: File? = null
+
+    private lateinit var selectedCategory: BooleanArray
+    private var categoryList = arrayListOf<Int>()
+    private var availableCategory = arrayOf(
+        "Makanan",
+        "Minuman",
+        "Fashion",
+        "Alat dapur",
+        "Kesehatan",
+        "Olahraga",
+        "Hobi",
+        "Kendaraan",
+        "Lainnya"
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -141,6 +154,10 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
         //init field later
         //
 
+        customDialogEdit.edit_product_kategori.setOnClickListener {
+            initMultiChoicesAlertDialog()
+        }
+
         customDialogEdit.edit_product_foto_button.setOnClickListener {
             startGallery()
             if(imageUri != Uri.EMPTY){
@@ -152,21 +169,27 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
             //action
 
             //fetch all data input from user
-            //val namaBaruProduct = customDialogEdit.edit_product_nama.text.toString().toRequestBody("multipart/form-data".toMediaType())
+            val namaBaruProduct = customDialogEdit.edit_product_nama.text.toString().toRequestBody("multipart/form-data".toMediaType())
             val hargaBaruProduct = customDialogEdit.edit_product_harga.text.toString()
-                .toRequestBody("multipart/form-data".toMediaType())
-            val kategoriBaruProduct = customDialogEdit.edit_product_kategori.text.toString()
                 .toRequestBody("multipart/form-data".toMediaType())
             val lokasiBaruToko = customDialogEdit.edit_product_lokasi_toko.text.toString()
                 .toRequestBody("multipart/form-data".toMediaType())
             val deskripsiBaruProduct = customDialogEdit.edit_product_deskripsi.text.toString()
                 .toRequestBody("multipart/form-data".toMediaType())
 
+            val kategoriList = ArrayList<MultipartBody.Part>()
+            if(categoryList.isNotEmpty()){
+                for(i in categoryList.indices){
+                    kategoriList.add(MultipartBody.Part.createFormData("category_ids", categoryList[i].toString()))
+                }
+            }
+
             if (
                 customDialogEdit.edit_product_harga.text.isNotEmpty() &&
                 customDialogEdit.edit_product_kategori.text.isNotEmpty() &&
                 customDialogEdit.edit_product_lokasi_toko.text.isNotEmpty() &&
                 customDialogEdit.edit_product_deskripsi.text.isNotEmpty() &&
+                customDialogEdit.edit_product_nama.text.isNotEmpty() &&
                 imageFile != null
             ) {
                 userLoginTokenManager.accessToken.asLiveData().observe(viewLifecycleOwner) {
@@ -179,10 +202,11 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
                         item.id,
                         SellerProductUpdateRequest(
                             hargaBaruProduct,
-                            kategoriBaruProduct,
+                            kategoriList,
                             deskripsiBaruProduct,
                             imageMultipart,
-                            lokasiBaruToko
+                            lokasiBaruToko,
+                            namaBaruProduct
                         )
                     )
                     viewModelSellerProduct.responseMessage.observe(viewLifecycleOwner) { responseMsg ->
@@ -248,5 +272,56 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
             imageFile = myImageFile
             imageUri = selectedImg
         }
+    }
+
+    private fun initMultiChoicesAlertDialog(){
+        selectedCategory = BooleanArray(availableCategory.size)
+        val customDialogEdit = LayoutInflater.from(requireContext()).inflate(
+            R.layout.custom_edit_data_product_dialog_alert, null, false
+        )
+        val alertDialogBuilder = AlertDialog.Builder(requireContext())
+        alertDialogBuilder.setTitle("Pilih kategori (maks. 4)")
+        alertDialogBuilder.setCancelable(false)
+        alertDialogBuilder.setMultiChoiceItems(availableCategory, selectedCategory
+        ) { _: DialogInterface, i: Int, b: Boolean ->
+            if (b) {
+                if(categoryList.isEmpty()){
+                    categoryList.add(i)
+                }else{
+                    if(categoryList.size >= 4){
+                        Toast.makeText(requireContext(), "Maksimal 4 kategori", Toast.LENGTH_SHORT).show()
+                    }else{
+                        categoryList.add(i)
+                    }
+                }
+            } else {
+                categoryList.remove(Integer.valueOf(i))
+            }
+        }
+        alertDialogBuilder.setPositiveButton("OK"
+        ) { _, _ ->
+            val stringBuilder = StringBuilder()
+            for (j in 0 until categoryList.size) {
+                stringBuilder.append(availableCategory[categoryList[j]])
+                if (j != categoryList.size - 1) {
+                    stringBuilder.append(", ")
+                }
+            }
+            customDialogEdit.edit_product_kategori.text = stringBuilder.toString()
+        }
+
+        alertDialogBuilder.setNegativeButton("Cancel"
+        ) { dialogInterface, _ ->
+            dialogInterface.dismiss()
+        }
+        alertDialogBuilder.setNeutralButton("Clear All"
+        ) { _, _ ->
+            for (j in selectedCategory.indices) {
+                selectedCategory[j] = false
+                categoryList.clear()
+                customDialogEdit.edit_product_kategori.text = ""
+            }
+        }
+        alertDialogBuilder.show()
     }
 }

@@ -70,10 +70,11 @@ class SellerProductViewModel @Inject constructor(api: ApiServices) : ViewModel()
             token,
             id,
             sellerProductUpdateRequest.basePrice!!,
-            sellerProductUpdateRequest.category!!,
+            sellerProductUpdateRequest.category,
             sellerProductUpdateRequest.description!!,
             //sellerProductUpdateRequest.imageProduct,
-            sellerProductUpdateRequest.location!!
+            sellerProductUpdateRequest.location!!,
+            sellerProductUpdateRequest.name
         ).enqueue(object: Callback<GetSellerProductUpdateResponse>{
             override fun onResponse(
                 call: Call<GetSellerProductUpdateResponse>,

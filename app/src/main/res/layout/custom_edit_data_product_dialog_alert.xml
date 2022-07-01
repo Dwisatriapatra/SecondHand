@@ -5,22 +5,22 @@
     android:layout_height="match_parent"
     android:padding="10dp"
     android:orientation="vertical">
-<!--    <TextView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="@string/nama_produk"-->
-<!--        android:textColor="@color/black"-->
-<!--        android:textStyle="bold"-->
-<!--        android:textSize="16sp"/>-->
-<!--    <EditText-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:inputType="text"-->
-<!--        android:hint="@string/masukkan_nama_produk"-->
-<!--        android:background="@drawable/custom_edit_text_layout"-->
-<!--        android:id="@+id/edit_product_nama"-->
-<!--        android:padding="10dp"-->
-<!--        android:importantForAutofill="no" />-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/nama_produk"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="16sp"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="@string/masukkan_nama_produk"
+        android:background="@drawable/custom_edit_text_layout"
+        android:id="@+id/edit_product_nama"
+        android:padding="10dp"
+        android:importantForAutofill="no" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,15 +46,14 @@
         android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="16sp"/>
-    <EditText
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
-        android:hint="@string/masukkan_kategori_produk"
         android:background="@drawable/custom_edit_text_layout"
         android:id="@+id/edit_product_kategori"
         android:padding="10dp"
-        android:importantForAutofill="no" />
+        android:drawableEnd="@drawable/ic_drop_down_arrow"
+        android:text="Pilih"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
