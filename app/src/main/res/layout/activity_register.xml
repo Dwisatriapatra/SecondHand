@@ -93,6 +93,34 @@
                 android:textSize="24sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Pilih Foto Profile"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            tools:ignore="HardcodedText" />
+
+        <RelativeLayout
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/register_choose_image_button">
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/register_image"
+                android:background="@color/telusuri_kategori_button_selected_item"
+                android:contentDescription="@string/img" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add"
+                android:textColor="@color/black"
+                android:layout_centerInParent="true"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+        </RelativeLayout>
         <Button
             android:id="@+id/btnDaftar"
             android:layout_width="match_parent"

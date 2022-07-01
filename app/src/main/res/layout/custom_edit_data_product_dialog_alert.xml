@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -32,7 +33,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
+        android:inputType="number"
         android:hint="Rp. 0.0"
         android:background="@drawable/custom_edit_text_layout"
         android:id="@+id/edit_product_harga"
@@ -52,8 +53,8 @@
         android:background="@drawable/custom_edit_text_layout"
         android:id="@+id/edit_product_kategori"
         android:padding="10dp"
-        android:drawableEnd="@drawable/ic_drop_down_arrow"
-        android:text="Pilih"/>
+        android:text="@string/pilih"
+        app:drawableEndCompat="@drawable/ic_drop_down_arrow" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -86,11 +87,17 @@
         android:id="@+id/edit_product_deskripsi"
         android:padding="10dp"
         android:importantForAutofill="no" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/foto_produk"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="16sp"/>
     <RelativeLayout
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:id="@+id/edit_product_foto_button"
-        android:layout_gravity="center_horizontal">
+        android:id="@+id/edit_product_foto_button">
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"

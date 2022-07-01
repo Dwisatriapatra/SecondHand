@@ -56,9 +56,9 @@ class UserViewModel @Inject constructor(api: ApiServices) : ViewModel() {
         address: RequestBody?,
         city: RequestBody?,
         phone: RequestBody?,
-        //image: MultipartBody.Part
+        image: MultipartBody.Part
     ) {
-        apiServices.postRegister(address, city, email, fullName, password, phone)
+        apiServices.postRegister(address, city, email, fullName, image, password, phone)
             .enqueue(object : Callback<RegisterResponsePostUser> {
                 override fun onResponse(
                     call: Call<RegisterResponsePostUser>,

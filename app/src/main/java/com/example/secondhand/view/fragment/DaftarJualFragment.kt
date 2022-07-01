@@ -1,5 +1,6 @@
 package com.example.secondhand.view.fragment
 
+import android.content.ContentResolver
 import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
@@ -10,7 +11,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -20,9 +20,9 @@ import com.bumptech.glide.Glide
 import com.example.secondhand.R
 import com.example.secondhand.datastore.UserLoginTokenManager
 import com.example.secondhand.helper.DaftarJualProductSayaItemClickListener
-import com.example.secondhand.helper.uriToFile
 import com.example.secondhand.model.GetSellerProductItem
 import com.example.secondhand.model.SellerProductUpdateRequest
+import com.example.secondhand.view.activity.LengkapiInfoAkun
 import com.example.secondhand.view.activity.LoginActivity
 import com.example.secondhand.view.adapter.SellerProductAdapter
 import com.example.secondhand.viewmodel.SellerProductViewModel
@@ -32,6 +32,7 @@ import kotlinx.android.synthetic.main.custom_edit_data_product_dialog_alert.view
 import kotlinx.android.synthetic.main.fragment_daftar_jual.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
@@ -41,6 +42,7 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
     private lateinit var userLoginTokenManager: UserLoginTokenManager
     private lateinit var adapter: SellerProductAdapter
 
+    private var imageMultiPart: MultipartBody.Part? = null
     private var imageUri: Uri? = Uri.EMPTY
     private var imageFile: File? = null
 
@@ -100,6 +102,9 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
 
     private fun initView() {
         val viewModelSeller = ViewModelProvider(this)[SellerViewModel::class.java]
+        daftar_jual_saya_edit_profile_penjual_button.setOnClickListener {
+            startActivity(Intent(activity, LengkapiInfoAkun::class.java))
+        }
         viewModelSeller.seller.observe(viewLifecycleOwner) {
             daftar_jual_saya_nama_penjual.text = it.full_name
             daftar_jual_saya_kota_penjual.text = it.city
@@ -155,14 +160,12 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
         //
 
         customDialogEdit.edit_product_kategori.setOnClickListener {
-            initMultiChoicesAlertDialog()
+            initMultiChoicesAlertDialog(customDialogEdit)
         }
 
         customDialogEdit.edit_product_foto_button.setOnClickListener {
-            startGallery()
-            if(imageUri != Uri.EMPTY){
-                customDialogEdit.edit_product_foto.setImageURI(imageUri)
-            }
+            openGallery()
+            customDialogEdit.edit_product_foto.setImageURI(imageUri)
         }
 
         customDialogEdit.edit_product_update_button.setOnClickListener {
@@ -255,30 +258,8 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
 
     }
 
-    private fun startGallery() {
-        val intent = Intent()
-        intent.action = Intent.ACTION_GET_CONTENT
-        intent.type = "image/*"
-        val chooser = Intent.createChooser(intent, "Choose picture")
-        launcherIntentGallery.launch(chooser)
-    }
-
-    private val launcherIntentGallery = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == AppCompatActivity.RESULT_OK) {
-            val selectedImg = result.data?.data as Uri
-            val myImageFile = uriToFile(selectedImg, requireContext())
-            imageFile = myImageFile
-            imageUri = selectedImg
-        }
-    }
-
-    private fun initMultiChoicesAlertDialog(){
+    private fun initMultiChoicesAlertDialog(view: View){
         selectedCategory = BooleanArray(availableCategory.size)
-        val customDialogEdit = LayoutInflater.from(requireContext()).inflate(
-            R.layout.custom_edit_data_product_dialog_alert, null, false
-        )
         val alertDialogBuilder = AlertDialog.Builder(requireContext())
         alertDialogBuilder.setTitle("Pilih kategori (maks. 4)")
         alertDialogBuilder.setCancelable(false)
@@ -307,7 +288,7 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
                     stringBuilder.append(", ")
                 }
             }
-            customDialogEdit.edit_product_kategori.text = stringBuilder.toString()
+            view.edit_product_kategori.text = stringBuilder.toString()
         }
 
         alertDialogBuilder.setNegativeButton("Cancel"
@@ -319,9 +300,32 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
             for (j in selectedCategory.indices) {
                 selectedCategory[j] = false
                 categoryList.clear()
-                customDialogEdit.edit_product_kategori.text = ""
+                view.edit_product_kategori.text = ""
             }
         }
         alertDialogBuilder.show()
     }
+
+    private fun openGallery(){
+        getContent.launch("image/*")
+    }
+
+    private val getContent =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            uri?.let {
+                val contentResolver: ContentResolver = context!!.contentResolver
+                val type = contentResolver.getType(it)
+                imageUri = it
+
+                val tempFile = File.createTempFile("temp-", null, null)
+                imageFile = tempFile
+                val inputstream = contentResolver.openInputStream(uri)
+                tempFile.outputStream().use { result ->
+                    inputstream?.copyTo(result)
+                }
+                val requestBody: RequestBody = tempFile.asRequestBody(type?.toMediaType())
+                imageMultiPart =
+                    MultipartBody.Part.createFormData("image", tempFile.name, requestBody)
+            }
+        }
 }
