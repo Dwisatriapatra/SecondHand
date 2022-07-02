@@ -2,7 +2,7 @@ package com.example.secondhand.model
 
 data class GetSellerProductItem(
     val base_price: Int,
-    val categories: List<CategoryX>,
+    val categories: List<CategorySellerProductItem>,
     val created_at: String,
     val id: Int,
     val image_name: String,

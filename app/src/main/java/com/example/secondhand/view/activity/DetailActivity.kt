@@ -14,6 +14,7 @@ import com.example.secondhand.datastore.UserLoginTokenManager
 import com.example.secondhand.model.GetBuyerProductResponseItem
 import com.example.secondhand.model.PostBuyerOrder
 import com.example.secondhand.viewmodel.BuyerOrderViewModel
+import com.example.secondhand.viewmodel.BuyerProductViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_detail.*
@@ -42,34 +43,44 @@ class DetailActivity : AppCompatActivity() {
                 intent.getParcelableExtra("detailbarangsearchresult")!!
         }
 
-        Glide.with(this).load(detailBarang.image_url)
-            .error(R.drawable.ic_launcher_background)
-            .into(imgDetail)
-        txtNamaBarang.text = detailBarang.name
-        txtJenisBarang.text = detailBarang.Categories.toString()
-        txtHargaBarang.text = detailBarang.base_price.toString()
-        txtDeskripsi.text = detailBarang.description
-
-
-        txtJenisBarang.text = ""
-        if (detailBarang.Categories!!.isNotEmpty()) {
-            for (i in detailBarang.Categories!!.indices) {
-                if (detailBarang.Categories!!.lastIndex == 0) {
-                    txtJenisBarang.text = detailBarang.Categories!![i].name
-                    break
+        val viewModelBuyerProduct = ViewModelProvider(this)[BuyerProductViewModel::class.java]
+        viewModelBuyerProduct.getBuyerProductById(detailBarang.id!!)
+        viewModelBuyerProduct.buyerProductById.observe(this){ product ->
+            //product detail
+            Glide.with(this).load(product.image_url)
+                .error(R.drawable.ic_launcher_background)
+                .into(imgDetail)
+            txtNamaBarang.text = product.name
+            txtHargaBarang.text = product.base_price.toString()
+            txtDeskripsi.text = product.description
+            txtJenisBarang.text = ""
+            if (product.Categories.isNotEmpty()) {
+                for (i in product.Categories.indices) {
+                    if (product.Categories.lastIndex == 0) {
+                        txtJenisBarang.text = product.Categories[i].name
+                        break
+                    }
+                    if (i == 0) {
+                        txtJenisBarang.text = product.Categories[i].name + ","
+                    } else if (i != product.Categories.lastIndex && i > 0) {
+                        txtJenisBarang.text = txtJenisBarang.text.toString() +
+                                product.Categories[i].name + ","
+                    } else {
+                        txtJenisBarang.text = txtJenisBarang.text.toString() +
+                                product.Categories[i].name
+                    }
                 }
-                if (i == 0) {
-                    txtJenisBarang.text = detailBarang.Categories!![i].name + ","
-                } else if (i != detailBarang.Categories!!.lastIndex && i > 0) {
-                    txtJenisBarang.text = txtJenisBarang.text.toString() +
-                            detailBarang.Categories?.get(i)!!.name + ","
-                } else {
-                    txtJenisBarang.text = txtJenisBarang.text.toString() +
-                            detailBarang.Categories!![i].name
-                }
+            } else {
+                txtJenisBarang.text = "Lainnya"
             }
-        } else {
-            txtJenisBarang.text = "Lainnya"
+
+            //product seller detail
+            txtNamaPenjual.text = product.User.full_name
+            txtKotaPenjual.text = product.User.city
+            Glide.with(imgPenjual.context)
+                .load(product.User.image_url)
+                .error(R.drawable.ic_launcher_background)
+                .into(imgPenjual)
         }
 
         btnNego.setOnClickListener {

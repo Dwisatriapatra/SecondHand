@@ -45,10 +45,13 @@ interface ApiServices {
 
 
     // ENDPOINT: BUYER/PRODUCT
-    @GET("/buyer/product")
+    @GET("buyer/product")
     fun getAllBuyerProduct(): Call<List<GetBuyerProductResponseItem>>
 
-
+    @GET("buyer/product/{id}")
+    fun getBuyerProductById(
+        @Path("id") id: Int
+    ): Call<GetProductDetail>
 
 
     // ENDPOINT: BUYER/ORDER

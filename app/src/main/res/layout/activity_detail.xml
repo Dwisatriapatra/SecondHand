@@ -97,7 +97,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/text_kota" />
+                    android:text="@string/text_kota"
+                    android:id="@+id/txtKotaPenjual"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

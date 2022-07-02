@@ -1,6 +1,6 @@
 package com.example.secondhand.model
 
-data class CategoryX(
+data class CategorySellerProductItem(
     val id: Int,
     val name: String
 )
