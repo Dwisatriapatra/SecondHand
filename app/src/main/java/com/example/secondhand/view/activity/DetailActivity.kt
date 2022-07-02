@@ -100,36 +100,42 @@ class DetailActivity : AppCompatActivity() {
 
             val dialog = BottomSheetDialog(this)
             val dialogView = layoutInflater.inflate(R.layout.tawar_harga_bottom_sheet_dialog, null)
-            val detailbarang =
-                intent.getParcelableExtra<GetBuyerProductResponseItem>("detailbarang")
+
+            if(intent.hasExtra("detailbarangsearchresult")){
+                detailBarang =
+                    intent.getParcelableExtra("detailbarangsearchresult")!!
+            }else if(intent.hasExtra("detailbarang")){
+                detailBarang =
+                    intent.getParcelableExtra("detailbarang")!!
+            }
 
             val btnBatal = dialogView.tawarDialogBatalkanButton
             val btnTawarkan = dialogView.tawarDialogTawarkanHargaButton
 
-            dialogView.tawarDialogName.text = detailbarang!!.name
-            dialogView.tawarDialogHarga.text = "Harga: Rp. ${detailbarang.base_price}"
+            dialogView.tawarDialogName.text = detailBarang.name
+            dialogView.tawarDialogHarga.text = "Harga: Rp. ${detailBarang.base_price}"
             Glide.with(dialogView.tawarDialogImage.context)
-                .load(detailbarang.image_url)
+                .load(detailBarang.image_url)
                 .error(R.drawable.ic_launcher_background)
                 .into(dialogView.tawarDialogImage)
             dialogView.tawarDialogKategori.text = ""
-            if (detailbarang.Categories!!.isNotEmpty()) {
-                for (i in detailbarang.Categories.indices) {
-                    if (detailbarang.Categories.lastIndex == 0) {
+            if (detailBarang.Categories!!.isNotEmpty()) {
+                for (i in detailBarang.Categories?.indices!!) {
+                    if (detailBarang.Categories?.lastIndex == 0) {
                         dialogView.tawarDialogKategori.text =
-                            "Kategori: ${detailbarang.Categories[i].name}"
+                            "Kategori: ${detailBarang.Categories!![i].name}"
                         break
                     }
                     if (i == 0) {
                         dialogView.tawarDialogKategori.text =
-                            "Kategori: ${detailbarang.Categories[i].name}, "
-                    } else if (i != detailbarang.Categories.lastIndex && i > 0) {
+                            "Kategori: ${detailBarang.Categories!![i].name}, "
+                    } else if (i != detailBarang.Categories!!.lastIndex && i > 0) {
                         dialogView.tawarDialogKategori.text =
-                            dialogView.tawarDialogKategori.text.toString() + detailbarang.Categories[i].name + ","
+                            dialogView.tawarDialogKategori.text.toString() + detailBarang.Categories!![i].name + ","
                     } else {
                         dialogView.tawarDialogKategori.text =
                             dialogView.tawarDialogKategori.text.toString() +
-                                    detailbarang.Categories[i].name
+                                    detailBarang.Categories!![i].name
                     }
                 }
             } else {
@@ -146,7 +152,7 @@ class DetailActivity : AppCompatActivity() {
 
                 btnTawarkan.setOnClickListener {
                     viewModelSellerData.seller.observe(this){seller ->
-                        val productId = detailbarang.id
+                        val productId = detailBarang.id
                         val edtTawar =
                             dialogView.tawarDialogInputHargaTawaran.text.toString().toInt()
 

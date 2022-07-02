@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -13,6 +14,7 @@ import com.example.secondhand.R
 import com.example.secondhand.model.GetBuyerProductResponseItem
 import com.example.secondhand.view.activity.DetailActivity
 import com.example.secondhand.view.adapter.BuyerProductAdapter
+import com.example.secondhand.view.adapter.SearchListResultAdapter
 import com.example.secondhand.viewmodel.BuyerProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -21,6 +23,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 class HomeFragment : Fragment() {
 
     private lateinit var adapter: BuyerProductAdapter
+    private lateinit var searchResultAdapter: SearchListResultAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -191,6 +194,47 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+
+        home_list_search_result.isInvisible = true
+        viewModelBuyerProduct.buyerProduct.observe(viewLifecycleOwner){buyerProduct ->
+            if(buyerProduct.isNotEmpty()){
+                searchResultAdapter = SearchListResultAdapter(requireContext(), ArrayList(buyerProduct)){
+                    val pindah = Intent(activity, DetailActivity::class.java)
+                    pindah.putExtra("detailbarangsearchresult", it)
+                    startActivity(pindah)
+                }
+                searchResultAdapter.notifyDataSetChanged()
+                home_list_search_result.adapter = searchResultAdapter
+            }
+        }
+        home_search_bar.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+
+                home_banner_section.isInvisible = true
+                home_telusuri_kategori_section.isInvisible = true
+                rv_product_home_section.isInvisible = true
+                home_list_search_result.isInvisible = false
+
+                home_search_bar.clearFocus()
+                viewModelBuyerProduct.buyerProduct.observe(viewLifecycleOwner){buyerProduct ->
+                    for(i in buyerProduct.indices){
+                        if(buyerProduct[i].name!!.contains(query!!, true)){
+                            searchResultAdapter.filter.filter(query)
+                            break
+                        }else{
+                            break
+                        }
+                    }
+                }
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                searchResultAdapter.filter.filter(newText!!)
+                return false
+            }
+
+        })
     }
 
 

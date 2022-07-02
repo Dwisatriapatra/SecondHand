@@ -6,75 +6,77 @@
     android:background="@drawable/custom_app_background"
     android:padding="10dp"
     tools:context=".view.fragment.HomeFragment">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/home_telusuri_katgeori_section"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical">
-
-        <SearchView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:layout_margin="10dp"
-            android:background="@drawable/custom_edit_text_layout"
-            android:queryHint="Cari Barang" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="BULAN RAMADAN"
-                    android:textColor="@color/black"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    tools:ignore="HardcodedText" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="18dp"
-                    android:text="BANYAK DISKON"
-                    android:textColor="@color/black"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    tools:ignore="HardcodedText" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Diskon hingga 60%"
-                    android:textColor="@color/merah"
-                    android:textSize="22sp"
-                    android:textStyle="bold"
-                    tools:ignore="HardcodedText" />
-            </LinearLayout>
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_alignParentEnd="true"
-                android:src="@drawable/promo_icon" />
-        </RelativeLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/home_telusuri_katgeori_section"
+    <SearchView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/rv_product_home_container"
+        android:layout_alignParentTop="true"
+        android:layout_margin="10dp"
+        android:id="@+id/home_search_bar"
+        android:iconifiedByDefault="false"
+        android:background="@drawable/custom_edit_text_layout"
+        android:queryHint="Cari Barang"
+        android:queryBackground="@null" />
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/home_search_bar"
+        android:layout_margin="10dp"
+        android:id="@+id/home_list_search_result"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_above="@id/home_telusuri_kategori_section"
+        android:layout_below="@id/home_search_bar"
+        android:id="@+id/home_banner_section">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BULAN RAMADAN"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="18dp"
+                android:text="BANYAK DISKON"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Diskon hingga 60%"
+                android:textColor="@color/merah"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/promo_icon" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/home_telusuri_kategori_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/rv_product_home_section"
         android:layout_marginBottom="20dp"
         android:orientation="vertical">
 
@@ -151,7 +153,7 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:id="@+id/rv_product_home_container"
+        android:id="@+id/rv_product_home_section"
         android:layout_width="match_parent"
         android:layout_height="350dp"
         android:layout_alignParentBottom="true">
