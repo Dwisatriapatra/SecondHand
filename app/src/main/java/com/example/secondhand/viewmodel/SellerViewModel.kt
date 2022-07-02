@@ -19,7 +19,7 @@ class SellerViewModel @Inject constructor(api: ApiServices) : ViewModel() {
     private val apiService = api
 
 
-    fun getSeller(token: String) {
+    fun getSellerData(token: String) {
         apiService.getSellerData(token)
             .enqueue(object : Callback<GetSellerResponse> {
                 override fun onResponse(

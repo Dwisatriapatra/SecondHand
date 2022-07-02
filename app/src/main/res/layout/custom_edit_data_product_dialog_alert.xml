@@ -103,7 +103,8 @@
             android:layout_height="100dp"
             android:id="@+id/edit_product_foto"
             android:background="@color/telusuri_kategori_button_selected_item"
-            android:contentDescription="@string/img" />
+            android:contentDescription="@string/img"
+            android:scaleType="fitXY"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

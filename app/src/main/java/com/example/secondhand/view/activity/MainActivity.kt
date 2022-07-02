@@ -22,7 +22,10 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
         val bottomNavigationView = main_bottom_navigation
         setupWithNavController(bottomNavigationView, navController)
+    }
 
-
+    //turn of back button when in main activity
+    override fun onBackPressed() {
+        //super.onBackPressed()
     }
 }

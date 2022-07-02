@@ -10,6 +10,8 @@ import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
 
+// Save all utilities needed
+
 fun uriToFile(selectedImg: Uri, context: Context): File {
     val contentResolver: ContentResolver = context.contentResolver
     val myFile = createTempFile(context)

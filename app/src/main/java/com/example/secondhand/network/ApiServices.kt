@@ -7,19 +7,71 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface ApiServices {
-    //patra
+    // ENDPOINT: AUTH
     @POST("auth/login")
-    fun login(@Body requestUser: LoginRequestUser): Call<LoginResponsePostUser>
+    fun login(
+        @Body requestUser: LoginRequestUser
+    ): Call<LoginResponsePostUser>
 
+    @POST("auth/register")
+    @Multipart
+    fun postRegister(
+        @Part("address") address: RequestBody?,
+        @Part("city") city: RequestBody?,
+        @Part("email") email: RequestBody?,
+        @Part("full_name") name: RequestBody?,
+        @Part image: MultipartBody.Part,
+        @Part("password") password: RequestBody?,
+        @Part("phone_number") phone: RequestBody?
+    ): Call<RegisterResponsePostUser>
+
+    @PUT("auth/user")
+    @Multipart
+    fun updateUserProfile(
+        @Header("access_token") token: String,
+        @Part("address") address: RequestBody?,
+        @Part("city") city: RequestBody?,
+        @Part("email") email: RequestBody?,
+        @Part("full_name") fullName: RequestBody?,
+        @Part image: MultipartBody.Part,
+        @Part("password") password: RequestBody?,
+        @Part("phone_number") phoneNumber: RequestBody?
+    ): Call<UpdateProfileUserResponse>
+
+    @GET("auth/user")
+    fun getSellerData(
+        @Header("access_token") token: String
+    ): Call<GetSellerResponse>
+
+
+    // ENDPOINT: BUYER/PRODUCT
     @GET("/buyer/product")
     fun getAllBuyerProduct(): Call<List<GetBuyerProductResponseItem>>
 
+
+
+
+    // ENDPOINT: BUYER/ORDER
+    @POST("buyer/order")
+    fun updateBidPrice(
+        @Header("access_token") token: String,
+        @Body reqBidPrice: PostBuyerOrder
+    ): Call<PostBuyerOrderResponseItem>
+
+
+    // ENDPOINT: NOTIFICATION
     @GET("notification")
     fun getAllNotification(@Header("access_token") token: String): Call<List<GetAllNotificationResponseItem>>
 
-    @GET("auth/user")
-    fun getSellerData(@Header("access_token") token: String): Call<GetSellerResponse>
+    @PATCH("notification/{id}")
+    fun updateNotificationStatus(
+        @Header("access_token") token: String,
+        @Path("id") notificationId: Int,
+        @Body notificationStatus: NotificationStatus
+    ) : Call<UpdateNotificationStatusResponse>
 
+
+    //ENDPOINT: SELLER/PRODUCT
     @GET("seller/product")
     fun getSellerProdcut(@Header("access_token") token: String): Call<List<GetSellerProductItem>>
 
@@ -35,44 +87,11 @@ interface ApiServices {
         @Part("name") name: RequestBody
     ): Call<PostJualProductResponse>
 
-    @PATCH("seller/order/{id}")
-    fun updateStatusOrder(
-        @Header("access_token") token: String,
-        @Path("id") id: Int,
-        @Body orderStatus: OrderStatus
-    ): Call<Any>
-
-    @GET("seller/order/product/{product_id}")
-    fun getInfoSellerOrderProductById(
-        @Header("access_token") token: String,
-        @Path("product_id") productId: Int
-    ) : Call<List<GetSellerOrderProductInfoItem>>
-
-    @PATCH("notification/{id}")
-    fun updateNotificationStatus(
-        @Header("access_token") token: String,
-        @Path("id") notificationId: Int,
-        @Body notificationStatus: NotificationStatus
-    ) : Call<UpdateNotificationStatusResponse>
-
     @DELETE("seller/product/{id}")
     fun deleteProductFromDaftarJualSaya(
         @Header("access_token") token: String,
         @Path("id") id: Int
     ) : Call<GetSellerProductDeleteItemResponse>
-
-    @PUT("auth/user")
-    @Multipart
-    fun updateUserProfile(
-       @Header("access_token") token: String,
-       @Part("address") address: RequestBody?,
-       @Part("city") city: RequestBody?,
-       @Part("email") email: RequestBody?,
-       @Part("full_name") fullName: RequestBody?,
-       @Part image: MultipartBody.Part,
-       @Part("password") password: RequestBody?,
-       @Part("phone_number") phoneNumber: RequestBody?
-    ): Call<UpdateProfileUserResponse>
 
     @PUT("seller/product/{id}")
     @Multipart
@@ -87,25 +106,18 @@ interface ApiServices {
         @Part("name") name: RequestBody
     ) : Call<GetSellerProductUpdateResponse>
 
-    //greta
 
-    @POST("auth/register")
-    @Multipart
-    fun postRegister(
-        @Part("address") address: RequestBody?,
-        @Part("city") city: RequestBody?,
-        @Part("email") email: RequestBody?,
-        @Part("full_name") name: RequestBody?,
-        @Part image: MultipartBody.Part,
-        @Part("password") password: RequestBody?,
-        @Part("phone_number") phone: RequestBody?
-    ): Call<RegisterResponsePostUser>
-
-    //fitur tawar menawar
-    @POST("buyer/order")
-    fun updateBidPrice(
+    // ENDPOINT: SELLER/ORDER
+    @PATCH("seller/order/{id}")
+    fun updateStatusOrder(
         @Header("access_token") token: String,
-        @Body reqBidPrice: PostBuyerOrder
-    ): Call<PostBuyerOrderResponseItem>
+        @Path("id") id: Int,
+        @Body orderStatus: OrderStatus
+    ): Call<Any>
 
+    @GET("seller/order/product/{product_id}")
+    fun getInfoSellerOrderProductById(
+        @Header("access_token") token: String,
+        @Path("product_id") productId: Int
+    ) : Call<List<GetSellerOrderProductInfoItem>>
 }

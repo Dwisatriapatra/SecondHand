@@ -47,7 +47,7 @@ class PreviewActivity : AppCompatActivity() {
         //seller
         userLoginTokenManager = UserLoginTokenManager(this)
         userLoginTokenManager.accessToken.asLiveData().observe(this){tokenAccess ->
-            viewModelSeller.getSeller(tokenAccess)
+            viewModelSeller.getSellerData(tokenAccess)
             viewModelSeller.seller.observe(this){
                 previewNamaSeller.text = it.full_name
                 previewKotaSeller.text = it.city

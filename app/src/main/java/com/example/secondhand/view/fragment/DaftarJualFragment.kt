@@ -79,7 +79,7 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
             if (isUser) {
                 daftar_jual_saya_belum_login_section.isInvisible = true
                 userLoginTokenManager.accessToken.asLiveData().observe(viewLifecycleOwner) {
-                    viewModelSeller.getSeller(it)
+                    viewModelSeller.getSellerData(it)
                 }
 
                 initView()
@@ -142,12 +142,8 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
     }
 
     override fun editProductInDaftarJualSaya(item: GetSellerProductItem, position: Int) {
-        // do edit
-        //task
-
         userLoginTokenManager = UserLoginTokenManager(requireContext())
         val viewModelSellerProduct = ViewModelProvider(this)[SellerProductViewModel::class.java]
-
 
         val customDialogEdit = LayoutInflater.from(requireContext()).inflate(
             R.layout.custom_edit_data_product_dialog_alert, null, false
@@ -155,9 +151,6 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
         val editDataDialog = AlertDialog.Builder(requireContext())
             .setView(customDialogEdit)
             .create()
-
-        //init field later
-        //
 
         customDialogEdit.edit_product_kategori.setOnClickListener {
             initMultiChoicesAlertDialog(customDialogEdit)
@@ -169,9 +162,6 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
         }
 
         customDialogEdit.edit_product_update_button.setOnClickListener {
-            //action
-
-            //fetch all data input from user
             val namaBaruProduct = customDialogEdit.edit_product_nama.text.toString().toRequestBody("multipart/form-data".toMediaType())
             val hargaBaruProduct = customDialogEdit.edit_product_harga.text.toString()
                 .toRequestBody("multipart/form-data".toMediaType())
