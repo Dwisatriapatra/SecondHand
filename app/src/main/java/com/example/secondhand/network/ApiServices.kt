@@ -123,4 +123,9 @@ interface ApiServices {
         @Header("access_token") token: String,
         @Path("product_id") productId: Int
     ) : Call<List<GetSellerOrderProductInfoItem>>
+
+    @GET("seller/order")
+    fun getAllSellerOrder(
+        @Header("access_token") token: String
+    ): Call<List<GetSellerOrderResponseItem>>
 }

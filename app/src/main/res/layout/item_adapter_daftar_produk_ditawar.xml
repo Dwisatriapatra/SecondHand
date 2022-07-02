@@ -63,29 +63,61 @@
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <Button
-                android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/tolak"
-                android:id="@+id/card_daftar_produk_ditawar_tolak_button"
-                android:layout_marginEnd="10dp"
-                android:textColor="@color/white"
-                android:layout_weight="0.5"
-                android:backgroundTint="@color/telusuri_kategori_button_not_selected_item"
-                style="?android:attr/buttonBarButtonStyle" />
-            <Button
-                android:id="@+id/card_daftar_produk_ditawar_terima_button"
-                android:layout_width="0dp"
+                android:orientation="horizontal"
+                android:id="@+id/card_daftar_produk_ditawar_terima_tolak_button_section">
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tolak"
+                    android:id="@+id/card_daftar_produk_ditawar_tolak_button"
+                    android:layout_marginEnd="10dp"
+                    android:textColor="@color/white"
+                    android:layout_weight="0.5"
+                    android:backgroundTint="@color/telusuri_kategori_button_not_selected_item"
+                    style="?android:attr/buttonBarButtonStyle" />
+                <Button
+                    android:id="@+id/card_daftar_produk_ditawar_terima_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/terima"
+                    android:textColor="@color/white"
+                    android:layout_weight="0.5"
+                    android:backgroundTint="@color/telusuri_kategori_button_selected_item"
+                    style="?android:attr/buttonBarButtonStyle" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/terima"
-                android:textColor="@color/white"
-                android:layout_weight="0.5"
-                android:backgroundTint="@color/telusuri_kategori_button_selected_item"
-                style="?android:attr/buttonBarButtonStyle" />
-        </LinearLayout>
+                android:orientation="horizontal"
+                android:id="@+id/card_daftar_produk_ditawar_status_hubungi_button_section">
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/status"
+                    android:id="@+id/card_daftar_produk_ditawar_status_button"
+                    android:layout_marginEnd="10dp"
+                    android:textColor="@color/white"
+                    android:layout_weight="0.5"
+                    android:backgroundTint="@color/telusuri_kategori_button_not_selected_item"
+                    style="?android:attr/buttonBarButtonStyle" />
+                <Button
+                    android:id="@+id/card_daftar_produk_ditawar_hubungi_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hubungi"
+                    android:textColor="@color/white"
+                    android:layout_weight="0.5"
+                    android:backgroundTint="@color/purple_700"
+                    style="?android:attr/buttonBarButtonStyle" />
+            </LinearLayout>
+        </RelativeLayout>
+
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>

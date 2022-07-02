@@ -15,10 +15,9 @@ import com.example.secondhand.R
 import com.example.secondhand.datastore.UserLoginTokenManager
 import com.example.secondhand.helper.PenawaranItemClickListener
 import com.example.secondhand.model.GetAllNotificationResponseItem
-import com.example.secondhand.model.NotificationStatus
+import com.example.secondhand.model.GetSellerOrderResponseItem
 import com.example.secondhand.model.OrderStatus
 import com.example.secondhand.view.adapter.ProdukDitawarAdapter
-import com.example.secondhand.viewmodel.NotificationViewModel
 import com.example.secondhand.viewmodel.SellerOrderViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -51,21 +50,18 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
             .into(info_penawar_foto_pembeli)
 
         userLoginTokenManager = UserLoginTokenManager(this)
-        val viewModelProdukDitawar = ViewModelProvider(this)[NotificationViewModel::class.java]
+        val viewModelSellerOrder = ViewModelProvider(this)[SellerOrderViewModel::class.java]
         userLoginTokenManager.accessToken.asLiveData().observe(this) {
-            viewModelProdukDitawar.getAllNotification(it)
+            viewModelSellerOrder.getAllSellerOrder(it)
         }
-        ViewModelProvider(this)[SellerOrderViewModel::class.java]
-        adapter = ProdukDitawarAdapter(this@InfoPenawarActivity)
+        adapter = ProdukDitawarAdapter(this@InfoPenawarActivity, sellerName!!)
         rv_daftar_barang_ditawar.layoutManager = LinearLayoutManager(this)
         rv_daftar_barang_ditawar.adapter = adapter
-
-
-        viewModelProdukDitawar.notification.observe(this) {
-            val list: MutableList<GetAllNotificationResponseItem> = mutableListOf()
+        viewModelSellerOrder.sellerOrder.observe(this) {
+            val list: MutableList<GetSellerOrderResponseItem> = mutableListOf()
             if (it.isNotEmpty()) {
                 for (i in it.indices) {
-                    if (it[i].seller_name == sellerName && it[i].buyer_name == buyerName) {
+                    if (it[i].User.full_name == buyerName) {
                         list += it[i]
                     }
                 }
@@ -111,10 +107,9 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
         bottomSheetDialog.show()
     }
 
-    override fun terima(item: GetAllNotificationResponseItem, position: Int) {
+    override fun terimaButton(item: GetSellerOrderResponseItem, position: Int) {
         userLoginTokenManager = UserLoginTokenManager(this)
         val viewModelSellerOrder = ViewModelProvider(this)[SellerOrderViewModel::class.java]
-        val viewModelNotification = ViewModelProvider(this)[NotificationViewModel::class.java]
 
         AlertDialog.Builder(this)
             .setTitle("Terima tawaran")
@@ -123,30 +118,26 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
                 dialogInterface.dismiss()
             }
             .setPositiveButton("Ya"){dialogInterface: DialogInterface, _: Int ->
-                userLoginTokenManager.accessToken.asLiveData().observe(this) { acessToken ->
-                    viewModelSellerOrder.getSellerOrderProductInfo(acessToken, item.product_id!!, item.buyer_name!!)
-                    viewModelSellerOrder.sellerProductInfo.observe(this){productInfo ->
-                        viewModelSellerOrder.updateOrderStatus(acessToken, productInfo.id, OrderStatus("accepted"))
-                        viewModelSellerOrder.responseMessage.observe(this) {
-                            if (it) {
-                                Toast.makeText(this, "Berhasil menerima", Toast.LENGTH_SHORT).show()
-                                initDialogToWhatsApp(productInfo.Product.image_url, item.bid_price)
-                            } else {
-                                Toast.makeText(this, "Permintaan anda gagal", Toast.LENGTH_SHORT)
-                                    .show()
-                            }
+                userLoginTokenManager.accessToken.asLiveData().observe(this){accessToken ->
+                    viewModelSellerOrder.updateOrderStatus(accessToken, item.id, OrderStatus("accepted"))
+                    viewModelSellerOrder.responseMessage.observe(this) {
+                        if (it) {
+                            Toast.makeText(this, "Berhasil menerima", Toast.LENGTH_SHORT).show()
+                            initDialogToWhatsApp(item.Product.image_url, item.price)
+                        } else {
+                            Toast.makeText(this, "Permintaan anda gagal", Toast.LENGTH_SHORT)
+                                .show()
                         }
-                        viewModelNotification.updateNotificationStatus(acessToken, item.id!!, NotificationStatus(true, "accepted"))
-                        dialogInterface.dismiss()
                     }
+                    //viewModelNotification.updateNotificationStatus(acessToken, item.id!!, NotificationStatus(true, "accepted"))
+                    dialogInterface.dismiss()
                 }
             }.show()
     }
 
-    override fun tolak(item: GetAllNotificationResponseItem, position: Int) {
+    override fun tolakButton(item: GetSellerOrderResponseItem, position: Int) {
         userLoginTokenManager = UserLoginTokenManager(this)
         val viewModelSellerOrder = ViewModelProvider(this)[SellerOrderViewModel::class.java]
-        val viewModelNotification = ViewModelProvider(this)[NotificationViewModel::class.java]
 
         AlertDialog.Builder(this)
             .setTitle("Tolak tawaran")
@@ -155,24 +146,29 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
                 dialogInterface.dismiss()
             }
             .setPositiveButton("Ya"){dialogInterface: DialogInterface, _: Int ->
-                userLoginTokenManager.accessToken.asLiveData().observe(this) { acessToken ->
-                    viewModelSellerOrder.getSellerOrderProductInfo(acessToken, item.product_id!!, item.buyer_name!!)
-                    viewModelSellerOrder.sellerProductInfo.observe(this){productInfo ->
-                        viewModelSellerOrder.updateOrderStatus(acessToken, productInfo.id, OrderStatus("declined"))
-                        viewModelSellerOrder.responseMessage.observe(this) {
-                            if (it) {
-                                Toast.makeText(this, "Berhasil menolak", Toast.LENGTH_SHORT).show()
-                            } else {
-                                Toast.makeText(this, "Permintaan anda gagal", Toast.LENGTH_SHORT)
-                                    .show()
-                            }
+
+                userLoginTokenManager.accessToken.asLiveData().observe(this){ accessToken ->
+                    viewModelSellerOrder.updateOrderStatus(accessToken, item.id, OrderStatus("declined"))
+                    viewModelSellerOrder.responseMessage.observe(this) {
+                        if (it) {
+                            Toast.makeText(this, "Berhasil menolak", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(this, "Permintaan anda gagal", Toast.LENGTH_SHORT)
+                                .show()
                         }
-                        viewModelNotification.updateNotificationStatus(acessToken, item.id!!, NotificationStatus(true, "declined"))
-                        dialogInterface.dismiss()
                     }
+                    //viewModelNotification.updateNotificationStatus(acessToken, item.id!!, NotificationStatus(true, "declined"))
+                    dialogInterface.dismiss()
                 }
             }.show()
     }
 
+    override fun hubungiButton(item: GetSellerOrderResponseItem, position: Int) {
+        initDialogToWhatsApp(item.Product.image_url, item.price)
+    }
 
+    override fun statusButton(item: GetSellerOrderResponseItem, position: Int) {
+        // do something
+        // declare bottom sheet here
+    }
 }

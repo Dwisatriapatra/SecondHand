@@ -1,8 +1,9 @@
 package com.example.secondhand.helper
-
-import com.example.secondhand.model.GetAllNotificationResponseItem
+import com.example.secondhand.model.GetSellerOrderResponseItem
 
 interface PenawaranItemClickListener {
-    fun tolak(item: GetAllNotificationResponseItem, position: Int)
-    fun terima(item: GetAllNotificationResponseItem, position: Int)
+    fun tolakButton(item: GetSellerOrderResponseItem, position: Int)
+    fun terimaButton(item: GetSellerOrderResponseItem, position: Int)
+    fun statusButton(item: GetSellerOrderResponseItem, position: Int)
+    fun hubungiButton(item: GetSellerOrderResponseItem, position: Int)
 }

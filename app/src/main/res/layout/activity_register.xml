@@ -109,6 +109,7 @@
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
+                android:scaleType="centerCrop"
                 android:id="@+id/register_image"
                 android:background="@color/telusuri_kategori_button_selected_item"
                 android:contentDescription="@string/img" />

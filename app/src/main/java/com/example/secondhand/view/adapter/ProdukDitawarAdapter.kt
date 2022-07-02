@@ -9,14 +9,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.secondhand.R
 import com.example.secondhand.helper.PenawaranItemClickListener
-import com.example.secondhand.model.GetAllNotificationResponseItem
+import com.example.secondhand.model.GetSellerOrderResponseItem
 import kotlinx.android.synthetic.main.item_adapter_daftar_produk_ditawar.view.*
 
-class ProdukDitawarAdapter (private val penawaranItemClickListener: PenawaranItemClickListener) :
+class ProdukDitawarAdapter (
+    private val penawaranItemClickListener: PenawaranItemClickListener,
+    private val namaSeller: String
+    ) :
     RecyclerView.Adapter<ProdukDitawarAdapter.ViewHolder>()
 {
-    private var listProdukDitawar: List<GetAllNotificationResponseItem>? = null
-    fun setListProdukDitawar(list: List<GetAllNotificationResponseItem>){
+    private var listProdukDitawar: List<GetSellerOrderResponseItem>? = null
+    fun setListProdukDitawar(list: List<GetSellerOrderResponseItem>){
         this.listProdukDitawar = list
     }
 
@@ -33,27 +36,31 @@ class ProdukDitawarAdapter (private val penawaranItemClickListener: PenawaranIte
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder.itemView){
             with(listProdukDitawar!![position]){
-                card_daftar_produk_ditawar_nama_buyer.text = "Pembeli: $buyer_name"
-                card_daftar_produk_ditawar_harga_tawar.text = "Harga tawar: $bid_price"
+                card_daftar_produk_ditawar_nama_buyer.text = "Pembeli: ${User.full_name}e"
+                card_daftar_produk_ditawar_harga_tawar.text = "Harga tawar: $price"
                 card_daftar_produk_ditawar_status.text = "Status: $status"
-                card_daftar_produk_ditawar_nama_seller.text = "Penjual: $seller_name"
+                card_daftar_produk_ditawar_nama_seller.text = "Penjual: $namaSeller"
                 Glide.with(card_daftar_produk_ditawar_image.context)
-                    .load(image_url)
+                    .load(Product.image_url)
                     .error(R.drawable.ic_launcher_background)
                     .override(100, 100)
                     .into(card_daftar_produk_ditawar_image)
-//                card_daftar_produk_ditawar_aksi_button.setOnClickListener {
-//                    onClick(listProdukDitawar!![position])
-//                }
                 if(status == "accepted" || status == "diterima" || status == "declined" || status == "ditolak"){
-                    card_daftar_produk_ditawar_terima_button.isInvisible = true
-                    card_daftar_produk_ditawar_tolak_button.isInvisible = true
+                    card_daftar_produk_ditawar_terima_tolak_button_section.isInvisible = true
+                }else{
+                    card_daftar_produk_ditawar_status_hubungi_button_section.isInvisible = true
                 }
                 card_daftar_produk_ditawar_tolak_button.setOnClickListener {
-                    penawaranItemClickListener.tolak(listProdukDitawar!![position], position)
+                    penawaranItemClickListener.tolakButton(listProdukDitawar!![position], position)
                 }
                 card_daftar_produk_ditawar_terima_button.setOnClickListener {
-                    penawaranItemClickListener.terima(listProdukDitawar!![position], position)
+                    penawaranItemClickListener.terimaButton(listProdukDitawar!![position], position)
+                }
+                card_daftar_produk_ditawar_hubungi_button.setOnClickListener {
+                    penawaranItemClickListener.hubungiButton(listProdukDitawar!![position], position)
+                }
+                card_daftar_produk_ditawar_status_button.setOnClickListener {
+                    penawaranItemClickListener.statusButton(listProdukDitawar!![position], position)
                 }
             }
         }

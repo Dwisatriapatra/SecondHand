@@ -15,6 +15,7 @@ import com.example.secondhand.model.GetBuyerProductResponseItem
 import com.example.secondhand.model.PostBuyerOrder
 import com.example.secondhand.viewmodel.BuyerOrderViewModel
 import com.example.secondhand.viewmodel.BuyerProductViewModel
+import com.example.secondhand.viewmodel.SellerViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_detail.*
@@ -91,7 +92,10 @@ class DetailActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun initDialogTawarHarga() {
         userLoginTokenManager = UserLoginTokenManager(this)
-
+        val viewModelSellerData = ViewModelProvider(this)[SellerViewModel::class.java]
+        userLoginTokenManager.accessToken.asLiveData().observe(this){accessToken ->
+            viewModelSellerData.getSellerData(accessToken)
+        }
         userLoginTokenManager.isUser.asLiveData().observe(this) { isUser ->
 
             val dialog = BottomSheetDialog(this)
@@ -141,18 +145,19 @@ class DetailActivity : AppCompatActivity() {
                 }
 
                 btnTawarkan.setOnClickListener {
-                    userLoginTokenManager.alamat.asLiveData().observe(this) { alamat ->
+                    viewModelSellerData.seller.observe(this){seller ->
                         val productId = detailbarang.id
                         val edtTawar =
                             dialogView.tawarDialogInputHargaTawaran.text.toString().toInt()
-                        if (alamat.isNullOrEmpty()) {
+
+                        if(seller.address.isEmpty()){
                             Toast.makeText(
                                 this,
                                 "Lengkapi profile anda terlebih dahulu",
                                 Toast.LENGTH_LONG
                             ).show()
                             startActivity(Intent(this, LengkapiInfoAkun::class.java))
-                        } else {
+                        }else{
                             if (edtTawar.toString().isNotEmpty()) {
                                 val viewModelBuyerOrder =
                                     ViewModelProvider(this)[BuyerOrderViewModel::class.java]

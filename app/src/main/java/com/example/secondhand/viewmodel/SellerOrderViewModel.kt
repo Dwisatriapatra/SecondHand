@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.secondhand.model.GetSellerOrderProductInfoItem
+import com.example.secondhand.model.GetSellerOrderResponseItem
 import com.example.secondhand.model.OrderStatus
 import com.example.secondhand.network.ApiServices
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,6 +20,9 @@ class SellerOrderViewModel @Inject constructor(api: ApiServices) : ViewModel() {
     val apiServices = api
     private val liveDataSellerProductInfo = MutableLiveData<GetSellerOrderProductInfoItem>()
     val sellerProductInfo: LiveData<GetSellerOrderProductInfoItem> = liveDataSellerProductInfo
+
+    private val liveDataSellerOrder = MutableLiveData<List<GetSellerOrderResponseItem>>()
+    val sellerOrder: LiveData<List<GetSellerOrderResponseItem>> = liveDataSellerOrder
 
     fun getSellerOrderProductInfo(token: String, productId: Int, buyerName: String){
         apiServices.getInfoSellerOrderProductById(token, productId)
@@ -52,11 +56,30 @@ class SellerOrderViewModel @Inject constructor(api: ApiServices) : ViewModel() {
         apiServices.updateStatusOrder(token, id, orderStatus)
             .enqueue(object : Callback<Any> {
                 override fun onResponse(call: Call<Any>, response: Response<Any>) {
-                    //responseMsg.value = response.isSuccessful
+                    responseMsg.value = response.isSuccessful
                 }
 
                 override fun onFailure(call: Call<Any>, t: Throwable) {
-                    //responseMsg.value = false
+                    responseMsg.value = false
+                }
+
+            })
+    }
+
+    fun getAllSellerOrder(token: String){
+        apiServices.getAllSellerOrder(token)
+            .enqueue(object: Callback<List<GetSellerOrderResponseItem>>{
+                override fun onResponse(
+                    call: Call<List<GetSellerOrderResponseItem>>,
+                    response: Response<List<GetSellerOrderResponseItem>>
+                ) {
+                    if(response.isSuccessful){
+                        liveDataSellerOrder.value = response.body()
+                    }
+                }
+
+                override fun onFailure(call: Call<List<GetSellerOrderResponseItem>>, t: Throwable) {
+                    //
                 }
 
             })
