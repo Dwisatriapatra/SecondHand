@@ -58,7 +58,15 @@ class UserViewModel @Inject constructor(api: ApiServices) : ViewModel() {
         phone: RequestBody?,
         image: MultipartBody.Part
     ) {
-        apiServices.postRegister(address, city, email, fullName, image, password, phone)
+        apiServices.postRegister(
+            address,
+            city,
+            email,
+            fullName,
+            image,
+            password,
+            phone
+        )
             .enqueue(object : Callback<RegisterResponsePostUser> {
                 override fun onResponse(
                     call: Call<RegisterResponsePostUser>,
@@ -80,11 +88,19 @@ class UserViewModel @Inject constructor(api: ApiServices) : ViewModel() {
         city: RequestBody,
         email: RequestBody,
         fullName: RequestBody,
-        image: MultipartBody.Part,
+        //image: MultipartBody.Part,
         password: RequestBody,
         phoneNumber: RequestBody
     ){
-        apiServices.updateUserProfile(token, address, city, email, fullName, image, password, phoneNumber)
+        apiServices.updateUserProfile(token,
+            address,
+            city,
+            email,
+            fullName,
+            //image,
+            password,
+            phoneNumber
+        )
             .enqueue(object: Callback<UpdateProfileUserResponse>{
                 override fun onResponse(
                     call: Call<UpdateProfileUserResponse>,

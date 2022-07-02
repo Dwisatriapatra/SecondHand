@@ -33,7 +33,7 @@ interface ApiServices {
         @Part("city") city: RequestBody?,
         @Part("email") email: RequestBody?,
         @Part("full_name") fullName: RequestBody?,
-        @Part image: MultipartBody.Part,
+        //@Part image: MultipartBody.Part,
         @Part("password") password: RequestBody?,
         @Part("phone_number") phoneNumber: RequestBody?
     ): Call<UpdateProfileUserResponse>

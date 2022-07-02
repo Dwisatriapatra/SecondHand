@@ -67,41 +67,43 @@ class LengkapiInfoAkun : AppCompatActivity() {
                     email = it.toRequestBody("multipart/form-data".toMediaType())
                 }
 
-                userLoginTokenManager.password.asLiveData().observe(this) {
-                    password = it.toRequestBody("multipart/form-data".toMediaType())
-                }
+                userLoginTokenManager.password.asLiveData().observe(this) { passwordResult ->
+                    password = passwordResult.toRequestBody("multipart/form-data".toMediaType())
 
-                userLoginTokenManager.accessToken.asLiveData().observe(this) {
-                    val viewModelUser = ViewModelProvider(this)[UserViewModel::class.java]
-                    viewModelUser.updateDataUser(
-                        it,
-                        alamat,
-                        kota,
-                        email!!,
-                        nama,
-                        imageMultiPart!!,
-                        password!!,
-                        nomorHandphone
-                    )
-                    viewModelUser.responseMessage.observe(this) { responseMessage ->
-                        if (responseMessage!!) {
+                    userLoginTokenManager.accessToken.asLiveData().observe(this) {
+                        val viewModelUser = ViewModelProvider(this)[UserViewModel::class.java]
+                        viewModelUser.updateDataUser(
+                            it,
+                            alamat,
+                            kota,
+                            email!!,
+                            nama,
+                            //imageMultiPart!!,
+                            password!!,
+                            nomorHandphone
+                        )
+                        viewModelUser.responseMessage.observe(this) { responseMessage ->
+                            if (responseMessage!!) {
 
-                            GlobalScope.launch {
-                                userLoginTokenManager.saveUpdateAkun(
-                                    imageUri.toString(),
-                                    update_kota_user.text.toString(),
-                                    update_alamat_user.text.toString(),
-                                    update_nomor_handphone_user.text.toString()
-                                )
+                                GlobalScope.launch {
+                                    userLoginTokenManager.saveUpdateAkun(
+                                        imageUri.toString(),
+                                        update_kota_user.text.toString(),
+                                        update_alamat_user.text.toString(),
+                                        update_nomor_handphone_user.text.toString()
+                                    )
+                                }
+                                Toast.makeText(this, "Update data profile berhasil", Toast.LENGTH_SHORT)
+                                    .show()
+                                startActivity(Intent(this, MainActivity::class.java))
+                            } else {
+                                Toast.makeText(this, "Update gagal", Toast.LENGTH_SHORT).show()
                             }
-                            Toast.makeText(this, "Update data profile berhasil", Toast.LENGTH_SHORT)
-                                .show()
-                            startActivity(Intent(this, MainActivity::class.java))
-                        } else {
-                            Toast.makeText(this, "Update gagal", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
+
+
             } else {
                 Toast.makeText(this, "Semua field harus diisi", Toast.LENGTH_SHORT).show()
             }
