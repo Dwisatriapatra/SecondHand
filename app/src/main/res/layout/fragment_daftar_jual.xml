@@ -70,7 +70,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/daftar_jual_saya_profile_penjual_section"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="5dp"
         android:padding="20dp">
 
         <LinearLayout
@@ -114,7 +114,7 @@
     </HorizontalScrollView>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_daftar_jual_saya"
+        android:id="@+id/rv_daftar_jual_saya_produk"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/daftar_jual_saya_filter_produk_section" />

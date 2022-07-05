@@ -162,6 +162,7 @@
             android:id="@+id/jual_jual_produk_baru_button"
             android:layout_width="200dp"
             android:layout_height="200dp"
+            android:backgroundTint="@color/telusuri_kategori_button_selected_item"
             android:layout_centerInParent="true"
             android:text="@string/jual_produk_baru" />
 

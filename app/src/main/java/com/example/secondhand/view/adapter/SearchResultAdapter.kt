@@ -7,15 +7,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.secondhand.R
-import com.example.secondhand.model.GetSearchProductResponseItem
+import com.example.secondhand.model.GetBuyerProductResponseItem
 import kotlinx.android.synthetic.main.search_result_adapter_item.view.*
 
 
-class SearchResultAdapter(private val onClick: (GetSearchProductResponseItem) -> Unit) :
+class SearchResultAdapter(private val onClick: (GetBuyerProductResponseItem) -> Unit) :
     RecyclerView.Adapter<SearchResultAdapter.ViewHolder>() {
 
-    private var listBuyerProductSearch: List<GetSearchProductResponseItem>? = null
-    fun setDataBuyerProductSearch(list: List<GetSearchProductResponseItem>) {
+    private var listBuyerProductSearch: List<GetBuyerProductResponseItem>? = null
+    fun setDataBuyerProductSearch(list: List<GetBuyerProductResponseItem>) {
         this.listBuyerProductSearch = list
     }
 
@@ -40,9 +40,8 @@ class SearchResultAdapter(private val onClick: (GetSearchProductResponseItem) ->
 
                 card_product_search_nama.text = name
                 card_product_search_harga.text = base_price.toString()
-                //card_product_search_kategori
 
-                if(Categories.isNotEmpty()){
+                if(Categories!!.isNotEmpty()){
                     for(i in Categories.indices){
                         if (Categories.lastIndex == 0) {
                             card_product_search_kategori.text = "Kategori: " + Categories[i].name
@@ -62,6 +61,9 @@ class SearchResultAdapter(private val onClick: (GetSearchProductResponseItem) ->
                     card_product_search_kategori.text = "Kategori: lainnya"
                 }
 
+                card_product_search.setOnClickListener {
+                    onClick(listBuyerProductSearch!![position])
+                }
 
             }
         }

@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.secondhand.model.GetBuyerProductResponseItem
 import com.example.secondhand.model.GetProductDetail
-import com.example.secondhand.model.GetSearchProductResponseItem
 import com.example.secondhand.network.ApiServices
 import dagger.hilt.android.lifecycle.HiltViewModel
 import retrofit2.Call
@@ -24,8 +23,8 @@ class BuyerProductViewModel @Inject constructor(api: ApiServices) : ViewModel() 
     val buyerProductById: LiveData<GetProductDetail> = liveDataBuyerProductById
 
     private val liveDataBuyerProductSearchResult =
-        MutableLiveData<List<GetSearchProductResponseItem>>()
-    val searchResult: LiveData<List<GetSearchProductResponseItem>> =
+        MutableLiveData<List<GetBuyerProductResponseItem>>()
+    val searchResult: LiveData<List<GetBuyerProductResponseItem>> =
         liveDataBuyerProductSearchResult
 
     fun getAllBuyerProduct() {
@@ -71,18 +70,18 @@ class BuyerProductViewModel @Inject constructor(api: ApiServices) : ViewModel() 
 
     fun getBuyerProductSearchResult(productName: String) {
         apiServices.getSearchBuyerProduct(productName)
-            .enqueue(object : Callback<List<GetSearchProductResponseItem>> {
+            .enqueue(object: Callback<List<GetBuyerProductResponseItem>>{
                 override fun onResponse(
-                    call: Call<List<GetSearchProductResponseItem>>,
-                    response: Response<List<GetSearchProductResponseItem>>
+                    call: Call<List<GetBuyerProductResponseItem>>,
+                    response: Response<List<GetBuyerProductResponseItem>>
                 ) {
-                    if (response.isSuccessful) {
+                    if(response.isSuccessful){
                         liveDataBuyerProductSearchResult.value = response.body()
                     }
                 }
 
                 override fun onFailure(
-                    call: Call<List<GetSearchProductResponseItem>>,
+                    call: Call<List<GetBuyerProductResponseItem>>,
                     t: Throwable
                 ) {
                     //

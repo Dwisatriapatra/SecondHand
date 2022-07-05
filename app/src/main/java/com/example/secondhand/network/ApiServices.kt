@@ -51,7 +51,7 @@ interface ApiServices {
     @GET("buyer/product")
     fun getSearchBuyerProduct(
         @Query("search") productName: String
-    ) : Call<List<GetSearchProductResponseItem>>
+    ) : Call<List<GetBuyerProductResponseItem>>
 
     @GET("buyer/product/{id}")
     fun getBuyerProductById(

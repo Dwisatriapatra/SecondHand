@@ -87,7 +87,7 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
                 daftar_jual_saya_title.isInvisible = true
                 daftar_jual_saya_profile_penjual_section.isInvisible = true
                 daftar_jual_saya_filter_produk_section.isInvisible = true
-                rv_daftar_jual_saya.isInvisible = true
+                rv_daftar_jual_saya_produk.isInvisible = true
                 daftar_jual_saya_progress_bar.isInvisible = true
 
                 daftar_jual_saya_to_login.setOnClickListener {
@@ -125,19 +125,23 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
             viewModelSellerProduct.getAllSellerProduct(it)
         }
         adapter = SellerProductAdapter(this@DaftarJualFragment)
-        rv_daftar_jual_saya.layoutManager =
+        rv_daftar_jual_saya_produk.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        rv_daftar_jual_saya.adapter = adapter
+        rv_daftar_jual_saya_produk.adapter = adapter
 
-        viewModelSellerProduct.sellerProduct.observe(viewLifecycleOwner) {
-            if (it.isNotEmpty()) {
-                adapter.setDataSellerProduct(it)
+        // init on "semua produk" category
+        daftar_jual_saya_filter_produk_product.isSelected = true
+        viewModelSellerProduct.sellerProduct.observe(viewLifecycleOwner) {product ->
+            if (product.isNotEmpty()) {
+                adapter.setDataSellerProduct(product)
                 daftar_jual_saya_progress_bar.isInvisible = true
                 adapter.notifyDataSetChanged()
             } else {
                 daftar_jual_saya_progress_bar.isInvisible = true
             }
         }
+
+        // to do: diminati, terjual
 
     }
 

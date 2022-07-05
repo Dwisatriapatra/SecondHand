@@ -51,7 +51,7 @@ class HomeFragment : Fragment() {
         rv_product_home.adapter = adapter
 
 
-        //
+        // initialize adapter and layout manager for searching activity
         searchProductResultAdapter = SearchResultAdapter {
             val pindah = Intent(activity, DetailActivity::class.java)
             pindah.putExtra("detailbarangsearchresult", it)
