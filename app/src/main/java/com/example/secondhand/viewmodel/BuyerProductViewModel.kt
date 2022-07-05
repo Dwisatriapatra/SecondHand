@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.secondhand.model.GetBuyerProductResponseItem
 import com.example.secondhand.model.GetProductDetail
+import com.example.secondhand.model.GetSearchProductResponseItem
 import com.example.secondhand.network.ApiServices
 import dagger.hilt.android.lifecycle.HiltViewModel
 import retrofit2.Call
@@ -20,7 +21,12 @@ class BuyerProductViewModel @Inject constructor(api: ApiServices) : ViewModel() 
     private val apiServices = api
 
     private val liveDataBuyerProductById = MutableLiveData<GetProductDetail>()
-    val buyerProductById : LiveData<GetProductDetail> = liveDataBuyerProductById
+    val buyerProductById: LiveData<GetProductDetail> = liveDataBuyerProductById
+
+    private val liveDataBuyerProductSearchResult =
+        MutableLiveData<List<GetSearchProductResponseItem>>()
+    val searchResult: LiveData<List<GetSearchProductResponseItem>> =
+        liveDataBuyerProductSearchResult
 
     fun getAllBuyerProduct() {
         apiServices.getAllBuyerProduct()
@@ -43,14 +49,15 @@ class BuyerProductViewModel @Inject constructor(api: ApiServices) : ViewModel() 
 
             })
     }
-    fun getBuyerProductById(idProduct: Int){
+
+    fun getBuyerProductById(idProduct: Int) {
         apiServices.getBuyerProductById(idProduct)
-            .enqueue(object: Callback<GetProductDetail>{
+            .enqueue(object : Callback<GetProductDetail> {
                 override fun onResponse(
                     call: Call<GetProductDetail>,
                     response: Response<GetProductDetail>
                 ) {
-                    if(response.isSuccessful){
+                    if (response.isSuccessful) {
                         liveDataBuyerProductById.value = response.body()
                     }
                 }
@@ -62,4 +69,25 @@ class BuyerProductViewModel @Inject constructor(api: ApiServices) : ViewModel() 
             })
     }
 
+    fun getBuyerProductSearchResult(productName: String) {
+        apiServices.getSearchBuyerProduct(productName)
+            .enqueue(object : Callback<List<GetSearchProductResponseItem>> {
+                override fun onResponse(
+                    call: Call<List<GetSearchProductResponseItem>>,
+                    response: Response<List<GetSearchProductResponseItem>>
+                ) {
+                    if (response.isSuccessful) {
+                        liveDataBuyerProductSearchResult.value = response.body()
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<List<GetSearchProductResponseItem>>,
+                    t: Throwable
+                ) {
+                    //
+                }
+
+            })
+    }
 }

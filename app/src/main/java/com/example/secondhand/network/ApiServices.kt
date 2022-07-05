@@ -48,11 +48,15 @@ interface ApiServices {
     @GET("buyer/product")
     fun getAllBuyerProduct(): Call<List<GetBuyerProductResponseItem>>
 
+    @GET("buyer/product")
+    fun getSearchBuyerProduct(
+        @Query("search") productName: String
+    ) : Call<List<GetSearchProductResponseItem>>
+
     @GET("buyer/product/{id}")
     fun getBuyerProductById(
         @Path("id") id: Int
     ): Call<GetProductDetail>
-
 
     // ENDPOINT: BUYER/ORDER
     @POST("buyer/order")

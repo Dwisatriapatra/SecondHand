@@ -60,6 +60,7 @@
         <entry key="app/src/main/res/layout/item_adapter_notification.xml" value="0.3390625" />
         <entry key="app/src/main/res/layout/item_adapter_seller_product_item.xml" value="0.16979166666666667" />
         <entry key="app/src/main/res/layout/item_seller_product_item.xml" value="0.34010416666666665" />
+        <entry key="app/src/main/res/layout/search_result_adapter_item.xml" value="0.16875" />
         <entry key="app/src/main/res/layout/status_penjualan_bottom_sheet.xml" value="0.2758152173913043" />
         <entry key="app/src/main/res/layout/tawar_harga_bottom_sheet_dialog.xml" value="0.3390625" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.7685546875" />

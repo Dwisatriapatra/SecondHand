@@ -9,12 +9,13 @@ import android.widget.SearchView
 import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.secondhand.R
 import com.example.secondhand.model.GetBuyerProductResponseItem
 import com.example.secondhand.view.activity.DetailActivity
 import com.example.secondhand.view.adapter.BuyerProductAdapter
-import com.example.secondhand.view.adapter.SearchListResultAdapter
+import com.example.secondhand.view.adapter.SearchResultAdapter
 import com.example.secondhand.viewmodel.BuyerProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -23,7 +24,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 class HomeFragment : Fragment() {
 
     private lateinit var adapter: BuyerProductAdapter
-    private lateinit var searchResultAdapter: SearchListResultAdapter
+    private lateinit var searchProductResultAdapter: SearchResultAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,6 +52,16 @@ class HomeFragment : Fragment() {
         rv_product_home.adapter = adapter
 
 
+        //
+        searchProductResultAdapter = SearchResultAdapter {
+            val pindah = Intent(activity, DetailActivity::class.java)
+            pindah.putExtra("detailbarangsearchresult", it)
+            startActivity(pindah)
+        }
+        home_list_search_result.layoutManager = LinearLayoutManager(requireContext())
+        home_list_search_result.adapter = searchProductResultAdapter
+
+
         // prevent user to click these button while load data from server
         home_telusuri_kategori_elektronik_button.isClickable = false
         home_telusuri_kategori_semua_button.isClickable = false
@@ -65,6 +76,9 @@ class HomeFragment : Fragment() {
                 //activate "telusuri kategori" button
                 home_telusuri_kategori_elektronik_button.isClickable = true
                 home_telusuri_kategori_semua_button.isClickable = true
+
+//                searchResultAdapter.setDataSearchBuyerProduct(ArrayList(it))
+//                searchResultAdapter.notifyDataSetChanged()
             }
         }
 
@@ -196,18 +210,10 @@ class HomeFragment : Fragment() {
         }
 
         home_list_search_result.isInvisible = true
-        viewModelBuyerProduct.buyerProduct.observe(viewLifecycleOwner){buyerProduct ->
-            if(buyerProduct.isNotEmpty()){
-                searchResultAdapter = SearchListResultAdapter(requireContext(), ArrayList(buyerProduct)){
-                    val pindah = Intent(activity, DetailActivity::class.java)
-                    pindah.putExtra("detailbarangsearchresult", it)
-                    startActivity(pindah)
-                }
-                searchResultAdapter.notifyDataSetChanged()
-                home_list_search_result.adapter = searchResultAdapter
-            }
-        }
         home_search_bar.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+
+            val viewModelSearch = ViewModelProvider(this@HomeFragment)[BuyerProductViewModel::class.java]
+
             override fun onQueryTextSubmit(query: String?): Boolean {
 
                 home_banner_section.isInvisible = true
@@ -216,21 +222,28 @@ class HomeFragment : Fragment() {
                 home_list_search_result.isInvisible = false
 
                 home_search_bar.clearFocus()
-                viewModelBuyerProduct.buyerProduct.observe(viewLifecycleOwner){buyerProduct ->
-                    for(i in buyerProduct.indices){
-                        if(buyerProduct[i].name!!.contains(query!!, true)){
-                            searchResultAdapter.filter.filter(query)
-                            break
-                        }else{
-                            break
-                        }
-                    }
+
+                viewModelSearch.getBuyerProductSearchResult(query!!)
+
+                viewModelSearch.searchResult.observe(viewLifecycleOwner){value ->
+                    searchProductResultAdapter.setDataBuyerProductSearch(value)
+                    searchProductResultAdapter.notifyDataSetChanged()
                 }
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                searchResultAdapter.filter.filter(newText!!)
+//                viewModelBuyerProduct.buyerProduct.observe(viewLifecycleOwner){buyerProduct ->
+//                    for(i in buyerProduct.indices){
+//                        if(buyerProduct[i].name!!.contains(newText!!, true)){
+//                            searchResultAdapter.filter.filter(newText)
+//                            break
+//                        }else{
+//                            break
+//                        }
+//                    }
+//                }
+                //searchResultAdapter.filter.filter(newText)
                 return false
             }
 

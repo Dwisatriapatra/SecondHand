@@ -16,7 +16,7 @@
         android:background="@drawable/custom_edit_text_layout"
         android:queryHint="Cari Barang"
         android:queryBackground="@null" />
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/home_search_bar"
