@@ -78,7 +78,7 @@ class LengkapiInfoAkun : AppCompatActivity() {
                             kota,
                             email!!,
                             nama,
-                            //imageMultiPart!!,
+                            imageMultiPart!!,
                             password!!,
                             nomorHandphone
                         )

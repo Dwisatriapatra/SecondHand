@@ -88,7 +88,7 @@ class UserViewModel @Inject constructor(api: ApiServices) : ViewModel() {
         city: RequestBody,
         email: RequestBody,
         fullName: RequestBody,
-        //image: MultipartBody.Part,
+        image: MultipartBody.Part,
         password: RequestBody,
         phoneNumber: RequestBody
     ){
@@ -97,7 +97,7 @@ class UserViewModel @Inject constructor(api: ApiServices) : ViewModel() {
             city,
             email,
             fullName,
-            //image,
+            image,
             password,
             phoneNumber
         )
