@@ -9,7 +9,6 @@ import android.widget.SearchView
 import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.secondhand.R
 import com.example.secondhand.model.GetBuyerProductResponseItem
@@ -73,12 +72,10 @@ class HomeFragment : Fragment() {
                 adapter.setDataBuyerProduct(it)
                 rv_product_home_progress_bar.isInvisible = true
                 adapter.notifyDataSetChanged()
+
                 //activate "telusuri kategori" button
                 home_telusuri_kategori_elektronik_button.isClickable = true
                 home_telusuri_kategori_semua_button.isClickable = true
-
-//                searchResultAdapter.setDataSearchBuyerProduct(ArrayList(it))
-//                searchResultAdapter.notifyDataSetChanged()
             }
         }
 
@@ -233,17 +230,6 @@ class HomeFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-//                viewModelBuyerProduct.buyerProduct.observe(viewLifecycleOwner){buyerProduct ->
-//                    for(i in buyerProduct.indices){
-//                        if(buyerProduct[i].name!!.contains(newText!!, true)){
-//                            searchResultAdapter.filter.filter(newText)
-//                            break
-//                        }else{
-//                            break
-//                        }
-//                    }
-//                }
-                //searchResultAdapter.filter.filter(newText)
                 return false
             }
 
