@@ -11,6 +11,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import com.example.secondhand.R
 import com.example.secondhand.datastore.UserLoginTokenManager
+import com.example.secondhand.helper.isOnline
 import com.example.secondhand.model.LoginRequestUser
 import com.example.secondhand.model.LoginResponsePostUser
 import com.example.secondhand.viewmodel.UserViewModel
@@ -31,31 +32,36 @@ class SplashAcivity : AppCompatActivity() {
 
         Handler(Looper.getMainLooper()).postDelayed({
 
-            userLoginTokenManager.isUser.asLiveData().observe(this) { isUser ->
-                if (isUser) {
-                    userLoginTokenManager.booelan.asLiveData().observe(this) {
-                        var email = ""
-                        var password: String
-                        if (it == true) {
+            if(isOnline(this)){
+                userLoginTokenManager.isUser.asLiveData().observe(this) { isUser ->
+                    if (isUser) {
+                        userLoginTokenManager.booelan.asLiveData().observe(this) {
+                            var email = ""
+                            var password: String
+                            if (it == true) {
 
-                            userLoginTokenManager.email.asLiveData().observe(this) { result ->
-                                email = result.toString()
+                                userLoginTokenManager.email.asLiveData().observe(this) { result ->
+                                    email = result.toString()
+                                }
+                                userLoginTokenManager.password.asLiveData().observe(this) { result ->
+                                    password = result.toString()
+                                    requestNewLoginToken(email, password)
+                                }
+
+                                //request new token
+
+                            } else {
+                                startActivity(Intent(this, LoginActivity::class.java))
                             }
-                            userLoginTokenManager.password.asLiveData().observe(this) { result ->
-                                password = result.toString()
-                                requestNewLoginToken(email, password)
-                            }
-
-                            //request new token
-
-                        } else {
-                            startActivity(Intent(this, LoginActivity::class.java))
                         }
+                    } else {
+                        Toast.makeText(this, "You are login as guest", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this, MainActivity::class.java))
                     }
-                } else {
-                    Toast.makeText(this, "You are login as guest", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this, MainActivity::class.java))
                 }
+            }else{
+                Toast.makeText(this, "You are offline", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this, MainActivity::class.java))
             }
         }, 6000)
 

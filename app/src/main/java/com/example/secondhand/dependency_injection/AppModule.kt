@@ -1,9 +1,13 @@
 package com.example.secondhand.dependency_injection
 
+import android.content.Context
 import com.example.secondhand.network.ApiServices
+import com.example.secondhand.roomdatabase.BuyerProductDao
+import com.example.secondhand.roomdatabase.BuyerProductDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -39,4 +43,13 @@ object AppModule {
     @Singleton
     fun provideApiServices(retrofit: Retrofit): ApiServices =
         retrofit.create(ApiServices::class.java)
+
+    @Provides
+    @Singleton
+    fun provideBuyerProductRoomDatabas(@ApplicationContext context: Context): BuyerProductDatabase =
+        BuyerProductDatabase.getInstance(context)!!
+
+    @Provides
+    @Singleton
+    fun provideBuyerProductListDao(buyerProductDatabase: BuyerProductDatabase) : BuyerProductDao = buyerProductDatabase.buyerProductDao()
 }
