@@ -1,74 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
-    <TextView
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
-        android:id="@+id/txtPerbaruiStatus"
-        android:textSize="18sp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:text="@string/text_perbarui_status"
-        android:layout_marginTop="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <RadioButton
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:id="@+id/txtBerhasilTerjual"
-        android:text="@string/text_berhasil_terjual"
+    <RadioGroup
+        android:id="@+id/rdgStatus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txtPerbaruiStatus" />
-    <TextView
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="64dp"
-        android:id="@+id/txtKetBerhasilTerjual"
-        android:textSize="16sp"
-        android:text="@string/text_ket_berhasil_terjual"
-        android:layout_below="@+id/txtBerhasilTerjual"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        tools:ignore="UselessParent">
+        <TextView
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
+            android:id="@+id/txtPerbaruiStatus"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:text="@string/text_perbarui_status"
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
-    <RadioButton
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
-        android:id="@+id/txtBatalkanTransaksi"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtKetBerhasilTerjual"
-        android:layout_marginTop="24dp"
-        android:text="@string/text_batalkan_transaksi"
-        android:textColor="@color/black"
-        android:textSize="16sp" />
-    <TextView
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="64dp"
-        android:id="@+id/txtKetBatalkanTransaksi"
-        android:textSize="16sp"
-        android:text="@string/text_ket_batalkan_transaksi"
-        android:layout_below="@+id/txtBatalkanTransaksi"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        <RadioButton
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="24dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:id="@+id/txtBerhasilTerjual"
+            android:text="@string/text_berhasil_terjual"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtPerbaruiStatus"
+            tools:ignore="ObsoleteLayoutParam" />
+        <TextView
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="64dp"
+            android:id="@+id/txtKetBerhasilTerjual"
+            android:textSize="16sp"
+            android:text="@string/text_ket_berhasil_terjual"
+            android:layout_below="@+id/txtBerhasilTerjual"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="ObsoleteLayoutParam" />
 
-    <Button
-        android:id="@+id/btnKirim"
-        android:layout_marginBottom="24dp"
-        android:background="@drawable/custom_button_layout"
-        android:text="@string/text_kirim"
-        android:textAllCaps="false"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="40dp"
-        android:layout_below="@id/txtKetBatalkanTransaksi"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        <RadioButton
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
+            android:id="@+id/txtBatalkanTransaksi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtKetBerhasilTerjual"
+            android:layout_marginTop="24dp"
+            android:text="@string/text_batalkan_transaksi"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            tools:ignore="ObsoleteLayoutParam" />
+        <TextView
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="64dp"
+            android:id="@+id/txtKetBatalkanTransaksi"
+            android:textSize="16sp"
+            android:text="@string/text_ket_batalkan_transaksi"
+            android:layout_below="@+id/txtBatalkanTransaksi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="ObsoleteLayoutParam" />
+        <Button
+            android:id="@+id/btnKirimStatus"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/custom_button_layout"
+            android:text="@string/text_kirim"
+            android:textAllCaps="false"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="40dp"
+            android:layout_below="@id/txtKetBatalkanTransaksi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="ObsoleteLayoutParam" />
+    </RadioGroup>
 
 </RelativeLayout>
