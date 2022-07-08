@@ -1,5 +1,7 @@
 package com.example.secondhand.view.fragment
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -81,15 +83,29 @@ class NotifikasiFragment : Fragment(), NotificationItemClickListener {
         item: GetAllNotificationResponseItem,
         position: Int
     ) {
-        userLoginTokenManager = UserLoginTokenManager(requireContext())
-        val viewModelNotification = ViewModelProvider(this)[NotificationViewModel::class.java]
-        userLoginTokenManager.accessToken.asLiveData().observe(viewLifecycleOwner) { accessToken ->
-            viewModelNotification.updateNotificationStatus(
-                accessToken,
-                item.id!!,
-                NotificationStatus(true, item.status!!)
-            )
-        }
+        AlertDialog.Builder(requireContext())
+            .setTitle("Status Notifikasi")
+            .setMessage("Tandai notifikasi sudah dibaca?")
+            .setNegativeButton("BATAL"){dialogInterface: DialogInterface, _: Int ->
+                dialogInterface.dismiss()
+            }
+            .setPositiveButton("YA"){_: DialogInterface, _: Int ->
+                userLoginTokenManager = UserLoginTokenManager(requireContext())
+                val viewModelNotification = ViewModelProvider(this)[NotificationViewModel::class.java]
+                userLoginTokenManager.accessToken.asLiveData().observe(viewLifecycleOwner) { accessToken ->
+                    viewModelNotification.updateNotificationStatus(
+                        accessToken,
+                        item.id!!,
+                        NotificationStatus(true, item.status!!)
+                    )
+                    viewModelNotification.getAllNotification(accessToken)
+                    viewModelNotification.notification.observe(viewLifecycleOwner){
+                        adapter.setNotificationData(it)
+                        adapter.notifyDataSetChanged()
+                    }
+                }
+            }
+            .show()
     }
 
     override fun clickOnNotificationBodySection(

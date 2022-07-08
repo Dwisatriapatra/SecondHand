@@ -20,11 +20,15 @@ import com.bumptech.glide.Glide
 import com.example.secondhand.R
 import com.example.secondhand.datastore.UserLoginTokenManager
 import com.example.secondhand.helper.DaftarJualProductSayaItemClickListener
+import com.example.secondhand.model.GetAllNotificationResponseItem
 import com.example.secondhand.model.GetSellerProductItem
 import com.example.secondhand.model.SellerProductUpdateRequest
+import com.example.secondhand.view.activity.InfoPenawarActivity
 import com.example.secondhand.view.activity.LengkapiInfoAkun
 import com.example.secondhand.view.activity.LoginActivity
+import com.example.secondhand.view.adapter.DiminatiTerjualAdapter
 import com.example.secondhand.view.adapter.SellerProductAdapter
+import com.example.secondhand.viewmodel.NotificationViewModel
 import com.example.secondhand.viewmodel.SellerProductViewModel
 import com.example.secondhand.viewmodel.SellerViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,6 +45,7 @@ import java.io.File
 class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
     private lateinit var userLoginTokenManager: UserLoginTokenManager
     private lateinit var adapter: SellerProductAdapter
+    private lateinit var diminatiTerjualAdapter: DiminatiTerjualAdapter
 
     private var imageMultiPart: MultipartBody.Part? = null
     private var imageUri: Uri? = Uri.EMPTY
@@ -121,13 +126,24 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
     private fun initRecyclerView() {
         userLoginTokenManager = UserLoginTokenManager(requireContext())
         val viewModelSellerProduct = ViewModelProvider(this)[SellerProductViewModel::class.java]
+        val viewModelNotification = ViewModelProvider(this)[NotificationViewModel::class.java]
         userLoginTokenManager.accessToken.asLiveData().observe(viewLifecycleOwner) {
             viewModelSellerProduct.getAllSellerProduct(it)
+            viewModelNotification.getAllNotification(it)
         }
+
         adapter = SellerProductAdapter(this@DaftarJualFragment)
         rv_daftar_jual_saya_produk.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         rv_daftar_jual_saya_produk.adapter = adapter
+
+        diminatiTerjualAdapter = DiminatiTerjualAdapter{
+            val intent = Intent(activity, InfoPenawarActivity::class.java)
+            intent.putExtra("InfoPenawaran", it)
+            startActivity(intent)
+        }
+        rv_daftar_jual_saya_diminati_terjual.layoutManager = LinearLayoutManager(requireContext())
+        rv_daftar_jual_saya_diminati_terjual.adapter = diminatiTerjualAdapter
 
         // init on "semua produk" category
         daftar_jual_saya_filter_produk_product.isSelected = true
@@ -141,8 +157,83 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
             }
         }
 
-        // to do: diminati, terjual
+        daftar_jual_saya_filter_produk_product.setOnClickListener {
+            daftar_jual_saya_filter_produk_diminati.isSelected = false
+            daftar_jual_saya_filter_produk_product.isSelected = true
+            daftar_jual_saya_filter_produk_terjual.isSelected = false
 
+            rv_daftar_jual_saya_diminati_terjual.isInvisible = true
+            rv_daftar_jual_saya_produk.isInvisible = false
+
+            daftar_jual_saya_progress_bar.isInvisible = false
+
+            viewModelSellerProduct.sellerProduct.observe(viewLifecycleOwner) {product ->
+                if (product.isNotEmpty()) {
+                    adapter.setDataSellerProduct(product)
+                    daftar_jual_saya_progress_bar.isInvisible = true
+                    adapter.notifyDataSetChanged()
+                } else {
+                    daftar_jual_saya_progress_bar.isInvisible = true
+                }
+            }
+        }
+
+        // to do: diminati, terjual
+        daftar_jual_saya_filter_produk_diminati.setOnClickListener {
+            daftar_jual_saya_filter_produk_diminati.isSelected = true
+            daftar_jual_saya_filter_produk_product.isSelected = false
+            daftar_jual_saya_filter_produk_terjual.isSelected = false
+
+            rv_daftar_jual_saya_diminati_terjual.isInvisible = false
+            rv_daftar_jual_saya_produk.isInvisible = true
+
+            daftar_jual_saya_progress_bar.isInvisible = false
+
+
+            viewModelNotification.notification.observe(viewLifecycleOwner){allNotification ->
+                val listProdukDiminati = mutableListOf<GetAllNotificationResponseItem>()
+                if(allNotification.isNotEmpty()){
+                    for(i in allNotification.indices){
+                        if(allNotification[i].status == "bid"){
+                            listProdukDiminati += allNotification[i]
+                        }
+                    }
+                    diminatiTerjualAdapter.setDiminatiTerjualData(listProdukDiminati)
+                    diminatiTerjualAdapter.notifyDataSetChanged()
+                    daftar_jual_saya_progress_bar.isInvisible = true
+
+                }else {
+                    daftar_jual_saya_progress_bar.isInvisible = true
+                }
+            }
+        }
+
+        daftar_jual_saya_filter_produk_terjual.setOnClickListener {
+            daftar_jual_saya_filter_produk_diminati.isSelected = false
+            daftar_jual_saya_filter_produk_product.isSelected = false
+            daftar_jual_saya_filter_produk_terjual.isSelected = true
+
+            rv_daftar_jual_saya_diminati_terjual.isInvisible = false
+            rv_daftar_jual_saya_produk.isInvisible = true
+
+            daftar_jual_saya_progress_bar.isInvisible = false
+            viewModelNotification.notification.observe(viewLifecycleOwner){allNotification ->
+                val listProdukTerjual = mutableListOf<GetAllNotificationResponseItem>()
+                if(allNotification.isNotEmpty()){
+                    for(i in allNotification.indices){
+                        if(allNotification[i].status == "accepted"){
+                            listProdukTerjual += allNotification[i]
+                        }
+                    }
+                    diminatiTerjualAdapter.setDiminatiTerjualData(listProdukTerjual)
+                    diminatiTerjualAdapter.notifyDataSetChanged()
+                    daftar_jual_saya_progress_bar.isInvisible = true
+
+                }else {
+                    daftar_jual_saya_progress_bar.isInvisible = true
+                }
+            }
+        }
     }
 
     override fun editProductInDaftarJualSaya(item: GetSellerProductItem, position: Int) {
@@ -322,4 +413,6 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
                     MultipartBody.Part.createFormData("image", tempFile.name, requestBody)
             }
         }
+
+
 }

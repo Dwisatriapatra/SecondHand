@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/custom_app_background"
     tools:context=".view.fragment.DaftarJualFragment">
 
     <TextView
@@ -117,7 +118,14 @@
         android:id="@+id/rv_daftar_jual_saya_produk"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
         android:layout_below="@id/daftar_jual_saya_filter_produk_section" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:id="@+id/rv_daftar_jual_saya_diminati_terjual"
+        android:layout_below="@id/daftar_jual_saya_filter_produk_section"/>
 
     <ProgressBar
         android:id="@+id/daftar_jual_saya_progress_bar"

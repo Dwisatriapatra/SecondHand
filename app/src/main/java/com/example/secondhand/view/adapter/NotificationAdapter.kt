@@ -20,7 +20,6 @@ class NotificationAdapter(private val notificationItemClickListener: Notificatio
         this.listNotification = list
     }
 
-
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(

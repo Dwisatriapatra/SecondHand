@@ -24,7 +24,6 @@ import kotlinx.android.synthetic.main.fragment_home.*
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
-
     private lateinit var adapter: BuyerProductAdapter
     private lateinit var searchProductResultAdapter: SearchResultAdapter
 
@@ -43,7 +42,7 @@ class HomeFragment : Fragment() {
 
     private fun initView() {
         val viewModelBuyerProduct = ViewModelProvider(this)[BuyerProductViewModel::class.java]
-        val viewModelRoomBuyerProdut = ViewModelProvider(this)[RoomBuyerProductViewModel::class.java]
+        val viewModelRoomBuyerProduct = ViewModelProvider(this)[RoomBuyerProductViewModel::class.java]
 
 
         viewModelBuyerProduct.getAllBuyerProduct()
@@ -75,7 +74,7 @@ class HomeFragment : Fragment() {
         home_telusuri_kategori_semua_button.isSelected = true
 
         if(!isOnline(requireContext())){
-            viewModelRoomBuyerProdut.roomBuyerProduct.observe(viewLifecycleOwner){
+            viewModelRoomBuyerProduct.roomBuyerProduct.observe(viewLifecycleOwner){
                 if(it.listBuyerProduct!!.isNotEmpty()){
                     adapter.setDataBuyerProduct(it.listBuyerProduct)
                     rv_product_home_progress_bar.isInvisible = true
@@ -97,13 +96,10 @@ class HomeFragment : Fragment() {
 
 
                     //adding buyer product data to room database
-                    viewModelRoomBuyerProdut.insertBuyerProductList(RoomBuyerProduct(null, it))
+                    viewModelRoomBuyerProduct.insertBuyerProductList(RoomBuyerProduct(null, it))
                 }
             }
         }
-
-
-
 
         home_telusuri_kategori_semua_button.setOnClickListener {
             //button state
@@ -111,7 +107,7 @@ class HomeFragment : Fragment() {
             home_telusuri_kategori_elektronik_button.isSelected = false
             home_telusuri_kategori_lainnya_button.isSelected = false
             home_telusuri_kategori_hobbi_button.isSelected = false
-            home_telusuri_kategori_kendaraan_button.isSelected = false
+            home_telusuri_kategori_makanan_button.isSelected = false
 
             viewModelBuyerProduct.buyerProduct.observe(viewLifecycleOwner) {
                 if (it.isNotEmpty()) {
@@ -122,20 +118,19 @@ class HomeFragment : Fragment() {
             }
         }
 
-
         home_telusuri_kategori_elektronik_button.setOnClickListener {
             home_telusuri_kategori_elektronik_button.isSelected = true
             home_telusuri_kategori_semua_button.isSelected = false
             home_telusuri_kategori_lainnya_button.isSelected = false
             home_telusuri_kategori_hobbi_button.isSelected = false
-            home_telusuri_kategori_kendaraan_button.isSelected = false
+            home_telusuri_kategori_makanan_button.isSelected = false
 
             viewModelBuyerProduct.buyerProduct.observe(viewLifecycleOwner) {
                 val listProduct: MutableList<GetBuyerProductResponseItem> = mutableListOf()
                 if (it.isNotEmpty()) {
                     for (i in it.indices) {
                         for (j in it[i].Categories!!.indices) {
-                            if (it[i].Categories!![j].name == "Electronic") {
+                            if (it[i].Categories!![j].name.lowercase().contains("elektronik")) {
                                 listProduct += it[i]
                             }
                         }
@@ -147,40 +142,12 @@ class HomeFragment : Fragment() {
             }
         }
 
-        home_telusuri_kategori_lainnya_button.setOnClickListener {
-            home_telusuri_kategori_lainnya_button.isSelected = true
-            home_telusuri_kategori_elektronik_button.isSelected = false
-            home_telusuri_kategori_semua_button.isSelected = false
-            home_telusuri_kategori_hobbi_button.isSelected = false
-            home_telusuri_kategori_kendaraan_button.isSelected = false
-
-            viewModelBuyerProduct.buyerProduct.observe(viewLifecycleOwner) {
-                val listProduct: MutableList<GetBuyerProductResponseItem> = mutableListOf()
-                if (it.isNotEmpty()) {
-                    for (i in it.indices) {
-                        if (it[i].Categories!!.isNotEmpty()) {
-                            for (j in it[i].Categories!!.indices) {
-                                val name = it[i].Categories!![j].name
-                                if (name != "Electronic" && name != "Minuman" && name != "kendaraan" && name != "hobbi") {
-                                    listProduct += it[i]
-                                }
-                            }
-                        }
-
-                    }
-                    adapter.setDataBuyerProduct(listProduct)
-                    rv_product_home_progress_bar.isInvisible = true
-                    adapter.notifyDataSetChanged()
-                }
-            }
-        }
-
-        home_telusuri_kategori_kendaraan_button.setOnClickListener {
+        home_telusuri_kategori_makanan_button.setOnClickListener {
             home_telusuri_kategori_lainnya_button.isSelected = false
             home_telusuri_kategori_elektronik_button.isSelected = false
             home_telusuri_kategori_semua_button.isSelected = false
             home_telusuri_kategori_hobbi_button.isSelected = false
-            home_telusuri_kategori_kendaraan_button.isSelected = true
+            home_telusuri_kategori_makanan_button.isSelected = true
 
             viewModelBuyerProduct.buyerProduct.observe(viewLifecycleOwner) {
                 val listProduct: MutableList<GetBuyerProductResponseItem> = mutableListOf()
@@ -189,7 +156,7 @@ class HomeFragment : Fragment() {
                         if (it[i].Categories!!.isNotEmpty()) {
                             for (j in it[i].Categories!!.indices) {
                                 val name = it[i].Categories!![j].name
-                                if (name == "kendaraan") {
+                                if (name.lowercase().contains("makanan")) {
                                     listProduct += it[i]
                                 }
                             }
@@ -208,7 +175,7 @@ class HomeFragment : Fragment() {
             home_telusuri_kategori_elektronik_button.isSelected = false
             home_telusuri_kategori_semua_button.isSelected = false
             home_telusuri_kategori_hobbi_button.isSelected = true
-            home_telusuri_kategori_kendaraan_button.isSelected = false
+            home_telusuri_kategori_makanan_button.isSelected = false
 
             viewModelBuyerProduct.buyerProduct.observe(viewLifecycleOwner) {
                 val listProduct: MutableList<GetBuyerProductResponseItem> = mutableListOf()
@@ -217,7 +184,38 @@ class HomeFragment : Fragment() {
                         if (it[i].Categories!!.isNotEmpty()) {
                             for (j in it[i].Categories!!.indices) {
                                 val name = it[i].Categories!![j].name
-                                if (name == "hobbi") {
+                                if (name.lowercase().contains("hobi")) {
+                                    listProduct += it[i]
+                                }
+                            }
+                        }
+
+                    }
+                    adapter.setDataBuyerProduct(listProduct)
+                    rv_product_home_progress_bar.isInvisible = true
+                    adapter.notifyDataSetChanged()
+                }
+            }
+        }
+
+        home_telusuri_kategori_lainnya_button.setOnClickListener {
+            home_telusuri_kategori_lainnya_button.isSelected = true
+            home_telusuri_kategori_elektronik_button.isSelected = false
+            home_telusuri_kategori_semua_button.isSelected = false
+            home_telusuri_kategori_hobbi_button.isSelected = false
+            home_telusuri_kategori_makanan_button.isSelected = false
+
+            viewModelBuyerProduct.buyerProduct.observe(viewLifecycleOwner) {
+                val listProduct: MutableList<GetBuyerProductResponseItem> = mutableListOf()
+                if (it.isNotEmpty()) {
+                    for (i in it.indices) {
+                        if (it[i].Categories!!.isNotEmpty()) {
+                            for (j in it[i].Categories!!.indices) {
+                                val name = it[i].Categories!![j].name
+                                if (!name.lowercase().contains("eletronik") &&
+                                    !name.lowercase().contains("kendaraan") &&
+                                    !name.lowercase().contains("hobi")
+                                ) {
                                     listProduct += it[i]
                                 }
                             }
