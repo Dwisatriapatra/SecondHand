@@ -56,14 +56,14 @@ class UserViewModel @Inject constructor(api: ApiServices) : ViewModel() {
         address: RequestBody?,
         city: RequestBody?,
         phone: RequestBody?,
-        image: MultipartBody.Part
+        //image: MultipartBody.Part
     ) {
         apiServices.postRegister(
             address,
             city,
             email,
             fullName,
-            image,
+            //image,
             password,
             phone
         )

@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide
 import com.example.secondhand.R
 import com.example.secondhand.datastore.UserLoginTokenManager
 import com.example.secondhand.model.PostJualProduct
-import com.example.secondhand.viewmodel.SellerJualProductViewModel
+import com.example.secondhand.viewmodel.SellerProductViewModel
 import com.example.secondhand.viewmodel.SellerViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_preview.*
@@ -59,8 +59,8 @@ class PreviewActivity : AppCompatActivity() {
         }
 
         previewTerbitkanButton.setOnClickListener {
-            val viewModelSellerJualProduct =
-                ViewModelProvider(this)[SellerJualProductViewModel::class.java]
+            val viewModelSellerProduct =
+                ViewModelProvider(this)[SellerProductViewModel::class.java]
 
             val namaProduk =
                 dataProduk.namaBarang.toRequestBody("multipart/form-data".toMediaType())
@@ -86,7 +86,7 @@ class PreviewActivity : AppCompatActivity() {
             kategoriList.add(MultipartBody.Part.createFormData("category_ids", "2"))
 
             userLoginTokenManager.accessToken.asLiveData().observe(this) {
-                viewModelSellerJualProduct.jualProduct(
+                viewModelSellerProduct.jualProduct(
                     it,
                     hargaProduk,
                     kategoriList,
@@ -95,7 +95,7 @@ class PreviewActivity : AppCompatActivity() {
                     lokasiToko,
                     namaProduk
                 )
-                viewModelSellerJualProduct.responseMessage.observe(this) { responseMsg ->
+                viewModelSellerProduct.responseMessage.observe(this) { responseMsg ->
                     if (responseMsg == true) {
                         Toast.makeText(
                             this,

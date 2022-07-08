@@ -72,33 +72,29 @@ import java.util.*
 //    })
 //}
 
-fun isOnline(context: Context): Boolean{
-    val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-    if(connectivityManager != null){
-        val capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
-        if(capabilities != null){
-            return if(capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)){
-                true
-            }else if(capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)){
-                true
-            }else capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
-        }
+fun isOnline(context: Context): Boolean {
+    val connectivityManager =
+        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+    if (capabilities != null) {
+        return if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+            true
+        } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+            true
+        } else capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
     }
     return false
 }
 
 class GithubTypeConverters {
-//    companion object {
-//
-//    }
-@TypeConverter
-fun stringToSomeObjectList(data: String?): List<GetBuyerProductResponseItem> {
-    if (data == null) {
-        return Collections.emptyList()
+    @TypeConverter
+    fun stringToSomeObjectList(data: String?): List<GetBuyerProductResponseItem> {
+        if (data == null) {
+            return Collections.emptyList()
+        }
+        val listType = object : TypeToken<List<GetBuyerProductResponseItem?>?>() {}.type
+        return Gson().fromJson(data, listType)
     }
-    val listType= object : TypeToken<List<GetBuyerProductResponseItem?>?>() {}.type
-    return Gson().fromJson(data, listType)
-}
 
     @TypeConverter
     fun someObjectListToString(someObjects: List<GetBuyerProductResponseItem?>?): String {

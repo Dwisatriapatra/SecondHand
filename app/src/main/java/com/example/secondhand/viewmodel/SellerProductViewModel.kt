@@ -3,10 +3,7 @@ package com.example.secondhand.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.secondhand.model.GetSellerProductDeleteItemResponse
-import com.example.secondhand.model.GetSellerProductItem
-import com.example.secondhand.model.GetSellerProductUpdateResponse
-import com.example.secondhand.model.SellerProductUpdateRequest
+import com.example.secondhand.model.*
 import com.example.secondhand.network.ApiServices
 import dagger.hilt.android.lifecycle.HiltViewModel
 import okhttp3.MultipartBody
@@ -25,6 +22,38 @@ class SellerProductViewModel @Inject constructor(api: ApiServices) : ViewModel()
 
     private val liveDataResponseMsg = MutableLiveData<Boolean>()
     val responseMessage: LiveData<Boolean> = liveDataResponseMsg
+
+    fun jualProduct(
+        token: String,
+        basePrice: RequestBody,
+        categories_ids: List<MultipartBody.Part>,
+        description: RequestBody,
+        image: MultipartBody.Part,
+        location: RequestBody,
+        name: RequestBody
+    ) {
+        apiServices.postJualProduct(
+            token,
+            basePrice,
+            categories_ids,
+            description,
+            image,
+            location,
+            name
+        ).enqueue(object : Callback<PostJualProductResponse> {
+            override fun onResponse(
+                call: Call<PostJualProductResponse>,
+                response: Response<PostJualProductResponse>
+            ) {
+                liveDataResponseMsg.value = response.isSuccessful
+            }
+
+            override fun onFailure(call: Call<PostJualProductResponse>, t: Throwable) {
+                liveDataResponseMsg.value = false
+            }
+
+        })
+    }
 
     fun getAllSellerProduct(token: String) {
         apiServices.getSellerProdcut(token)

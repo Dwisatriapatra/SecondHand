@@ -20,7 +20,7 @@ import com.example.secondhand.datastore.UserLoginTokenManager
 import com.example.secondhand.model.PostJualProduct
 import com.example.secondhand.view.activity.LoginActivity
 import com.example.secondhand.view.activity.PreviewActivity
-import com.example.secondhand.viewmodel.SellerJualProductViewModel
+import com.example.secondhand.viewmodel.SellerProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_jual.*
 import okhttp3.MediaType.Companion.toMediaType
@@ -155,19 +155,19 @@ class JualFragment : Fragment() {
                     .toRequestBody("multipart/form-data".toMediaType())
 
                 userLoginTokenManager = UserLoginTokenManager(requireContext())
-                val viewModelJualProduk =
-                    ViewModelProvider(this)[SellerJualProductViewModel::class.java]
+                val viewModelSellerProduct =
+                    ViewModelProvider(this)[SellerProductViewModel::class.java]
 
                 val kategoriList = ArrayList<MultipartBody.Part>()
 
                 if(categoryList.isNotEmpty()){
                     for(i in categoryList.indices){
-                        kategoriList.add(MultipartBody.Part.createFormData("category_ids", categoryList[i].toString()))
+                        kategoriList.add(MultipartBody.Part.createFormData("category_ids", (i + 1).toString()))
                     }
                 }
 
                 userLoginTokenManager.accessToken.asLiveData().observe(viewLifecycleOwner) {
-                    viewModelJualProduk.jualProduct(
+                    viewModelSellerProduct.jualProduct(
                         it,
                         hargaBarang,
                         kategoriList,
@@ -176,7 +176,7 @@ class JualFragment : Fragment() {
                         lokasiBarang,
                         namaBarang
                     )
-                    viewModelJualProduk.responseMessage.observe(viewLifecycleOwner) { responseMsg ->
+                    viewModelSellerProduct.responseMessage.observe(viewLifecycleOwner) { responseMsg ->
                         if (responseMsg == true) {
                             Toast.makeText(
                                 requireContext(),
