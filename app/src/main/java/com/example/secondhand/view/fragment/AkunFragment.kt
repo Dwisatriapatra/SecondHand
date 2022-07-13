@@ -3,7 +3,6 @@ package com.example.secondhand.view.fragment
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -23,6 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_akun.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+
 @AndroidEntryPoint
 class AkunFragment : Fragment() {
 

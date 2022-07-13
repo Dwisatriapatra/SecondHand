@@ -95,16 +95,4 @@ class UserLoginTokenManager(context: Context) {
         it[IS_USER] ?: false
     }
 
-    val fotoUser: Flow<String> = dataStore.data.map {
-        it[FOTOUSER] ?: ""
-    }
-    val kota: Flow<String> = dataStore.data.map {
-        it[KOTA] ?: ""
-    }
-    val alamat: Flow<String> = dataStore.data.map {
-        it[ALAMAT] ?: ""
-    }
-    val noHandphone: Flow<String> = dataStore.data.map {
-        it[NO_HANDPHONE] ?: ""
-    }
 }

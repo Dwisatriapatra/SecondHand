@@ -7,5 +7,4 @@ data class PostBuyerOrder(
     val product_id: Int,
     @SerializedName("bid_price")
     val bid_price: Int
-
 )

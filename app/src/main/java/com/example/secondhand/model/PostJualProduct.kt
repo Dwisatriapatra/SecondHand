@@ -1,7 +1,5 @@
 package com.example.secondhand.model
 
-import android.net.Uri
-import okhttp3.MultipartBody
 import java.io.File
 import java.io.Serializable
 

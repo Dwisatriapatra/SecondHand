@@ -122,12 +122,6 @@ interface ApiServices {
         @Body orderStatus: OrderStatus
     ): Call<Any>
 
-    @GET("seller/order/product/{product_id}")
-    fun getInfoSellerOrderProductById(
-        @Header("access_token") token: String,
-        @Path("product_id") productId: Int
-    ) : Call<List<GetSellerOrderProductInfoItem>>
-
     @GET("seller/order")
     fun getAllSellerOrder(
         @Header("access_token") token: String
