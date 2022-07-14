@@ -3,6 +3,7 @@ package com.example.secondhand.view.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.secondhand.R
@@ -43,6 +44,15 @@ class SellerProductAdapter(private val clickListener: DaftarJualProductSayaItemC
                     .override(72, 72)
                     .into(card_daftar_jual_produk_image)
                 card_daftar_jual_produk_lokasi.text = location
+                card_daftar_jual_produk_status.text = status
+
+                if(status == "sold"){
+                    card_daftar_jual_edit_button.isInvisible = true
+                    card_daftar_jual_hapus_button.isInvisible = true
+                }else if(status == "available"){
+                    card_daftar_jual_edit_button.isInvisible = false
+                    card_daftar_jual_hapus_button.isInvisible = false
+                }
 
                 card_daftar_jual_edit_button.setOnClickListener {
                     clickListener.editProductInDaftarJualSaya(listSellerProduct!![position], position)

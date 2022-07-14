@@ -148,8 +148,14 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
         // init on "semua produk" category
         daftar_jual_saya_filter_produk_product.isSelected = true
         viewModelSellerProduct.sellerProduct.observe(viewLifecycleOwner) {product ->
+            val listProdukTersedia = mutableListOf<GetSellerProductItem>()
             if (product.isNotEmpty()) {
-                adapter.setDataSellerProduct(product)
+                for (i in product.indices){
+                    if(product[i].status == "available"){
+                        listProdukTersedia += product[i]
+                    }
+                }
+                adapter.setDataSellerProduct(listProdukTersedia)
                 daftar_jual_saya_progress_bar.isInvisible = true
                 adapter.notifyDataSetChanged()
             } else {
@@ -168,8 +174,14 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
             daftar_jual_saya_progress_bar.isInvisible = false
 
             viewModelSellerProduct.sellerProduct.observe(viewLifecycleOwner) {product ->
+                val listProdukTersedia = mutableListOf<GetSellerProductItem>()
                 if (product.isNotEmpty()) {
-                    adapter.setDataSellerProduct(product)
+                    for (i in product.indices){
+                        if(product[i].status == "available"){
+                            listProdukTersedia += product[i]
+                        }
+                    }
+                    adapter.setDataSellerProduct(listProdukTersedia)
                     daftar_jual_saya_progress_bar.isInvisible = true
                     adapter.notifyDataSetChanged()
                 } else {
@@ -213,26 +225,43 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
             daftar_jual_saya_filter_produk_product.isSelected = false
             daftar_jual_saya_filter_produk_terjual.isSelected = true
 
-            rv_daftar_jual_saya_diminati_terjual.isInvisible = false
-            rv_daftar_jual_saya_produk.isInvisible = true
+            rv_daftar_jual_saya_diminati_terjual.isInvisible = true
+            rv_daftar_jual_saya_produk.isInvisible = false
 
             daftar_jual_saya_progress_bar.isInvisible = false
-            viewModelNotification.notification.observe(viewLifecycleOwner){allNotification ->
-                val listProdukTerjual = mutableListOf<GetAllNotificationResponseItem>()
-                if(allNotification.isNotEmpty()){
-                    for(i in allNotification.indices){
-                        if(allNotification[i].status == "accepted"){
-                            listProdukTerjual += allNotification[i]
+
+            viewModelSellerProduct.sellerProduct.observe(viewLifecycleOwner){allProduct ->
+                val listProdukTerjual = mutableListOf<GetSellerProductItem>()
+                if(allProduct.isNotEmpty()){
+                    for(i in allProduct.indices){
+                        if(allProduct[i].status == "sold"){
+                            listProdukTerjual += allProduct[i]
                         }
                     }
-                    diminatiTerjualAdapter.setDiminatiTerjualData(listProdukTerjual)
-                    diminatiTerjualAdapter.notifyDataSetChanged()
+                    adapter.setDataSellerProduct(listProdukTerjual)
+                    adapter.notifyDataSetChanged()
                     daftar_jual_saya_progress_bar.isInvisible = true
-
-                }else {
+                }else{
                     daftar_jual_saya_progress_bar.isInvisible = true
                 }
             }
+
+//            viewModelNotification.notification.observe(viewLifecycleOwner){allNotification ->
+//                val listProdukTerjual = mutableListOf<GetAllNotificationResponseItem>()
+//                if(allNotification.isNotEmpty()){
+//                    for(i in allNotification.indices){
+//                        if(allNotification[i].status == "Terjual" || allNotification[i].status == "terjual" || allNotification[i].status == "sold" || allNotification[i].status == "accepted"){
+//                            listProdukTerjual += allNotification[i]
+//                        }
+//                    }
+//                    diminatiTerjualAdapter.setDiminatiTerjualData(listProdukTerjual)
+//                    diminatiTerjualAdapter.notifyDataSetChanged()
+//                    daftar_jual_saya_progress_bar.isInvisible = true
+//
+//                }else {
+//                    daftar_jual_saya_progress_bar.isInvisible = true
+//                }
+//            }
         }
     }
 

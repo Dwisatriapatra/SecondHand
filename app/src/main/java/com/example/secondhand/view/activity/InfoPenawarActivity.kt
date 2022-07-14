@@ -4,6 +4,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -23,7 +24,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_info_penawar.*
 import kotlinx.android.synthetic.main.hubungi_via_whatsapp_bottom_sheet.view.*
-import kotlinx.android.synthetic.main.item_adapter_daftar_produk_ditawar.*
 import kotlinx.android.synthetic.main.status_penjualan_bottom_sheet.view.*
 
 
@@ -173,45 +173,35 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
         // do something
         // declare bottom sheet here
 
-        var name = "bid"
-
         userLoginTokenManager = UserLoginTokenManager(this)
         val viewModelSellerOrder = ViewModelProvider(this)[SellerOrderViewModel::class.java]
 
         val dialog = BottomSheetDialog(this)
         val dialogView = layoutInflater.inflate(R.layout.status_penjualan_bottom_sheet, null)
 
-        dialogView.rdgStatus.setOnCheckedChangeListener { radioGroup, i ->
-            name = when(i){
-                R.id.txtBerhasilTerjual ->
-                    userLoginTokenManager.accessToken.asLiveData().observe(this){accessToken ->
-                        viewModelSellerOrder.updateOrderStatus(accessToken, item.id, OrderStatus("Terjual"))
-                        viewModelSellerOrder.responseMessage.observe(this) {
-                            if (it) {
-                                Toast.makeText(this, "Status produk berhasil diperbarui", Toast.LENGTH_SHORT).show()
-                            } else {
-                                Toast.makeText(this, "Status produk gagal diperbarui", Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                    }.toString()
-//                    Toast.makeText(this, "Terjual", Toast.LENGTH_SHORT).show().toString()
-                R.id.txtBatalkanTransaksi ->
-                    userLoginTokenManager.accessToken.asLiveData().observe(this){accessToken ->
-                        viewModelSellerOrder.updateOrderStatus(accessToken, item.id, OrderStatus("Dibatalkan"))
-                        viewModelSellerOrder.responseMessage.observe(this) {
-                            if (it) {
-                                Toast.makeText(this, "Status produk dibatalkan", Toast.LENGTH_SHORT).show()
-                            } else {
-                                Toast.makeText(this, "Status produk gagal dibatalkan", Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                    }.toString()
-//                    Toast.makeText(this, "Dibatalkan", Toast.LENGTH_SHORT).show().toString()
-            else -> ""
-            }
-        }
         dialogView.btnKirimStatus.setOnClickListener {
-            card_daftar_produk_ditawar_status.text = "Status : $name"
+            userLoginTokenManager.accessToken.asLiveData().observe(this){accessToken ->
+                val statusValue = dialogView.findViewById<RadioButton>(dialogView.rdgStatus.checkedRadioButtonId)
+                if(statusValue.text == "Berhasil terjual"){
+                    viewModelSellerOrder.updateOrderStatus(accessToken, item.id, OrderStatus("sold"))
+                    viewModelSellerOrder.responseMessage.observe(this){
+                        if (it) {
+                            Toast.makeText(this, "Status produk berhasil diperbarui", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(this, "Status produk gagal diperbarui", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }else if(statusValue.text == "Batalkan transaksi"){
+                    viewModelSellerOrder.updateOrderStatus(accessToken, item.id, OrderStatus("available"))
+                    viewModelSellerOrder.responseMessage.observe(this){
+                        if (it) {
+                            Toast.makeText(this, "Status produk berhasil diperbarui", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(this, "Status produk gagal diperbarui", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
             dialog.dismiss()
         }
 
