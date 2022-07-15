@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import androidx.room.TypeConverter
+import com.example.secondhand.model.GetAllNotificationResponseItem
 import com.example.secondhand.model.GetBuyerProductResponseItem
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -36,6 +37,22 @@ class GithubTypeConverters {
     @TypeConverter
     fun someObjectListToString(someObjects: List<GetBuyerProductResponseItem?>?): String {
         return Gson().toJson(someObjects)
+    }
+}
+
+class notificatiomTypeConverters{
+    @TypeConverter
+    fun stringToNotificationObject(string: String?): List<GetAllNotificationResponseItem>{
+        if(string.isNullOrEmpty()){
+            return Collections.emptyList()
+        }
+        val listType = object : TypeToken<List<GetAllNotificationResponseItem?>?>() {}.type
+        return Gson().fromJson(string, listType)
+    }
+
+    @TypeConverter
+    fun notificationObjectToString(notificationList: List<GetAllNotificationResponseItem?>?) : String{
+        return Gson().toJson(notificationList)
     }
 }
 

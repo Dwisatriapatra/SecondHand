@@ -4,6 +4,8 @@ import android.content.Context
 import com.example.secondhand.network.ApiServices
 import com.example.secondhand.roomdatabase.BuyerProductDao
 import com.example.secondhand.roomdatabase.BuyerProductDatabase
+import com.example.secondhand.roomdatabase.NotificationDao
+import com.example.secondhand.roomdatabase.NotificationDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -51,5 +53,16 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideBuyerProductListDao(buyerProductDatabase: BuyerProductDatabase) : BuyerProductDao = buyerProductDatabase.buyerProductDao()
+    fun provideBuyerProductListDao(buyerProductDatabase: BuyerProductDatabase): BuyerProductDao =
+        buyerProductDatabase.buyerProductDao()
+
+    @Provides
+    @Singleton
+    fun provideNotificationRoomDatabase(@ApplicationContext context: Context): NotificationDatabase =
+        NotificationDatabase.getInstance(context)!!
+
+    @Provides
+    @Singleton
+    fun provideNotificationDao(notificationDatabase: NotificationDatabase): NotificationDao =
+        notificationDatabase.notificationDao()
 }
