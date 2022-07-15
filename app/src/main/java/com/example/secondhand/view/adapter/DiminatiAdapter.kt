@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.secondhand.R
 import com.example.secondhand.model.GetAllNotificationResponseItem
-import kotlinx.android.synthetic.main.item_adapter_diminati_terjual.view.*
+import kotlinx.android.synthetic.main.item_adapter_diminati.view.*
 
-class DiminatiTerjualAdapter(private val onClick: (GetAllNotificationResponseItem) -> Unit) : RecyclerView.Adapter<DiminatiTerjualAdapter.ViewHolder>() {
+class DiminatiAdapter(private val onClick: (GetAllNotificationResponseItem) -> Unit) : RecyclerView.Adapter<DiminatiAdapter.ViewHolder>() {
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
     private var listData: List<GetAllNotificationResponseItem>? = null
     fun setDiminatiTerjualData(list: List<GetAllNotificationResponseItem>) {
@@ -18,7 +18,7 @@ class DiminatiTerjualAdapter(private val onClick: (GetAllNotificationResponseIte
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_adapter_diminati_terjual, parent, false)
+            .inflate(R.layout.item_adapter_diminati, parent, false)
         return ViewHolder(view)
     }
 

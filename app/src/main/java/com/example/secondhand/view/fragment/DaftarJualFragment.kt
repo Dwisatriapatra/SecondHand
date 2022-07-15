@@ -26,7 +26,7 @@ import com.example.secondhand.model.SellerProductUpdateRequest
 import com.example.secondhand.view.activity.InfoPenawarActivity
 import com.example.secondhand.view.activity.LengkapiInfoAkun
 import com.example.secondhand.view.activity.LoginActivity
-import com.example.secondhand.view.adapter.DiminatiTerjualAdapter
+import com.example.secondhand.view.adapter.DiminatiAdapter
 import com.example.secondhand.view.adapter.SellerProductAdapter
 import com.example.secondhand.viewmodel.NotificationViewModel
 import com.example.secondhand.viewmodel.SellerProductViewModel
@@ -45,7 +45,7 @@ import java.io.File
 class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
     private lateinit var userLoginTokenManager: UserLoginTokenManager
     private lateinit var adapter: SellerProductAdapter
-    private lateinit var diminatiTerjualAdapter: DiminatiTerjualAdapter
+    private lateinit var diminatiAdapter: DiminatiAdapter
 
     private var imageMultiPart: MultipartBody.Part? = null
     private var imageUri: Uri? = Uri.EMPTY
@@ -94,6 +94,7 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
                 daftar_jual_saya_filter_produk_section.isInvisible = true
                 rv_daftar_jual_saya_produk.isInvisible = true
                 daftar_jual_saya_progress_bar.isInvisible = true
+                daftar_jual_saya_no_data_animation.isInvisible = true
 
                 daftar_jual_saya_to_login.setOnClickListener {
                     startActivity(Intent(activity, LoginActivity::class.java))
@@ -137,13 +138,13 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         rv_daftar_jual_saya_produk.adapter = adapter
 
-        diminatiTerjualAdapter = DiminatiTerjualAdapter{
+        diminatiAdapter = DiminatiAdapter{
             val intent = Intent(activity, InfoPenawarActivity::class.java)
             intent.putExtra("InfoPenawaran", it)
             startActivity(intent)
         }
         rv_daftar_jual_saya_diminati_terjual.layoutManager = LinearLayoutManager(requireContext())
-        rv_daftar_jual_saya_diminati_terjual.adapter = diminatiTerjualAdapter
+        rv_daftar_jual_saya_diminati_terjual.adapter = diminatiAdapter
 
         // init on "semua produk" category
         daftar_jual_saya_filter_produk_product.isSelected = true
@@ -158,8 +159,10 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
                 adapter.setDataSellerProduct(listProdukTersedia)
                 daftar_jual_saya_progress_bar.isInvisible = true
                 adapter.notifyDataSetChanged()
+                daftar_jual_saya_no_data_animation.isInvisible = true
             } else {
                 daftar_jual_saya_progress_bar.isInvisible = true
+                daftar_jual_saya_no_data_animation.isInvisible = false
             }
         }
 
@@ -184,13 +187,14 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
                     adapter.setDataSellerProduct(listProdukTersedia)
                     daftar_jual_saya_progress_bar.isInvisible = true
                     adapter.notifyDataSetChanged()
+                    daftar_jual_saya_no_data_animation.isInvisible = true
                 } else {
                     daftar_jual_saya_progress_bar.isInvisible = true
+                    daftar_jual_saya_no_data_animation.isInvisible = false
                 }
             }
         }
 
-        // to do: diminati, terjual
         daftar_jual_saya_filter_produk_diminati.setOnClickListener {
             daftar_jual_saya_filter_produk_diminati.isSelected = true
             daftar_jual_saya_filter_produk_product.isSelected = false
@@ -210,12 +214,13 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
                             listProdukDiminati += allNotification[i]
                         }
                     }
-                    diminatiTerjualAdapter.setDiminatiTerjualData(listProdukDiminati)
-                    diminatiTerjualAdapter.notifyDataSetChanged()
+                    diminatiAdapter.setDiminatiTerjualData(listProdukDiminati)
+                    diminatiAdapter.notifyDataSetChanged()
                     daftar_jual_saya_progress_bar.isInvisible = true
-
+                    daftar_jual_saya_no_data_animation.isInvisible = true
                 }else {
                     daftar_jual_saya_progress_bar.isInvisible = true
+                    daftar_jual_saya_no_data_animation.isInvisible = false
                 }
             }
         }
@@ -240,28 +245,13 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
                     }
                     adapter.setDataSellerProduct(listProdukTerjual)
                     adapter.notifyDataSetChanged()
+                    daftar_jual_saya_no_data_animation.isInvisible = true
                     daftar_jual_saya_progress_bar.isInvisible = true
                 }else{
                     daftar_jual_saya_progress_bar.isInvisible = true
+                    daftar_jual_saya_no_data_animation.isInvisible = false
                 }
             }
-
-//            viewModelNotification.notification.observe(viewLifecycleOwner){allNotification ->
-//                val listProdukTerjual = mutableListOf<GetAllNotificationResponseItem>()
-//                if(allNotification.isNotEmpty()){
-//                    for(i in allNotification.indices){
-//                        if(allNotification[i].status == "Terjual" || allNotification[i].status == "terjual" || allNotification[i].status == "sold" || allNotification[i].status == "accepted"){
-//                            listProdukTerjual += allNotification[i]
-//                        }
-//                    }
-//                    diminatiTerjualAdapter.setDiminatiTerjualData(listProdukTerjual)
-//                    diminatiTerjualAdapter.notifyDataSetChanged()
-//                    daftar_jual_saya_progress_bar.isInvisible = true
-//
-//                }else {
-//                    daftar_jual_saya_progress_bar.isInvisible = true
-//                }
-//            }
         }
     }
 

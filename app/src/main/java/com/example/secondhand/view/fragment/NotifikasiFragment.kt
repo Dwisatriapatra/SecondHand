@@ -62,14 +62,21 @@ class NotifikasiFragment : Fragment(), NotificationItemClickListener {
                 rv_notification.layoutManager = myLm
                 rv_notification.adapter = adapter
 
-                viewModelNotification.notification.observe(viewLifecycleOwner) {
-                    adapter.setNotificationData(it)
-                    notifikasi_progress_bar.isInvisible = true
-                    adapter.notifyDataSetChanged()
+                viewModelNotification.notification.observe(viewLifecycleOwner) {notification ->
+                    if(notification.isNotEmpty()){
+                        adapter.setNotificationData(notification)
+                        notifikasi_progress_bar.isInvisible = true
+                        adapter.notifyDataSetChanged()
+                        notifikasi_no_data_animation.isInvisible = true
+                    }else{
+                        notifikasi_no_data_animation.isInvisible = false
+                        notifikasi_progress_bar.isInvisible = true
+                    }
                 }
             } else {
                 rv_notification.isInvisible = true
                 notifikasi_progress_bar.isInvisible = true
+                notifikasi_no_data_animation.isInvisible = true
 
                 notifikasi_to_login_button.setOnClickListener {
                     startActivity(Intent(activity, LoginActivity::class.java))

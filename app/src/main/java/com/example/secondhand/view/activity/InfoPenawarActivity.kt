@@ -125,13 +125,12 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
                     viewModelSellerOrder.responseMessage.observe(this) {
                         if (it) {
                             Toast.makeText(this, "Berhasil menerima", Toast.LENGTH_SHORT).show()
-//                            initDialogToWhatsApp(item.Product.image_url, item.price)
+                            initDialogToWhatsApp(item.Product.image_url, item.price)
                         } else {
                             Toast.makeText(this, "Permintaan anda gagal", Toast.LENGTH_SHORT)
                                 .show()
                         }
                     }
-                    //viewModelNotification.updateNotificationStatus(acessToken, item.id!!, NotificationStatus(true, "accepted"))
                     dialogInterface.dismiss()
                 }
             }.show()
@@ -159,7 +158,6 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
                                 .show()
                         }
                     }
-                    //viewModelNotification.updateNotificationStatus(acessToken, item.id!!, NotificationStatus(true, "declined"))
                     dialogInterface.dismiss()
                 }
             }.show()
@@ -170,9 +168,6 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
     }
 
     override fun statusButton(item: GetSellerOrderResponseItem, position: Int) {
-        // do something
-        // declare bottom sheet here
-
         userLoginTokenManager = UserLoginTokenManager(this)
         val viewModelSellerOrder = ViewModelProvider(this)[SellerOrderViewModel::class.java]
 
@@ -204,7 +199,6 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
             }
             dialog.dismiss()
         }
-
         dialog.setContentView(dialogView)
         dialog.show()
     }

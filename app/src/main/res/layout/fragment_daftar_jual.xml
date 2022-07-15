@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/custom_app_background"
     tools:context=".view.fragment.DaftarJualFragment">
 
@@ -126,13 +127,22 @@
         android:layout_marginHorizontal="20dp"
         android:id="@+id/rv_daftar_jual_saya_diminati_terjual"
         android:layout_below="@id/daftar_jual_saya_filter_produk_section"/>
-
     <ProgressBar
         android:id="@+id/daftar_jual_saya_progress_bar"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true" />
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/no_data_animation"
+        android:id="@+id/daftar_jual_saya_no_data_animation"
+        android:layout_below="@id/daftar_jual_saya_filter_produk_section"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"/>
 
     <LinearLayout
         android:id="@+id/daftar_jual_saya_belum_login_section"
