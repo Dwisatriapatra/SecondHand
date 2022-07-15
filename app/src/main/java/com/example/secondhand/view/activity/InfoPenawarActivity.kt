@@ -81,7 +81,7 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
         val dialogView = layoutInflater.inflate(R.layout.hubungi_via_whatsapp_bottom_sheet, null)
         val dataPenawar = intent.getParcelableExtra<GetAllNotificationResponseItem>("InfoPenawaran")
 
-        dialogView.txtNamaPembeliWhatsApp.text = "${dataPenawar!!.buyer_name}"
+        dialogView.txtNamaPembeliWhatsApp.text = dataPenawar!!.buyer_name
         dialogView.txtKotaPembeliWhatsApp.text = ""
         Glide.with(dialogView.imgPembeliWhatsApp.context)
             .load(dataPenawar.image_url)

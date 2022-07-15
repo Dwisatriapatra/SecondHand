@@ -95,8 +95,8 @@ class NotifikasiFragment : Fragment(), NotificationItemClickListener {
                 userLoginTokenManager.accessToken.asLiveData().observe(viewLifecycleOwner) { accessToken ->
                     viewModelNotification.updateNotificationStatus(
                         accessToken,
-                        item.id!!,
-                        NotificationStatus(true, item.status!!)
+                        item.id,
+                        NotificationStatus(true, item.status)
                     )
                     viewModelNotification.getAllNotification(accessToken)
                     viewModelNotification.notification.observe(viewLifecycleOwner){

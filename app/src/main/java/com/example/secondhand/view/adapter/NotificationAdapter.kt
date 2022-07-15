@@ -46,7 +46,7 @@ class NotificationAdapter(private val notificationItemClickListener: Notificatio
                     .override(75, 75)
                     .into(card_notification_image)
 
-                if(read == true){
+                if(read){
                     card_notification_read_status.isInvisible = true
                 }
                 card_notification_read_status.setOnClickListener {

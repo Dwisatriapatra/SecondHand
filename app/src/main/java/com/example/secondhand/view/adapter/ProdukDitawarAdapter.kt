@@ -45,7 +45,7 @@ class ProdukDitawarAdapter (
                     .error(R.drawable.ic_launcher_background)
                     .override(100, 100)
                     .into(card_daftar_produk_ditawar_image)
-                if(status == "accepted" || status == "diterima" || status == "declined" || status == "ditolak"){
+                if(status == "accepted" || status == "diterima" || status == "declined" || status == "ditolak" || status == "sold"){
                     card_daftar_produk_ditawar_terima_tolak_button_section.isInvisible = true
                 }else{
                     card_daftar_produk_ditawar_status_hubungi_button_section.isInvisible = true
