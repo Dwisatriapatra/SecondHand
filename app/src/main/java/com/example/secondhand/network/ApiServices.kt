@@ -122,8 +122,13 @@ interface ApiServices {
         @Body orderStatus: OrderStatus
     ): Call<Any>
 
+
+
     @GET("seller/order")
     fun getAllSellerOrder(
         @Header("access_token") token: String
     ): Call<List<GetSellerOrderResponseItem>>
+
+    @GET("seller/banner")
+    fun getImageBanner() : Call<List<GetSellerBannerItem>>
 }

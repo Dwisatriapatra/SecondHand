@@ -10,6 +10,7 @@ import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+
 import com.example.secondhand.R
 import com.example.secondhand.model.GetBuyerProductResponseItem
 import com.example.secondhand.model.RoomBuyerProduct
@@ -19,11 +20,15 @@ import com.example.secondhand.view.adapter.SearchResultAdapter
 import com.example.secondhand.viewmodel.BuyerProductViewModel
 import com.example.secondhand.viewmodel.RoomBuyerProductViewModel
 import com.example.secondhand.helper.isOnline
+import com.example.secondhand.view.adapter.BannerAdapter
+import com.example.secondhand.viewmodel.BannerViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_home.*
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
+
+    private lateinit var adapterBanner : BannerAdapter
     private lateinit var adapter: BuyerProductAdapter
     private lateinit var searchProductResultAdapter: SearchResultAdapter
 
@@ -38,6 +43,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+        banner()
     }
 
     private fun initView() {
@@ -257,6 +263,22 @@ class HomeFragment : Fragment() {
             }
 
         })
+    }
+
+    private fun banner(){
+        val viewModelbanner = ViewModelProvider(this)[BannerViewModel::class.java]
+        viewModelbanner.banner.observe(requireActivity()){
+            adapterBanner = BannerAdapter(requireContext(), it)
+            vpHomeImageBanner.adapter = adapterBanner
+        }
+        viewModelbanner.getAllBanner()
+//        Glide.with(requireContext())
+//            .load(imageUrl)
+//            .error(R.drawable.ic_launcher_background)
+//        val imageUrl = imageUR
+//        val image = vpImageBanner
+//        adapterBanner = BannerAdapter(this,  )
+//        vpHomeImageBanner.adapter = adapterBanner
     }
 
 
