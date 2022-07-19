@@ -20,6 +20,7 @@ import com.example.secondhand.view.adapter.SearchResultAdapter
 import com.example.secondhand.viewmodel.BuyerProductViewModel
 import com.example.secondhand.viewmodel.RoomBuyerProductViewModel
 import com.example.secondhand.helper.isOnline
+import com.example.secondhand.view.activity.WishlistActivity
 import com.example.secondhand.view.adapter.BannerAdapter
 import com.example.secondhand.viewmodel.BannerViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,7 +51,6 @@ class HomeFragment : Fragment() {
         val viewModelBuyerProduct = ViewModelProvider(this)[BuyerProductViewModel::class.java]
         val viewModelRoomBuyerProduct = ViewModelProvider(this)[RoomBuyerProductViewModel::class.java]
 
-
         viewModelBuyerProduct.getAllBuyerProduct()
         adapter = BuyerProductAdapter {
             val pindah = Intent(activity, DetailActivity::class.java)
@@ -61,6 +61,9 @@ class HomeFragment : Fragment() {
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         rv_product_home.adapter = adapter
 
+        home_to_wishlist_button.setOnClickListener {
+            startActivity(Intent(requireContext(), WishlistActivity::class.java))
+        }
 
         // initialize adapter and layout manager for searching activity
         searchProductResultAdapter = SearchResultAdapter {
@@ -76,7 +79,6 @@ class HomeFragment : Fragment() {
         home_telusuri_kategori_elektronik_button.isClickable = false
         home_telusuri_kategori_semua_button.isClickable = false
         home_telusuri_kategori_semua_button.isClickable = false
-
         home_telusuri_kategori_semua_button.isSelected = true
 
         if(!isOnline(requireContext())){
@@ -241,8 +243,7 @@ class HomeFragment : Fragment() {
             val viewModelSearch = ViewModelProvider(this@HomeFragment)[BuyerProductViewModel::class.java]
 
             override fun onQueryTextSubmit(query: String?): Boolean {
-
-                home_banner_section.isInvisible = true
+                vpHomeImageBanner.isInvisible = true
                 home_telusuri_kategori_section.isInvisible = true
                 rv_product_home_section.isInvisible = true
                 home_list_search_result.isInvisible = false
@@ -272,14 +273,5 @@ class HomeFragment : Fragment() {
             vpHomeImageBanner.adapter = adapterBanner
         }
         viewModelbanner.getAllBanner()
-//        Glide.with(requireContext())
-//            .load(imageUrl)
-//            .error(R.drawable.ic_launcher_background)
-//        val imageUrl = imageUR
-//        val image = vpImageBanner
-//        adapterBanner = BannerAdapter(this,  )
-//        vpHomeImageBanner.adapter = adapterBanner
     }
-
-
 }

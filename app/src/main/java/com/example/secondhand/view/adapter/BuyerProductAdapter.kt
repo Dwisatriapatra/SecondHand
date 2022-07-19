@@ -18,7 +18,6 @@ class BuyerProductAdapter(private val onClick: (GetBuyerProductResponseItem) -> 
         this.listBuyerProduct = list
     }
 
-
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(

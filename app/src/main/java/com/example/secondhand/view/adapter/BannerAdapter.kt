@@ -6,12 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import com.bumptech.glide.Glide
 import com.example.secondhand.R
 import com.example.secondhand.model.GetSellerBannerItem
-import kotlinx.android.synthetic.main.banner_view_pager.view.*
 import java.util.*
 
 class BannerAdapter(val context : Context, private var imagebanner : List<GetSellerBannerItem>) : PagerAdapter(){
@@ -27,6 +25,7 @@ class BannerAdapter(val context : Context, private var imagebanner : List<GetSel
         val mLayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val itemView : View = mLayoutInflater.inflate(R.layout.banner_view_pager, container, false)
         val imageView : ImageView = itemView.findViewById<View>(R.id.vpImageBanner) as ImageView
+        imageView.scaleType = ImageView.ScaleType.FIT_XY
         Glide.with(context).load(imagebanner[position].imageUrl).into(imageView)
 
         Objects.requireNonNull(container).addView(itemView)

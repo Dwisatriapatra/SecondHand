@@ -27,11 +27,7 @@
         <entry key="..\:/Semester 6/Binar Academy/SecondHand/app/src/main/res/drawable/custom_app_background.xml" value="0.1145" />
         <entry key="..\:/Semester 6/Binar Academy/SecondHand/app/src/main/res/layout/activity_register.xml" value="0.2" />
         <entry key="..\:/Semester 6/Binar Academy/SecondHand/app/src/main/res/layout/tawar_harga_bottom_sheet_dialog.xml" value="0.20416666666666666" />
-        <entry key="..\:/Semester 6/Binar Academy/SecondHandKeDua/app/src/main/res/layout/activity_info_penawar.xml" value="0.20416666666666666" />
-        <entry key="..\:/Semester 6/Binar Academy/SecondHandKeDua/app/src/main/res/layout/banner_view_pager.xml" value="0.1" />
-        <entry key="..\:/Semester 6/Binar Academy/SecondHandKeDua/app/src/main/res/layout/fragment_home.xml" value="0.21452702702702703" />
-        <entry key="..\:/Semester 6/Binar Academy/SecondHandKeDua/app/src/main/res/layout/status_penjualan_bottom_sheet.xml" value="0.1" />
-        <entry key="..\:/clone/SecondHand/app/src/main/res/layout/activity_login.xml" value="0.17777777777777778" />
+        <entry key="..\:/Semester 6/Binar Academy/SecondHandKeDua/app/src/main/res/layout/status_penjualan_bottom_sheet.xml" value="0.20416666666666666" />
         <entry key="app/src/main/res/drawable-v24/custom_button_layout.xml" value="0.144" />
         <entry key="app/src/main/res/drawable/bottom_nav_colors.xml" value="0.2115" />
         <entry key="app/src/main/res/drawable/custom_app_background.xml" value="0.2115" />
@@ -49,6 +45,7 @@
         <entry key="app/src/main/res/layout/activity_preview.xml" value="0.2758152173913043" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.32395833333333335" />
         <entry key="app/src/main/res/layout/activity_splash_acivity.xml" value="0.34010416666666665" />
+        <entry key="app/src/main/res/layout/activity_wishlist.xml" value="0.16979166666666667" />
         <entry key="app/src/main/res/layout/custom_edit_data_product_dialog_alert.xml" value="0.2758152173913043" />
         <entry key="app/src/main/res/layout/custom_list_view_search_result.xml" value="0.2758152173913043" />
         <entry key="app/src/main/res/layout/fragment_akun.xml" value="0.34010416666666665" />
@@ -66,6 +63,7 @@
         <entry key="app/src/main/res/layout/item_adapter_diminati_terjual.xml" value="0.2758152173913043" />
         <entry key="app/src/main/res/layout/item_adapter_notification.xml" value="0.3390625" />
         <entry key="app/src/main/res/layout/item_adapter_seller_product_item.xml" value="0.16979166666666667" />
+        <entry key="app/src/main/res/layout/item_adapter_wishlist.xml" value="0.16875" />
         <entry key="app/src/main/res/layout/item_seller_product_item.xml" value="0.34010416666666665" />
         <entry key="app/src/main/res/layout/search_result_adapter_item.xml" value="0.16875" />
         <entry key="app/src/main/res/layout/status_penjualan_bottom_sheet.xml" value="0.2758152173913043" />

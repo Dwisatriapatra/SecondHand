@@ -13,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_launcher_background" />
+        android:src="@drawable/ic_launcher_background"
+        android:contentDescription="@string/img" />
 
     <!--    Membuat Judul Barang-->
     <LinearLayout
@@ -156,7 +157,20 @@
         android:layout_marginBottom="16dp"
         android:background="@drawable/custom_button_layout"
         android:text="Saya Tertarik dan ingin Nego"
-        android:textAllCaps="false" />
+        android:textAllCaps="false"
+        tools:ignore="HardcodedText" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/custom_button_layout"
+        android:text="Tambahkan ke wishlist"
+        android:textAllCaps="false"
+        android:id="@+id/btnTambahkanKeWishlist"
+        tools:ignore="HardcodedText" />
+
 
 
 </LinearLayout>

@@ -1,9 +1,11 @@
 package com.example.secondhand.view.activity
 
 import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isInvisible
 import androidx.lifecycle.ViewModelProvider
@@ -13,8 +15,10 @@ import com.example.secondhand.R
 import com.example.secondhand.datastore.UserLoginTokenManager
 import com.example.secondhand.model.GetBuyerProductResponseItem
 import com.example.secondhand.model.PostBuyerOrder
+import com.example.secondhand.model.RoomWishlistItem
 import com.example.secondhand.viewmodel.BuyerOrderViewModel
 import com.example.secondhand.viewmodel.BuyerProductViewModel
+import com.example.secondhand.viewmodel.RoomWishlistProductViewModel
 import com.example.secondhand.viewmodel.SellerViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,7 +50,7 @@ class DetailActivity : AppCompatActivity() {
 
         val viewModelBuyerProduct = ViewModelProvider(this)[BuyerProductViewModel::class.java]
         viewModelBuyerProduct.getBuyerProductById(detailBarang.id!!)
-        viewModelBuyerProduct.buyerProductById.observe(this){ product ->
+        viewModelBuyerProduct.buyerProductById.observe(this) { product ->
             //product detail
             Glide.with(this).load(product.image_url)
                 .error(R.drawable.ic_launcher_background)
@@ -87,13 +91,49 @@ class DetailActivity : AppCompatActivity() {
         btnNego.setOnClickListener {
             initDialogTawarHarga()
         }
+
+        btnTambahkanKeWishlist.setOnClickListener {
+            AlertDialog.Builder(this)
+                .setTitle("Menambahkan ke wishlist")
+                .setMessage("Anda yakin ingin menambahkan product ini ke wishlist?")
+                .setNegativeButton("Tidak") { dialogInterface: DialogInterface, _: Int ->
+                    dialogInterface.dismiss()
+                }
+                .setPositiveButton("Ya") { _: DialogInterface, _: Int ->
+                    val viewModelWishlistProduct =
+                        ViewModelProvider(this)[RoomWishlistProductViewModel::class.java]
+                    val sellerViewModel = ViewModelProvider(this)[SellerViewModel::class.java]
+                    userLoginTokenManager = UserLoginTokenManager(this)
+
+                    userLoginTokenManager.accessToken.asLiveData().observe(this){
+                        sellerViewModel.getSellerData(it)
+                    }
+                    viewModelBuyerProduct.getBuyerProductById(detailBarang.id!!)
+
+                    sellerViewModel.seller.observe(this){sellerData ->
+                        viewModelBuyerProduct.buyerProductById.observe(this) { product ->
+                            viewModelWishlistProduct.insertBuyerProductList(
+                                RoomWishlistItem(
+                                    null,
+                                    sellerData.full_name,
+                                    product.name,
+                                    product.base_price,
+                                    product.image_url
+                                )
+                            )
+                            Toast.makeText(this@DetailActivity, "Berhasil ditambahkan ke wishlist", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+                .show()
+        }
     }
 
     @SuppressLint("SetTextI18n")
     private fun initDialogTawarHarga() {
         userLoginTokenManager = UserLoginTokenManager(this)
         val viewModelSellerData = ViewModelProvider(this)[SellerViewModel::class.java]
-        userLoginTokenManager.accessToken.asLiveData().observe(this){accessToken ->
+        userLoginTokenManager.accessToken.asLiveData().observe(this) { accessToken ->
             viewModelSellerData.getSellerData(accessToken)
         }
         userLoginTokenManager.isUser.asLiveData().observe(this) { isUser ->
@@ -101,10 +141,10 @@ class DetailActivity : AppCompatActivity() {
             val dialog = BottomSheetDialog(this)
             val dialogView = layoutInflater.inflate(R.layout.tawar_harga_bottom_sheet_dialog, null)
 
-            if(intent.hasExtra("detailbarangsearchresult")){
+            if (intent.hasExtra("detailbarangsearchresult")) {
                 detailBarang =
                     intent.getParcelableExtra("detailbarangsearchresult")!!
-            }else if(intent.hasExtra("detailbarang")){
+            } else if (intent.hasExtra("detailbarang")) {
                 detailBarang =
                     intent.getParcelableExtra("detailbarang")!!
             }
@@ -151,19 +191,19 @@ class DetailActivity : AppCompatActivity() {
                 }
 
                 btnTawarkan.setOnClickListener {
-                    viewModelSellerData.seller.observe(this){seller ->
+                    viewModelSellerData.seller.observe(this) { seller ->
                         val productId = detailBarang.id
                         val edtTawar =
                             dialogView.tawarDialogInputHargaTawaran.text.toString().toInt()
 
-                        if(seller.address.isEmpty()){
+                        if (seller.address.isEmpty()) {
                             Toast.makeText(
                                 this,
                                 "Lengkapi profile anda terlebih dahulu",
                                 Toast.LENGTH_LONG
                             ).show()
                             startActivity(Intent(this, LengkapiInfoAkun::class.java))
-                        }else{
+                        } else {
                             if (edtTawar.toString().isNotEmpty()) {
                                 val viewModelBuyerOrder =
                                     ViewModelProvider(this)[BuyerOrderViewModel::class.java]

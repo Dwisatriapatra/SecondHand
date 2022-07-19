@@ -3,7 +3,6 @@ package com.example.secondhand.view.activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricManager
@@ -121,7 +120,7 @@ class LoginActivity : AppCompatActivity() {
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
 
                 // Authentikasi Error
-                Toast.makeText(this@LoginActivity, errString.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this@LoginActivity, errString.toString(), Toast.LENGTH_SHORT).show()
 
                 super.onAuthenticationError(errorCode, errString)
             }
@@ -129,7 +128,7 @@ class LoginActivity : AppCompatActivity() {
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
 
                 // Authentikasi Berhasil
-                Toast.makeText(this@LoginActivity, "Authentication Success", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this@LoginActivity, "Authentication Success", Toast.LENGTH_SHORT).show()
 
                 super.onAuthenticationSucceeded(result)
             }
@@ -137,7 +136,7 @@ class LoginActivity : AppCompatActivity() {
             override fun onAuthenticationFailed() {
 
                 // Authentikasi Gagal
-                Toast.makeText(this@LoginActivity, "Authentication Failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this@LoginActivity, "Authentication Failed", Toast.LENGTH_SHORT).show()
 
                 super.onAuthenticationFailed()
             }
