@@ -95,4 +95,10 @@ dependencies {
 
     //lottie animeation
     implementation "com.airbnb.android:lottie:5.2.0"
+
+    // google
+    implementation 'com.google.android.gms:play-services-auth:20.2.0'
+
+    //biometric
+    implementation "androidx.biometric:biometric:1.2.0-alpha04"
 }

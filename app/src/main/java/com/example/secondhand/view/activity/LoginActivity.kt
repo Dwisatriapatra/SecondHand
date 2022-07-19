@@ -3,8 +3,12 @@ package com.example.secondhand.view.activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.secondhand.R
@@ -22,6 +26,7 @@ import kotlinx.coroutines.withContext
 class LoginActivity : AppCompatActivity() {
     private lateinit var userLoginTokenManager: UserLoginTokenManager
     private lateinit var viewModelUser: UserViewModel
+    private lateinit var biometricPrompt: BiometricPrompt
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +34,15 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         userLoginTokenManager = UserLoginTokenManager(this)
+        biometricPrompt = createBiometricPrompt()
+        BiometricManager.from(this).canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)
+
+        button_biometric.setOnClickListener {
+
+            // Menampilkan Biometric Authentication
+            biometricPrompt.authenticate(createPromptInfo())
+        }
+
 
         button_login.setOnClickListener {
             login()
@@ -39,6 +53,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
     }
+
 
     private fun login() {
         viewModelUser = ViewModelProvider(this)[UserViewModel::class.java]
@@ -86,4 +101,50 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun createPromptInfo(): BiometricPrompt.PromptInfo {
+        return BiometricPrompt.PromptInfo.Builder()
+            .setTitle("Title")
+            .setDescription("Description")
+            .setNegativeButtonText("Cancel")
+            .setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_STRONG)
+            .setConfirmationRequired(true)
+            .build()
+    }
+
+    private fun createBiometricPrompt(): BiometricPrompt {
+        val executor = ContextCompat.getMainExecutor(this)
+
+        // Callback
+        val callback = object : BiometricPrompt.AuthenticationCallback() {
+
+            override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+
+                // Authentikasi Error
+                Toast.makeText(this@LoginActivity, errString.toString(), Toast.LENGTH_SHORT).show();
+
+                super.onAuthenticationError(errorCode, errString)
+            }
+
+            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+
+                // Authentikasi Berhasil
+                Toast.makeText(this@LoginActivity, "Authentication Success", Toast.LENGTH_SHORT).show();
+
+                super.onAuthenticationSucceeded(result)
+            }
+
+            override fun onAuthenticationFailed() {
+
+                // Authentikasi Gagal
+                Toast.makeText(this@LoginActivity, "Authentication Failed", Toast.LENGTH_SHORT).show();
+
+                super.onAuthenticationFailed()
+            }
+        }
+
+        return BiometricPrompt(this, executor, callback)
+    }
+
+
 }
