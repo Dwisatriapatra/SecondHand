@@ -53,10 +53,35 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/akun_pengaturan_section"
+        android:id="@+id/akun_history_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/akun_edit_profile_section"
+        android:layout_marginBottom="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/img"
+            android:src="@drawable/ic_baseline_history_24" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/histori"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/akun_pengaturan_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/akun_history_section"
         android:layout_marginBottom="10dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"

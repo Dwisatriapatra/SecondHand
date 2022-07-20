@@ -36,8 +36,10 @@
         <entry key="app/src/main/res/drawable/custom_image_picker.xml" value="0.2115" />
         <entry key="app/src/main/res/drawable/custom_judul_detail.xml" value="0.2115" />
         <entry key="app/src/main/res/drawable/custom_telusuri_kategori_button.xml" value="0.2115" />
+        <entry key="app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.2115" />
         <entry key="app/src/main/res/drawable/tawar_harga_bottom_sheet_dialog.xml" value="0.2115" />
         <entry key="app/src/main/res/layout/activity_detail.xml" value="0.34010416666666665" />
+        <entry key="app/src/main/res/layout/activity_history.xml" value="0.2758152173913043" />
         <entry key="app/src/main/res/layout/activity_info_penawar.xml" value="0.2758152173913043" />
         <entry key="app/src/main/res/layout/activity_lengkapi_info_akun.xml" value="0.2758152173913043" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.32395833333333335" />
@@ -63,6 +65,7 @@
         <entry key="app/src/main/res/layout/item_adapter_diminati_terjual.xml" value="0.2758152173913043" />
         <entry key="app/src/main/res/layout/item_adapter_notification.xml" value="0.3390625" />
         <entry key="app/src/main/res/layout/item_adapter_seller_product_item.xml" value="0.16979166666666667" />
+        <entry key="app/src/main/res/layout/item_adapter_user_history.xml" value="0.2758152173913043" />
         <entry key="app/src/main/res/layout/item_adapter_wishlist.xml" value="0.16875" />
         <entry key="app/src/main/res/layout/item_seller_product_item.xml" value="0.34010416666666665" />
         <entry key="app/src/main/res/layout/search_result_adapter_item.xml" value="0.16875" />

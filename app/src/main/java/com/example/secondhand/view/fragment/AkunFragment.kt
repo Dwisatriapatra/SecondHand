@@ -14,6 +14,7 @@ import androidx.lifecycle.asLiveData
 import com.bumptech.glide.Glide
 import com.example.secondhand.R
 import com.example.secondhand.datastore.UserLoginTokenManager
+import com.example.secondhand.view.activity.HistoryActivity
 import com.example.secondhand.view.activity.LengkapiInfoAkun
 import com.example.secondhand.view.activity.LoginActivity
 import com.example.secondhand.view.activity.SplashAcivity
@@ -101,6 +102,10 @@ class AkunFragment : Fragment() {
 
         akun_edit_profile_section.setOnClickListener {
             startActivity(Intent(activity, LengkapiInfoAkun::class.java))
+        }
+
+        akun_history_section.setOnClickListener {
+            startActivity(Intent(activity, HistoryActivity::class.java))
         }
     }
 }

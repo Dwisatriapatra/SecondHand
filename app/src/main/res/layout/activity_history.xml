@@ -5,18 +5,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/custom_app_background"
-    tools:context=".view.activity.WishlistActivity">
+    tools:context=".view.activity.HistoryActivity">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="@string/nama_user"
-        android:id="@+id/wishlist_user_name"
-        android:textColor="@color/black"
+        android:textSize="24sp"
         android:textStyle="bold"
-        android:textSize="18sp"/>
+        android:id="@+id/history_nama_user"
+        android:textColor="@color/black"
+        android:text="@string/nama_user"
+        android:gravity="center_horizontal"/>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/rv_wishlist"/>
+        android:id="@+id/rv_history"/>
 </LinearLayout>
