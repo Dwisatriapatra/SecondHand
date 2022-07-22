@@ -50,6 +50,7 @@ class AkunFragment : Fragment() {
                 text_akun_saya.isInvisible = true
                 akun_image.isInvisible = true
                 akun_edit_profile_section.isInvisible = true
+                akun_history_section.isInvisible = true
                 akun_pengaturan_section.isInvisible = true
                 akun_logout_section.isInvisible = true
                 akun_to_login.setOnClickListener {
@@ -106,6 +107,10 @@ class AkunFragment : Fragment() {
 
         akun_history_section.setOnClickListener {
             startActivity(Intent(activity, HistoryActivity::class.java))
+        }
+
+        akun_pengaturan_section.setOnClickListener {
+            throw RuntimeException("Crashlytics demo")
         }
     }
 }
