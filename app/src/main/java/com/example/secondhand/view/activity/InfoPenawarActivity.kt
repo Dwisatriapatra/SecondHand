@@ -2,10 +2,8 @@ package com.example.secondhand.view.activity
 
 import android.content.DialogInterface
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -77,7 +75,7 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
         }
     }
 
-    private fun initDialogToWhatsApp(imageUrl: String?, bidPrice: Int?) {
+    private fun initDialogToWhatsApp(imageUrl: String?, bidPrice: Int?, buyerPhone: String?) {
         userLoginTokenManager = UserLoginTokenManager(this)
 
         val bottomSheetDialog = BottomSheetDialog(this)
@@ -101,13 +99,11 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
 
         dialogView.btnHubungiViaWHatsApp.setOnClickListener {
             //do intent to whatsapp
-            val number = dataPenawar.User.phone_number.drop(1)
-            Log.d("hallo", number)
             val message = "Hai, tawaranmu terhadap produk ${dataPenawar.Product.name} seharga " +
                     "${dataPenawar.bid_price} telah diterima oleh penjual. Jika anda " +
                     "mengkonfirmasi pembelian, silahkan kirim pesan untuk menghubungi pembeli"
 
-            val url = "https://api.whatsapp.com/send?phone=+62$number"+"&text=" + URLEncoder.encode(message, "UTF-8")
+            val url = "https://api.whatsapp.com/send?phone=$buyerPhone"+"&text=" + URLEncoder.encode(message, "UTF-8")
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(url)
             startActivity(i)
@@ -137,7 +133,7 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
                     viewModelSellerOrder.responseMessage.observe(this) {
                         if (it) {
                             Toast.makeText(this, "Berhasil menerima", Toast.LENGTH_SHORT).show()
-                            initDialogToWhatsApp(item.Product.image_url, item.price)
+                            initDialogToWhatsApp(item.Product.image_url, item.price, item.User.phone_number)
                         } else {
                             Toast.makeText(this, "Permintaan anda gagal", Toast.LENGTH_SHORT)
                                 .show()
@@ -180,7 +176,7 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
     }
 
     override fun hubungiButton(item: GetSellerOrderResponseItem, position: Int) {
-        initDialogToWhatsApp(item.Product.image_url, item.price)
+        initDialogToWhatsApp(item.Product.image_url, item.price, item.User.phone_number)
     }
 
     override fun statusButton(item: GetSellerOrderResponseItem, position: Int) {
