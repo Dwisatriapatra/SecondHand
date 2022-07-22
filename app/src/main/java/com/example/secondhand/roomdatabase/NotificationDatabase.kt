@@ -5,12 +5,12 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.example.secondhand.helper.notificatiomTypeConverters
+import com.example.secondhand.helper.NotificatiomTypeConverters
 import com.example.secondhand.model.RoomNotification
 
 @Database(entities = [RoomNotification::class], version = 1, exportSchema = false)
-@TypeConverters(notificatiomTypeConverters::class)
-abstract class NotificationDatabase() : RoomDatabase() {
+@TypeConverters(NotificatiomTypeConverters::class)
+abstract class NotificationDatabase : RoomDatabase() {
     abstract fun notificationDao(): NotificationDao
     companion object{
         private var INSTANCE: NotificationDatabase? = null

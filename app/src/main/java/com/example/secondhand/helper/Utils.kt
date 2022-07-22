@@ -4,7 +4,6 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import androidx.room.TypeConverter
-import com.example.secondhand.model.Category
 import com.example.secondhand.model.GetAllNotificationResponseItem
 import com.example.secondhand.model.GetBuyerProductResponseItem
 import com.google.gson.Gson
@@ -41,7 +40,7 @@ class GithubTypeConverters {
     }
 }
 
-class notificatiomTypeConverters{
+class NotificatiomTypeConverters{
     @TypeConverter
     fun stringToNotificationObject(string: String?): List<GetAllNotificationResponseItem>{
         if(string.isNullOrEmpty()){

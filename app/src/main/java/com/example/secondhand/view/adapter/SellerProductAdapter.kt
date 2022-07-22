@@ -18,7 +18,8 @@ class SellerProductAdapter(private val clickListener: DaftarJualProductSayaItemC
     fun setDataSellerProduct(list: List<GetSellerProductItem>) {
         this.listSellerProduct = list as MutableList<GetSellerProductItem>
     }
-    fun deleteSellerProductByPosition(position: Int){
+
+    fun deleteSellerProductByPosition(position: Int) {
         listSellerProduct!!.removeAt(position)
     }
 
@@ -35,31 +36,32 @@ class SellerProductAdapter(private val clickListener: DaftarJualProductSayaItemC
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder.itemView) {
-            with(listSellerProduct!![position]) {
-                card_daftar_jual_produk_nama.text = name
-                card_daftar_jual_produk_harga.text = base_price.toString()
-                Glide.with(card_daftar_jual_produk_image.context)
-                    .load(image_url)
-                    .error(R.drawable.ic_launcher_background)
-                    .override(72, 72)
-                    .into(card_daftar_jual_produk_image)
-                card_daftar_jual_produk_lokasi.text = location
-                card_daftar_jual_produk_status.text = status
+            card_daftar_jual_produk_nama.text = listSellerProduct!![position].name
+            card_daftar_jual_produk_harga.text = listSellerProduct!![position].base_price.toString()
+            Glide.with(card_daftar_jual_produk_image.context)
+                .load(listSellerProduct!![position].image_url)
+                .error(R.drawable.ic_launcher_background)
+                .override(72, 72)
+                .into(card_daftar_jual_produk_image)
+            card_daftar_jual_produk_lokasi.text = listSellerProduct!![position].location
+            card_daftar_jual_produk_status.text = listSellerProduct!![position].status
 
-                if(status == "sold"){
-                    card_daftar_jual_edit_button.isInvisible = true
-                    card_daftar_jual_hapus_button.isInvisible = true
-                }else if(status == "available"){
-                    card_daftar_jual_edit_button.isInvisible = false
-                    card_daftar_jual_hapus_button.isInvisible = false
-                }
+            if (listSellerProduct!![position].status == "sold") {
+                card_daftar_jual_edit_button.isInvisible = true
+                card_daftar_jual_hapus_button.isInvisible = true
+            } else if (listSellerProduct!![position].status == "available") {
+                card_daftar_jual_edit_button.isInvisible = false
+                card_daftar_jual_hapus_button.isInvisible = false
+            }
 
-                card_daftar_jual_edit_button.setOnClickListener {
-                    clickListener.editProductInDaftarJualSaya(listSellerProduct!![position], position)
-                }
-                card_daftar_jual_hapus_button.setOnClickListener {
-                    clickListener.deleteProductFromDaftarJualSaya(listSellerProduct!![position], position)
-                }
+            card_daftar_jual_edit_button.setOnClickListener {
+                clickListener.editProductInDaftarJualSaya(listSellerProduct!![position], position)
+            }
+            card_daftar_jual_hapus_button.setOnClickListener {
+                clickListener.deleteProductFromDaftarJualSaya(
+                    listSellerProduct!![position],
+                    position
+                )
             }
         }
 

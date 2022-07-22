@@ -47,7 +47,7 @@ class RegisterActivity : AppCompatActivity() {
         val address = "init address".toRequestBody("multipart/form-data".toMediaType())
         val city = "init city".toRequestBody("multipart/form-data".toMediaType())
 
-        val viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+        val viewModel = ViewModelProvider(this)[UserViewModel::class.java]
 
         viewModel.userRegister(email,
             fullName,

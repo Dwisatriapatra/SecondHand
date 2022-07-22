@@ -32,38 +32,37 @@ class BuyerProductAdapter(private val onClick: (GetBuyerProductResponseItem) -> 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder.itemView) {
-            with(listBuyerProduct!![position]) {
-                card_product_nama.text = name
-                card_product_harga.text = "Harga: Rp. $base_price"
-                Glide.with(card_image_produk.context)
-                    .load(image_url)
-                    .error(R.drawable.ic_launcher_background)
-                    .override(100, 100)
-                    .into(card_image_produk)
+            card_product_nama.text = listBuyerProduct!![position].name
+            card_product_harga.text = "Harga: Rp. ${listBuyerProduct!![position].base_price}"
+            Glide.with(card_image_produk.context)
+                .load(listBuyerProduct!![position].image_url)
+                .error(R.drawable.ic_launcher_background)
+                .override(100, 100)
+                .into(card_image_produk)
 
-                card_product.setOnClickListener {
-                    onClick(listBuyerProduct!![position])
-                }
-                card_product_kategori.text = ""
-                if (Categories!!.isNotEmpty()) {
-                    for (i in Categories.indices) {
-                        if (Categories.lastIndex == 0) {
-                            card_product_kategori.text = "Kategori: " + Categories[i].name
-                            break
-                        }
-                        if (i == 0) {
-                            card_product_kategori.text = "Kategori: " + Categories[i].name + ", "
-                        } else if (i != Categories.lastIndex && i > 0) {
-                            card_product_kategori.text =
-                                card_product_kategori.text.toString() + Categories[i].name + ", "
-                        } else {
-                            card_product_kategori.text =
-                                card_product_kategori.text.toString() + Categories[i].name
-                        }
+            card_product.setOnClickListener {
+                onClick(listBuyerProduct!![position])
+            }
+
+            card_product_kategori.text = ""
+            if (listBuyerProduct!![position].Categories!!.isNotEmpty()) {
+                for (i in listBuyerProduct!![position].Categories!!.indices) {
+                    if (listBuyerProduct!![position].Categories!!.lastIndex == 0) {
+                        card_product_kategori.text = "Kategori: " + listBuyerProduct!![position].Categories!![i].name
+                        break
                     }
-                } else {
-                    card_product_kategori.text = "Kategori: Belum ada kategori"
+                    if (i == 0) {
+                        card_product_kategori.text = "Kategori: " + listBuyerProduct!![position].Categories!![i].name + ", "
+                    } else if (i != listBuyerProduct!![position].Categories!!.lastIndex && i > 0) {
+                        card_product_kategori.text =
+                            card_product_kategori.text.toString() + listBuyerProduct!![position].Categories!![i].name + ", "
+                    } else {
+                        card_product_kategori.text =
+                            card_product_kategori.text.toString() + listBuyerProduct!![position].Categories!![i].name
+                    }
                 }
+            } else {
+                card_product_kategori.text = "Kategori: Belum ada kategori"
             }
         }
     }

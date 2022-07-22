@@ -25,20 +25,18 @@ class DiminatiAdapter(private val onClick: (GetAllNotificationResponseItem) -> U
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder.itemView) {
-            with(listData!![position]) {
-                card_diminati_terjual_seller.text = "Penjual: $seller_name"
-                card_diminati_terjual_buyer.text = "Pembeli: $buyer_name"
-                card_diminati_terjual_status.text = "Status: $status"
-                card_diminati_terjual_harga_tawar.text = "Harga tawar: $bid_price"
-                card_diminati_terjual_tanggal_transaksi.text = transaction_date
-                Glide.with(card_diminati_terjual_image.context)
-                    .load(image_url)
-                    .error(R.drawable.ic_launcher_background)
-                    .override(75, 75)
-                    .into(card_diminati_terjual_image)
-                card_diminati_terjual.setOnClickListener {
-                    onClick(listData!![position])
-                }
+            card_diminati_terjual_seller.text = "Penjual: ${listData!![position].seller_name}"
+            card_diminati_terjual_buyer.text = "Pembeli: ${listData!![position].buyer_name}"
+            card_diminati_terjual_status.text = "Status: ${listData!![position].status}"
+            card_diminati_terjual_harga_tawar.text = "Harga tawar: ${listData!![position].bid_price}"
+            card_diminati_terjual_tanggal_transaksi.text = listData!![position].transaction_date
+            Glide.with(card_diminati_terjual_image.context)
+                .load(listData!![position].image_url)
+                .error(R.drawable.ic_launcher_background)
+                .override(75, 75)
+                .into(card_diminati_terjual_image)
+            card_diminati_terjual.setOnClickListener {
+                onClick(listData!![position])
             }
         }
     }

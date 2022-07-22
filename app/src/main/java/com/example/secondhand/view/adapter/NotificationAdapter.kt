@@ -34,27 +34,32 @@ class NotificationAdapter(private val notificationItemClickListener: Notificatio
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder.itemView) {
-            with(listNotification!![position]) {
-                card_notification_seller.text = "Penjual: $seller_name"
-                card_notification_buyer.text = "Pembeli: $buyer_name"
-                card_notification_status.text = "Status: $status"
-                card_notification_harga_tawar.text = "Harga tawar: $bid_price"
-                card_notification_tanggal_transaksi.text = transaction_date
-                Glide.with(card_notification_image.context)
-                    .load(image_url)
-                    .error(R.drawable.ic_launcher_background)
-                    .override(75, 75)
-                    .into(card_notification_image)
+            card_notification_seller.text = "Penjual: ${listNotification!![position].seller_name}"
+            card_notification_buyer.text = "Pembeli: ${listNotification!![position].buyer_name}"
+            card_notification_status.text = "Status: ${listNotification!![position].status}"
+            card_notification_harga_tawar.text =
+                "Harga tawar: ${listNotification!![position].bid_price}"
+            card_notification_tanggal_transaksi.text = listNotification!![position].transaction_date
+            Glide.with(card_notification_image.context)
+                .load(listNotification!![position].image_url)
+                .error(R.drawable.ic_launcher_background)
+                .override(75, 75)
+                .into(card_notification_image)
 
-                if(read){
-                    card_notification_read_status.isInvisible = true
-                }
-                card_notification_read_status.setOnClickListener {
-                    notificationItemClickListener.clickOnNotificationReadStatus(listNotification!![position], position)
-                }
-                card_notification_body.setOnClickListener{
-                    notificationItemClickListener.clickOnNotificationBodySection(listNotification!![position], position)
-                }
+            if (listNotification!![position].read) {
+                card_notification_read_status.isInvisible = true
+            }
+            card_notification_read_status.setOnClickListener {
+                notificationItemClickListener.clickOnNotificationReadStatus(
+                    listNotification!![position],
+                    position
+                )
+            }
+            card_notification_body.setOnClickListener {
+                notificationItemClickListener.clickOnNotificationBodySection(
+                    listNotification!![position],
+                    position
+                )
             }
         }
     }
