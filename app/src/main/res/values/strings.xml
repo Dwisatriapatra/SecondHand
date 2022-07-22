@@ -24,7 +24,7 @@
     <string name="kategori_lainnya">Lainnya</string>
     <string name="daftar">Daftar</string>
     <string name="masukkan_nama">Masukkan nama</string>
-    <string name="masukkan_nomor_handphone">Masukkan nomor handphone</string>
+    <string name="masukkan_nomor_handphone">Contoh : +62891188989</string>
     <string name="masukkan_alamat">Masukkan alamat</string>
     <string name="seller">Seller</string>
     <string name="kategori">Kategori:</string>

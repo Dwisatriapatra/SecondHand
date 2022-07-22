@@ -183,20 +183,17 @@ class DetailActivity : AppCompatActivity() {
             }
 
             if (isUser) {
-
                 dialogView.tawarDialogBelumLoginLabel.isInvisible = true
-
                 btnBatal.setOnClickListener {
                     dialog.dismiss()
                 }
-
                 btnTawarkan.setOnClickListener {
                     viewModelSellerData.seller.observe(this) { seller ->
                         val productId = detailBarang.id
                         val edtTawar =
                             dialogView.tawarDialogInputHargaTawaran.text.toString().toInt()
 
-                        if (seller.address.isEmpty()) {
+                        if (seller.image_url == null) {
                             Toast.makeText(
                                 this,
                                 "Lengkapi profile anda terlebih dahulu",

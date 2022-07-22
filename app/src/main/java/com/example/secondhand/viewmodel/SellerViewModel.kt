@@ -28,8 +28,6 @@ class SellerViewModel @Inject constructor(api: ApiServices) : ViewModel() {
                 ) {
                     if (response.isSuccessful) {
                         liveDataSeller.value = response.body()
-                    } else {
-                        //
                     }
                 }
 

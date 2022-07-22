@@ -2,8 +2,10 @@ package com.example.secondhand.view.activity
 
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -25,6 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_info_penawar.*
 import kotlinx.android.synthetic.main.hubungi_via_whatsapp_bottom_sheet.view.*
 import kotlinx.android.synthetic.main.status_penjualan_bottom_sheet.view.*
+import java.net.URLEncoder
 
 
 @AndroidEntryPoint
@@ -98,8 +101,13 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
 
         dialogView.btnHubungiViaWHatsApp.setOnClickListener {
             //do intent to whatsapp
-            val number = "+6281248400760"
-            val url = "https://api.whatsapp.com/send?phone=$number"
+            val number = dataPenawar.User.phone_number.drop(1)
+            Log.d("hallo", number)
+            val message = "Hai, tawaranmu terhadap produk ${dataPenawar.Product.name} seharga " +
+                    "${dataPenawar.bid_price} telah diterima oleh penjual. Jika anda " +
+                    "mengkonfirmasi pembelian, silahkan kirim pesan untuk menghubungi pembeli"
+
+            val url = "https://api.whatsapp.com/send?phone=+62$number"+"&text=" + URLEncoder.encode(message, "UTF-8")
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(url)
             startActivity(i)
@@ -116,12 +124,16 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
         AlertDialog.Builder(this)
             .setTitle("Terima tawaran")
             .setMessage("Anda yakin ingin menerima tawaran?")
-            .setNegativeButton("Batal"){dialogInterface: DialogInterface, _: Int ->
+            .setNegativeButton("Batal") { dialogInterface: DialogInterface, _: Int ->
                 dialogInterface.dismiss()
             }
-            .setPositiveButton("Ya"){dialogInterface: DialogInterface, _: Int ->
-                userLoginTokenManager.accessToken.asLiveData().observe(this){accessToken ->
-                    viewModelSellerOrder.updateOrderStatus(accessToken, item.id, OrderStatus("accepted"))
+            .setPositiveButton("Ya") { dialogInterface: DialogInterface, _: Int ->
+                userLoginTokenManager.accessToken.asLiveData().observe(this) { accessToken ->
+                    viewModelSellerOrder.updateOrderStatus(
+                        accessToken,
+                        item.id,
+                        OrderStatus("accepted")
+                    )
                     viewModelSellerOrder.responseMessage.observe(this) {
                         if (it) {
                             Toast.makeText(this, "Berhasil menerima", Toast.LENGTH_SHORT).show()
@@ -143,13 +155,17 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
         AlertDialog.Builder(this)
             .setTitle("Tolak tawaran")
             .setMessage("Anda yakin ingin menolak tawaran?")
-            .setNegativeButton("Batal"){dialogInterface: DialogInterface, _: Int ->
+            .setNegativeButton("Batal") { dialogInterface: DialogInterface, _: Int ->
                 dialogInterface.dismiss()
             }
-            .setPositiveButton("Ya"){dialogInterface: DialogInterface, _: Int ->
+            .setPositiveButton("Ya") { dialogInterface: DialogInterface, _: Int ->
 
-                userLoginTokenManager.accessToken.asLiveData().observe(this){ accessToken ->
-                    viewModelSellerOrder.updateOrderStatus(accessToken, item.id, OrderStatus("declined"))
+                userLoginTokenManager.accessToken.asLiveData().observe(this) { accessToken ->
+                    viewModelSellerOrder.updateOrderStatus(
+                        accessToken,
+                        item.id,
+                        OrderStatus("declined")
+                    )
                     viewModelSellerOrder.responseMessage.observe(this) {
                         if (it) {
                             Toast.makeText(this, "Berhasil menolak", Toast.LENGTH_SHORT).show()
@@ -175,24 +191,49 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
         val dialogView = layoutInflater.inflate(R.layout.status_penjualan_bottom_sheet, null)
 
         dialogView.btnKirimStatus.setOnClickListener {
-            userLoginTokenManager.accessToken.asLiveData().observe(this){accessToken ->
-                val statusValue = dialogView.findViewById<RadioButton>(dialogView.rdgStatus.checkedRadioButtonId)
-                if(statusValue.text == "Berhasil terjual"){
-                    viewModelSellerOrder.updateOrderStatus(accessToken, item.id, OrderStatus("sold"))
-                    viewModelSellerOrder.responseMessage.observe(this){
+            userLoginTokenManager.accessToken.asLiveData().observe(this) { accessToken ->
+                val statusValue =
+                    dialogView.findViewById<RadioButton>(dialogView.rdgStatus.checkedRadioButtonId)
+                if (statusValue.text == "Berhasil terjual") {
+                    viewModelSellerOrder.updateOrderStatus(
+                        accessToken,
+                        item.id,
+                        OrderStatus("sold")
+                    )
+                    viewModelSellerOrder.responseMessage.observe(this) {
                         if (it) {
-                            Toast.makeText(this, "Status produk berhasil diperbarui", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this,
+                                "Status produk berhasil diperbarui",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         } else {
-                            Toast.makeText(this, "Status produk gagal diperbarui", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this,
+                                "Status produk gagal diperbarui",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
-                }else if(statusValue.text == "Batalkan transaksi"){
-                    viewModelSellerOrder.updateOrderStatus(accessToken, item.id, OrderStatus("available"))
-                    viewModelSellerOrder.responseMessage.observe(this){
+                } else if (statusValue.text == "Batalkan transaksi") {
+                    viewModelSellerOrder.updateOrderStatus(
+                        accessToken,
+                        item.id,
+                        OrderStatus("available")
+                    )
+                    viewModelSellerOrder.responseMessage.observe(this) {
                         if (it) {
-                            Toast.makeText(this, "Status produk berhasil diperbarui", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this,
+                                "Status produk berhasil diperbarui",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         } else {
-                            Toast.makeText(this, "Status produk gagal diperbarui", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this,
+                                "Status produk gagal diperbarui",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
                 }

@@ -37,7 +37,7 @@ class ProdukDitawarAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder.itemView) {
             card_daftar_produk_ditawar_nama_buyer.text =
-                "Pembeli: ${listProdukDitawar!![position].User.full_name}e"
+                "Pembeli: ${listProdukDitawar!![position].User.full_name}"
             card_daftar_produk_ditawar_harga_tawar.text =
                 "Harga tawar: ${listProdukDitawar!![position].price}"
             card_daftar_produk_ditawar_status.text =
