@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="170dp"
+    android:layout_height="210dp"
     android:layout_marginBottom="10dp"
-    android:id="@+id/card_diminati_terjual">
+    android:id="@+id/card_daftar_jual_diminati">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+        <TextView
+            android:id="@+id/card_daftar_jual_diminati_label_transaksi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_transaksi"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:gravity="center_horizontal"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@color/black"
+            android:layout_marginTop="5dp"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -17,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tanggal_transaksi"
-                android:id="@+id/card_diminati_terjual_tanggal_transaksi"
+                android:id="@+id/card_daftar_jual_diminati_tanggal_transaksi"
                 android:layout_marginEnd="10dp"
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"/>
@@ -28,7 +41,7 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/card_diminati_terjual_image"
+                android:id="@+id/card_daftar_jual_diminati_image"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginHorizontal="10dp"
@@ -40,7 +53,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/card_diminati_terjual_seller"
+                    android:id="@+id/card_daftar_jual_diminati_nama_seller"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/seller"
@@ -49,7 +62,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/card_diminati_terjual_buyer"
+                    android:id="@+id/card_daftar_jual_diminati_nama_buyer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/buyer"
@@ -57,7 +70,15 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/card_diminati_terjual_harga_tawar"
+                    android:id="@+id/card_daftar_jual_diminati_nama_product"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nama_product"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/card_daftar_jual_diminati_harga_tawar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/harga_produk"
@@ -65,7 +86,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/card_diminati_terjual_status"
+                    android:id="@+id/card_daftar_jual_diminati_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/status"
@@ -74,5 +95,6 @@
 
             </LinearLayout>
         </LinearLayout>
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>

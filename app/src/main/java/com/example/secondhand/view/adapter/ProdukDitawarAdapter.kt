@@ -49,9 +49,7 @@ class ProdukDitawarAdapter(
                 .override(100, 100)
                 .into(card_daftar_produk_ditawar_image)
             if (listProdukDitawar!![position].status == "accepted" ||
-                listProdukDitawar!![position].status == "diterima" ||
                 listProdukDitawar!![position].status == "declined" ||
-                listProdukDitawar!![position].status == "ditolak" ||
                 listProdukDitawar!![position].status == "sold") {
                 card_daftar_produk_ditawar_terima_tolak_button_section.isInvisible = true
             } else {
@@ -67,7 +65,10 @@ class ProdukDitawarAdapter(
                 penawaranItemClickListener.hubungiButton(listProdukDitawar!![position], position)
             }
             card_daftar_produk_ditawar_status_button.setOnClickListener {
-                penawaranItemClickListener.statusButton(listProdukDitawar!![position], position)
+                penawaranItemClickListener.statusButton(
+                    listProdukDitawar!![position],
+                    position,
+                    listProdukDitawar!![position].User.full_name)
             }
         }
 

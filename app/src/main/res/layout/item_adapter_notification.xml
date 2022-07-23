@@ -1,13 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="170dp"
+    android:layout_height="220dp"
     android:layout_marginBottom="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+        <TextView
+            android:id="@+id/card_notification_label_transaksi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_transaksi"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:gravity="center_horizontal"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@color/black"
+            android:layout_marginTop="5dp"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -61,6 +74,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/buyer"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/card_notification_nama_produk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nama_produk"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 

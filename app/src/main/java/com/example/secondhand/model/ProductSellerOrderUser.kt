@@ -1,6 +1,6 @@
 package com.example.secondhand.model
 
-data class UserSellerOrder(
+data class ProductSellerOrderUser(
     val address: String,
     val city: String,
     val email: String,

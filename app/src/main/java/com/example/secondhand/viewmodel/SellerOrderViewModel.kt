@@ -7,6 +7,7 @@ import com.example.secondhand.model.GetSellerOrderResponseItem
 import com.example.secondhand.model.OrderStatus
 import com.example.secondhand.network.ApiServices
 import dagger.hilt.android.lifecycle.HiltViewModel
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,8 +23,8 @@ class SellerOrderViewModel @Inject constructor(api: ApiServices) : ViewModel() {
     val sellerOrder: LiveData<List<GetSellerOrderResponseItem>> = liveDataSellerOrder
 
 
-    fun updateOrderStatus(token: String, id: Int, orderStatus: OrderStatus) {
-        apiServices.updateStatusOrder(token, id, orderStatus)
+    fun updateOrderStatus(token: String, id: Int, statusOrder: RequestBody) {
+        apiServices.updateStatusOrder(token, id, statusOrder)
             .enqueue(object : Callback<Any> {
                 override fun onResponse(call: Call<Any>, response: Response<Any>) {
                     responseMsg.value = response.isSuccessful

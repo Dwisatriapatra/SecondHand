@@ -44,8 +44,8 @@ class RegisterActivity : AppCompatActivity() {
 
         //fake data
         val phone = 6282144.toString().toRequestBody("multipart/form-data".toMediaType())
-        val address = "init address".toRequestBody("multipart/form-data".toMediaType())
-        val city = "init city".toRequestBody("multipart/form-data".toMediaType())
+        val address = "Default".toRequestBody("multipart/form-data".toMediaType())
+        val city = "Default".toRequestBody("multipart/form-data".toMediaType())
 
         val viewModel = ViewModelProvider(this)[UserViewModel::class.java]
 

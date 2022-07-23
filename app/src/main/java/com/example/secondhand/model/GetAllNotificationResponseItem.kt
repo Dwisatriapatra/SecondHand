@@ -5,7 +5,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class GetAllNotificationResponseItem(
-    val Product: ProductX,
+    val Product: ProductX?,
     val User: UserX,
     val base_price: String,
     val bid_price: Int,
@@ -21,6 +21,6 @@ data class GetAllNotificationResponseItem(
     val receiver_id: Int,
     val seller_name: String,
     val status: String,
-    val transaction_date: String,
+    val transaction_date: String?,
     val updatedAt: String
 ) : Parcelable

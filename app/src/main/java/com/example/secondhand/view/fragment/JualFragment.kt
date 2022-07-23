@@ -183,6 +183,14 @@ class JualFragment : Fragment() {
                                 "Barang berhasil dijual",
                                 Toast.LENGTH_SHORT
                             ).show()
+
+                            //clear
+                            jual_nama_barang.text.clear()
+                            jual_harga_barang.text.clear()
+                            jual_lokasi_toko.text.clear()
+                            jual_deskripsi_produk.text.clear()
+                            jual_kategori_barang.text = ""
+                            jual_foto_produk.setImageDrawable(null)
                         } else {
                             Toast.makeText(requireContext(), "Gagal", Toast.LENGTH_SHORT).show()
                         }

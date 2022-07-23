@@ -113,13 +113,22 @@ interface ApiServices {
         @Part("name") name: RequestBody
     ) : Call<GetSellerProductUpdateResponse>
 
+    @PATCH("seller/product/{id}")
+    @Multipart
+    fun updateStatusProduct(
+        @Header("access_token") token: String,
+        @Path("id") id: Int,
+        @Part("status") statusProduct: RequestBody
+    ) : Call<UpdateStatusProductResponse>
+
 
     // ENDPOINT: SELLER/ORDER
     @PATCH("seller/order/{id}")
+    @Multipart
     fun updateStatusOrder(
         @Header("access_token") token: String,
         @Path("id") id: Int,
-        @Body orderStatus: OrderStatus
+        @Part("status") statusOrder: RequestBody
     ): Call<Any>
 
     @GET("seller/order")

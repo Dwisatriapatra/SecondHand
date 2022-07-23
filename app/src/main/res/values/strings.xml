@@ -92,6 +92,8 @@
     <string name="biometric">Biometric</string>
     <string name="nama_user">Nama User</string>
     <string name="histori">Histori</string>
+    <string name="nama_product">Nama product</string>
+    <string name="label_transaksi">Label transaksi</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 

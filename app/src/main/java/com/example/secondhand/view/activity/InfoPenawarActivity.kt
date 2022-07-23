@@ -17,14 +17,16 @@ import com.example.secondhand.datastore.UserLoginTokenManager
 import com.example.secondhand.helper.PenawaranItemClickListener
 import com.example.secondhand.model.GetAllNotificationResponseItem
 import com.example.secondhand.model.GetSellerOrderResponseItem
-import com.example.secondhand.model.OrderStatus
 import com.example.secondhand.view.adapter.ProdukDitawarAdapter
 import com.example.secondhand.viewmodel.SellerOrderViewModel
+import com.example.secondhand.viewmodel.SellerProductViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_info_penawar.*
 import kotlinx.android.synthetic.main.hubungi_via_whatsapp_bottom_sheet.view.*
 import kotlinx.android.synthetic.main.status_penjualan_bottom_sheet.view.*
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.net.URLEncoder
 
 
@@ -34,12 +36,11 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
     private lateinit var userLoginTokenManager: UserLoginTokenManager
     private lateinit var adapter: ProdukDitawarAdapter
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_info_penawar)
-
         val dataPenawar = intent.getParcelableExtra<GetAllNotificationResponseItem>("InfoPenawaran")
-
         initRecyclerView(dataPenawar!!.seller_name, dataPenawar.buyer_name, dataPenawar.image_url)
     }
 
@@ -99,7 +100,7 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
 
         dialogView.btnHubungiViaWHatsApp.setOnClickListener {
             //do intent to whatsapp
-            val message = "Hai, tawaranmu terhadap produk ${dataPenawar.Product.name} seharga " +
+            val message = "Hai, tawaranmu terhadap produk ${dataPenawar.Product!!.name} seharga " +
                     "${dataPenawar.bid_price} telah diterima oleh penjual. Jika anda " +
                     "mengkonfirmasi pembelian, silahkan kirim pesan untuk menghubungi pembeli"
 
@@ -128,20 +129,28 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
                     viewModelSellerOrder.updateOrderStatus(
                         accessToken,
                         item.id,
-                        OrderStatus("accepted")
+                        "accepted".toRequestBody("multipart/form-data".toMediaType())
                     )
                     viewModelSellerOrder.responseMessage.observe(this) {
                         if (it) {
                             Toast.makeText(this, "Berhasil menerima", Toast.LENGTH_SHORT).show()
+
+                            viewModelSellerOrder.getAllSellerOrder(accessToken)
+                            viewModelSellerOrder.sellerOrder.observe(this){sellerOrder ->
+                                adapter.setListProdukDitawar(sellerOrder)
+                                adapter.notifyDataSetChanged()
+                            }
+
                             initDialogToWhatsApp(item.Product.image_url, item.price, item.User.phone_number)
                         } else {
                             Toast.makeText(this, "Permintaan anda gagal", Toast.LENGTH_SHORT)
                                 .show()
                         }
                     }
-                    dialogInterface.dismiss()
                 }
+                dialogInterface.dismiss()
             }.show()
+
     }
 
     override fun tolakButton(item: GetSellerOrderResponseItem, position: Int) {
@@ -160,7 +169,7 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
                     viewModelSellerOrder.updateOrderStatus(
                         accessToken,
                         item.id,
-                        OrderStatus("declined")
+                        "declined".toRequestBody("multipart/form-data".toMediaType())
                     )
                     viewModelSellerOrder.responseMessage.observe(this) {
                         if (it) {
@@ -172,6 +181,11 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
                     }
                     dialogInterface.dismiss()
                 }
+                //reload
+                finish()
+                overridePendingTransition(0, 0)
+                startActivity(intent)
+                overridePendingTransition(0, 0)
             }.show()
     }
 
@@ -179,9 +193,10 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
         initDialogToWhatsApp(item.Product.image_url, item.price, item.User.phone_number)
     }
 
-    override fun statusButton(item: GetSellerOrderResponseItem, position: Int) {
+    override fun statusButton(item: GetSellerOrderResponseItem, position: Int, buyerName: String) {
         userLoginTokenManager = UserLoginTokenManager(this)
         val viewModelSellerOrder = ViewModelProvider(this)[SellerOrderViewModel::class.java]
+        val viewModelSellerProduct = ViewModelProvider(this)[SellerProductViewModel::class.java]
 
         val dialog = BottomSheetDialog(this)
         val dialogView = layoutInflater.inflate(R.layout.status_penjualan_bottom_sheet, null)
@@ -194,7 +209,12 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
                     viewModelSellerOrder.updateOrderStatus(
                         accessToken,
                         item.id,
-                        OrderStatus("sold")
+                        "sold".toRequestBody("multipart/form-data".toMediaType())
+                    )
+                    viewModelSellerProduct.updateStatusProduct(
+                        accessToken,
+                        item.product_id,
+                        "sold".toRequestBody("multipart/form-data".toMediaType())
                     )
                     viewModelSellerOrder.responseMessage.observe(this) {
                         if (it) {
@@ -215,7 +235,12 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
                     viewModelSellerOrder.updateOrderStatus(
                         accessToken,
                         item.id,
-                        OrderStatus("available")
+                        "bid".toRequestBody("multipart/form-data".toMediaType())
+                    )
+                    viewModelSellerProduct.updateStatusProduct(
+                        accessToken,
+                        item.product_id,
+                        "available".toRequestBody("multipart/form-data".toMediaType())
                     )
                     viewModelSellerOrder.responseMessage.observe(this) {
                         if (it) {
@@ -232,11 +257,25 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
                             ).show()
                         }
                     }
+                }else{
+                    //nothing
                 }
+
+                //reload
+                finish()
+                overridePendingTransition(0, 0)
+                startActivity(intent)
+                overridePendingTransition(0, 0)
             }
             dialog.dismiss()
         }
         dialog.setContentView(dialogView)
         dialog.show()
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("isBackFromInfoPenawar", true)
+        startActivity(intent)
     }
 }

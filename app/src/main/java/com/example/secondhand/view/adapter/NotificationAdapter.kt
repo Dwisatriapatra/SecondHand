@@ -35,20 +35,41 @@ class NotificationAdapter(private val notificationItemClickListener: Notificatio
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder.itemView) {
             card_notification_seller.text = "Penjual: ${listNotification!![position].seller_name}"
-            card_notification_buyer.text = "Pembeli: ${listNotification!![position].buyer_name}"
-            card_notification_status.text = "Status: ${listNotification!![position].status}"
-            card_notification_harga_tawar.text =
-                "Harga tawar: ${listNotification!![position].bid_price}"
-            card_notification_tanggal_transaksi.text = listNotification!![position].transaction_date
+            if(listNotification!![position].Product == null){
+                card_notification_nama_produk.text = "Nama produk: (Produk sudah tidak ada/di hapus)"
+            }else{
+                card_notification_nama_produk.text = "Nama produk: ${listNotification!![position].Product!!.name}"
+            }
+            if (listNotification!![position].read) {
+                card_notification_read_status.isInvisible = true
+            }else{
+                card_notification_read_status.isInvisible = false
+            }
+            if(listNotification!![position].status == "create"){
+                card_notification_buyer.text = "Harga: ${listNotification!![position].base_price}"
+                card_notification_status.isInvisible = true
+                card_notification_harga_tawar.isInvisible = true
+                card_notification_label_transaksi.text = "Penambahan Produk Baru"
+            }else{
+                card_notification_buyer.text = "Pembeli: ${listNotification!![position].buyer_name}"
+                card_notification_status.text = "Status: ${listNotification!![position].status}"
+                card_notification_harga_tawar.text =
+                    "Harga tawar: ${listNotification!![position].bid_price}"
+                card_notification_label_transaksi.text = "Penawaran Produk"
+            }
+            if(listNotification!![position].transaction_date == null){
+                card_notification_tanggal_transaksi.text = listNotification!![position].createdAt
+            }else{
+                card_notification_tanggal_transaksi.text = listNotification!![position].transaction_date
+            }
+
             Glide.with(card_notification_image.context)
                 .load(listNotification!![position].image_url)
                 .error(R.drawable.ic_launcher_background)
                 .override(75, 75)
                 .into(card_notification_image)
 
-            if (listNotification!![position].read) {
-                card_notification_read_status.isInvisible = true
-            }
+
             card_notification_read_status.setOnClickListener {
                 notificationItemClickListener.clickOnNotificationReadStatus(
                     listNotification!![position],

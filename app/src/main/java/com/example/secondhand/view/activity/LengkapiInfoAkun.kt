@@ -9,8 +9,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
+import com.bumptech.glide.Glide
 import com.example.secondhand.R
 import com.example.secondhand.datastore.UserLoginTokenManager
+import com.example.secondhand.viewmodel.SellerViewModel
 import com.example.secondhand.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_lengkapi_info_akun.*
@@ -41,6 +43,22 @@ class LengkapiInfoAkun : AppCompatActivity() {
     }
 
     private fun initView() {
+        val sellerViewModel = ViewModelProvider(this)[SellerViewModel::class.java]
+        userLoginTokenManager = UserLoginTokenManager(this)
+        userLoginTokenManager.accessToken.asLiveData().observe(this){
+            sellerViewModel.getSellerData(it)
+        }
+        sellerViewModel.seller.observe(this){
+            update_nama_user.setText(it.full_name)
+            update_kota_user.setText(it.city)
+            update_alamat_user.setText(it.address)
+            update_nomor_handphone_user.setText(it.phone_number)
+            Glide.with(update_image_user_uri.context)
+                .load(it.image_url)
+                .error(R.drawable.ic_launcher_background)
+                .into(update_image_user_uri)
+        }
+
         update_image_user_button.setOnClickListener {
             startGallery()
         }

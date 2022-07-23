@@ -118,4 +118,24 @@ class SellerProductViewModel @Inject constructor(api: ApiServices) : ViewModel()
 
         })
     }
+
+    fun updateStatusProduct(token: String, id: Int, status: RequestBody){
+        apiServices.updateStatusProduct(
+            token,
+            id,
+            status
+        ).enqueue(object: Callback<UpdateStatusProductResponse>{
+            override fun onResponse(
+                call: Call<UpdateStatusProductResponse>,
+                response: Response<UpdateStatusProductResponse>
+            ) {
+                //nothing to do
+            }
+
+            override fun onFailure(call: Call<UpdateStatusProductResponse>, t: Throwable) {
+                //nothing to do
+            }
+
+        })
+    }
 }

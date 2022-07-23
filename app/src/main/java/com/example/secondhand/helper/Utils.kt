@@ -3,6 +3,8 @@ package com.example.secondhand.helper
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.view.View
+import android.view.ViewGroup
 import androidx.room.TypeConverter
 import com.example.secondhand.model.GetAllNotificationResponseItem
 import com.example.secondhand.model.GetBuyerProductResponseItem
@@ -22,6 +24,12 @@ fun isOnline(context: Context): Boolean {
         } else capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
     }
     return false
+}
+
+fun View?.removeSelf() {
+    this ?: return
+    val parent = parent as? ViewGroup ?: return
+    parent.removeView(this)
 }
 
 class GithubTypeConverters {

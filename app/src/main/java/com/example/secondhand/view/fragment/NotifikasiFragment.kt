@@ -11,6 +11,7 @@ import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.secondhand.R
 import com.example.secondhand.datastore.UserLoginTokenManager
@@ -139,6 +140,7 @@ class NotifikasiFragment : Fragment(), NotificationItemClickListener {
                             adapter.setNotificationData(it)
                             adapter.notifyDataSetChanged()
                         }
+                        refreshCurrentFragment()
                     }
             }
             .show()
@@ -149,14 +151,26 @@ class NotifikasiFragment : Fragment(), NotificationItemClickListener {
         position: Int
     ) {
         userLoginTokenManager = UserLoginTokenManager(requireContext())
+//        val notificationViewModel = ViewModelProvider(this)[NotificationViewModel::class.java]
+//
+//        userLoginTokenManager.accessToken.asLiveData().observe(viewLifecycleOwner){accessToken ->
+//            notificationViewModel.updateNotificationStatus(
+//                accessToken,
+//                item.id,
+//                NotificationStatus(true, item.status))
+//        }
         userLoginTokenManager.name.asLiveData().observe(viewLifecycleOwner) { sellerName ->
             if (item.seller_name == sellerName && item.status.lowercase() != "create") {
-                val intent = Intent(activity, InfoPenawarActivity::class.java)
+                val intent = Intent(activity!!.applicationContext, InfoPenawarActivity::class.java)
                 intent.putExtra("InfoPenawaran", item)
                 startActivity(intent)
             }
         }
     }
 
-
+    private fun refreshCurrentFragment(){
+        val id = findNavController().currentDestination!!.id
+        findNavController().popBackStack(id, true)
+        findNavController().navigate(id)
+    }
 }
