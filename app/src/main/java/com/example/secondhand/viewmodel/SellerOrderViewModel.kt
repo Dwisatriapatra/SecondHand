@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.secondhand.model.GetSellerOrderResponseItem
-import com.example.secondhand.model.OrderStatus
 import com.example.secondhand.network.ApiServices
 import dagger.hilt.android.lifecycle.HiltViewModel
 import okhttp3.RequestBody
@@ -37,14 +36,14 @@ class SellerOrderViewModel @Inject constructor(api: ApiServices) : ViewModel() {
             })
     }
 
-    fun getAllSellerOrder(token: String){
+    fun getAllSellerOrder(token: String) {
         apiServices.getAllSellerOrder(token)
-            .enqueue(object: Callback<List<GetSellerOrderResponseItem>>{
+            .enqueue(object : Callback<List<GetSellerOrderResponseItem>> {
                 override fun onResponse(
                     call: Call<List<GetSellerOrderResponseItem>>,
                     response: Response<List<GetSellerOrderResponseItem>>
                 ) {
-                    if(response.isSuccessful){
+                    if (response.isSuccessful) {
                         liveDataSellerOrder.value = response.body()
                     }
                 }

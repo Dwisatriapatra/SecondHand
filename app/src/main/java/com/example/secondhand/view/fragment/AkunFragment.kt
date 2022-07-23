@@ -42,11 +42,11 @@ class AkunFragment : Fragment() {
 
         userLoginTokenManager = UserLoginTokenManager(requireContext())
 
-        userLoginTokenManager.isUser.asLiveData().observe(viewLifecycleOwner){isUser ->
-            if(isUser){
+        userLoginTokenManager.isUser.asLiveData().observe(viewLifecycleOwner) { isUser ->
+            if (isUser) {
                 akun_belum_login_section.isInvisible = true
                 initView()
-            }else{
+            } else {
                 text_akun_saya.isInvisible = true
                 akun_image.isInvisible = true
                 akun_edit_profile_section.isInvisible = true
@@ -65,9 +65,9 @@ class AkunFragment : Fragment() {
         userLoginTokenManager = UserLoginTokenManager(requireContext())
         val viewModelUser = ViewModelProvider(this)[SellerViewModel::class.java]
 
-        userLoginTokenManager.accessToken.asLiveData().observe(viewLifecycleOwner){
+        userLoginTokenManager.accessToken.asLiveData().observe(viewLifecycleOwner) {
             viewModelUser.getSellerData(it)
-            viewModelUser.seller.observe(viewLifecycleOwner){sellerData ->
+            viewModelUser.seller.observe(viewLifecycleOwner) { sellerData ->
                 Glide.with(akun_image.context)
                     .load(sellerData.image_url)
                     .error(R.drawable.ic_launcher_background)
@@ -75,16 +75,16 @@ class AkunFragment : Fragment() {
             }
         }
 
-        akun_logout_section.setOnClickListener{
-            userLoginTokenManager.isUser.asLiveData().observe(viewLifecycleOwner){isUser ->
-                if(isUser){
+        akun_logout_section.setOnClickListener {
+            userLoginTokenManager.isUser.asLiveData().observe(viewLifecycleOwner) { isUser ->
+                if (isUser) {
                     AlertDialog.Builder(requireContext())
                         .setTitle("LOG OUT")
                         .setMessage("Anda yakin ingin logout?")
-                        .setNegativeButton("Tidak"){dialogInterface: DialogInterface, _: Int ->
+                        .setNegativeButton("Tidak") { dialogInterface: DialogInterface, _: Int ->
                             dialogInterface.dismiss()
                         }
-                        .setPositiveButton("Ya"){_: DialogInterface, _:Int ->
+                        .setPositiveButton("Ya") { _: DialogInterface, _: Int ->
                             GlobalScope.launch {
                                 userLoginTokenManager.clearToken()
                                 // code for refreshing apps
@@ -94,7 +94,7 @@ class AkunFragment : Fragment() {
                             }
                         }
                         .show()
-                }else{
+                } else {
                     //
                 }
             }

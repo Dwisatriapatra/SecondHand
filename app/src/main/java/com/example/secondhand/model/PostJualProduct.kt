@@ -9,6 +9,5 @@ data class PostJualProduct(
     val lokasi: String,
     val deskripsiProduct: String,
     val imageUri: String,
-    val kategoriProduk: String,
     val imageProduct: File
 ) : Serializable

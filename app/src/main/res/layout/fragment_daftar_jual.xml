@@ -9,13 +9,14 @@
 
     <TextView
         android:id="@+id/daftar_jual_saya_title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_margin="20dp"
+        android:gravity="center_horizontal"
         android:text="@string/daftar_jual_saya"
         android:textColor="@color/black"
-        android:textSize="28sp"
+        android:textSize="24sp"
         android:textStyle="bold" />
 
     <RelativeLayout

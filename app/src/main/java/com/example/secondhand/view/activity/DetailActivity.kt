@@ -105,12 +105,12 @@ class DetailActivity : AppCompatActivity() {
                     val sellerViewModel = ViewModelProvider(this)[SellerViewModel::class.java]
                     userLoginTokenManager = UserLoginTokenManager(this)
 
-                    userLoginTokenManager.accessToken.asLiveData().observe(this){
+                    userLoginTokenManager.accessToken.asLiveData().observe(this) {
                         sellerViewModel.getSellerData(it)
                     }
                     viewModelBuyerProduct.getBuyerProductById(detailBarang.id!!)
 
-                    sellerViewModel.seller.observe(this){sellerData ->
+                    sellerViewModel.seller.observe(this) { sellerData ->
                         viewModelBuyerProduct.buyerProductById.observe(this) { product ->
                             viewModelWishlistProduct.insertBuyerProductList(
                                 RoomWishlistItem(
@@ -121,7 +121,11 @@ class DetailActivity : AppCompatActivity() {
                                     product.image_url
                                 )
                             )
-                            Toast.makeText(this@DetailActivity, "Berhasil ditambahkan ke wishlist", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this@DetailActivity,
+                                "Berhasil ditambahkan ke wishlist",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
                 }

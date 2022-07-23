@@ -13,13 +13,14 @@ import com.example.secondhand.model.RoomBuyerProduct
 abstract class BuyerProductDatabase : RoomDatabase() {
 
     abstract fun buyerProductDao(): BuyerProductDao
-    companion object{
+
+    companion object {
         private var INSTANCE: BuyerProductDatabase? = null
 
 
-        fun getInstance(context: Context): BuyerProductDatabase?{
-            if(INSTANCE == null){
-                synchronized(BuyerProductDatabase::class){
+        fun getInstance(context: Context): BuyerProductDatabase? {
+            if (INSTANCE == null) {
+                synchronized(BuyerProductDatabase::class) {
                     INSTANCE = Room.databaseBuilder(
                         context.applicationContext,
                         BuyerProductDatabase::class.java,

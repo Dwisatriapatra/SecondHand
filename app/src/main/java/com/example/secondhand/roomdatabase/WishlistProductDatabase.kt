@@ -9,11 +9,12 @@ import com.example.secondhand.model.RoomWishlistItem
 @Database(entities = [RoomWishlistItem::class], version = 1, exportSchema = false)
 abstract class WishlistProductDatabase : RoomDatabase() {
     abstract fun wishlistDao(): WishlistDao
-    companion object{
+
+    companion object {
         private var INSTANCE: WishlistProductDatabase? = null
-        fun getInstance(context: Context): WishlistProductDatabase{
-            if(INSTANCE == null){
-                synchronized(WishlistProductDatabase::class){
+        fun getInstance(context: Context): WishlistProductDatabase {
+            if (INSTANCE == null) {
+                synchronized(WishlistProductDatabase::class) {
                     INSTANCE = Room.databaseBuilder(
                         context.applicationContext,
                         WishlistProductDatabase::class.java,

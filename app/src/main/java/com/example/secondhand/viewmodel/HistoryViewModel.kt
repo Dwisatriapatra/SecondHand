@@ -14,16 +14,16 @@ import javax.inject.Inject
 @HiltViewModel
 class HistoryViewModel @Inject constructor(api: ApiServices) : ViewModel() {
     private val liveDataHistory = MutableLiveData<List<GetAllUserHistoryResponseItem>>()
-    val history : LiveData<List<GetAllUserHistoryResponseItem>> = liveDataHistory
+    val history: LiveData<List<GetAllUserHistoryResponseItem>> = liveDataHistory
     val apiServices = api
-    fun getAllUserHistory(token: String){
+    fun getAllUserHistory(token: String) {
         apiServices.getAllUserHistory(token)
-            .enqueue(object: Callback<List<GetAllUserHistoryResponseItem>> {
+            .enqueue(object : Callback<List<GetAllUserHistoryResponseItem>> {
                 override fun onResponse(
                     call: Call<List<GetAllUserHistoryResponseItem>>,
                     response: Response<List<GetAllUserHistoryResponseItem>>
                 ) {
-                    if(response.isSuccessful){
+                    if (response.isSuccessful) {
                         liveDataHistory.value = response.body()
                     }
                 }

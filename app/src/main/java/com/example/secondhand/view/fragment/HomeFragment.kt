@@ -10,26 +10,25 @@ import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-
 import com.example.secondhand.R
+import com.example.secondhand.helper.isOnline
 import com.example.secondhand.model.GetBuyerProductResponseItem
 import com.example.secondhand.model.RoomBuyerProduct
 import com.example.secondhand.view.activity.DetailActivity
-import com.example.secondhand.view.adapter.BuyerProductAdapter
-import com.example.secondhand.view.adapter.SearchResultAdapter
-import com.example.secondhand.viewmodel.BuyerProductViewModel
-import com.example.secondhand.viewmodel.RoomBuyerProductViewModel
-import com.example.secondhand.helper.isOnline
 import com.example.secondhand.view.activity.WishlistActivity
 import com.example.secondhand.view.adapter.BannerAdapter
+import com.example.secondhand.view.adapter.BuyerProductAdapter
+import com.example.secondhand.view.adapter.SearchResultAdapter
 import com.example.secondhand.viewmodel.BannerViewModel
+import com.example.secondhand.viewmodel.BuyerProductViewModel
+import com.example.secondhand.viewmodel.RoomBuyerProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_home.*
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
-    private lateinit var adapterBanner : BannerAdapter
+    private lateinit var adapterBanner: BannerAdapter
     private lateinit var adapter: BuyerProductAdapter
     private lateinit var searchProductResultAdapter: SearchResultAdapter
 
@@ -49,7 +48,8 @@ class HomeFragment : Fragment() {
 
     private fun initView() {
         val viewModelBuyerProduct = ViewModelProvider(this)[BuyerProductViewModel::class.java]
-        val viewModelRoomBuyerProduct = ViewModelProvider(this)[RoomBuyerProductViewModel::class.java]
+        val viewModelRoomBuyerProduct =
+            ViewModelProvider(this)[RoomBuyerProductViewModel::class.java]
 
         viewModelBuyerProduct.getAllBuyerProduct()
         adapter = BuyerProductAdapter {
@@ -81,17 +81,17 @@ class HomeFragment : Fragment() {
         home_telusuri_kategori_semua_button.isClickable = false
         home_telusuri_kategori_semua_button.isSelected = true
 
-        if(!isOnline(requireContext())){
-            viewModelRoomBuyerProduct.roomBuyerProduct.observe(viewLifecycleOwner){
-                if(it.listBuyerProduct!!.isNotEmpty()){
+        if (!isOnline(requireContext())) {
+            viewModelRoomBuyerProduct.roomBuyerProduct.observe(viewLifecycleOwner) {
+                if (it.listBuyerProduct!!.isNotEmpty()) {
                     adapter.setDataBuyerProduct(it.listBuyerProduct)
                     rv_product_home_progress_bar.isInvisible = true
                     adapter.notifyDataSetChanged()
-                }else{
+                } else {
                     rv_product_home_progress_bar.isInvisible = true
                 }
             }
-        }else{
+        } else {
             viewModelBuyerProduct.buyerProduct.observe(viewLifecycleOwner) {
                 if (it.isNotEmpty()) {
                     adapter.setDataBuyerProduct(it)
@@ -238,9 +238,10 @@ class HomeFragment : Fragment() {
         }
 
         home_list_search_result.isInvisible = true
-        home_search_bar.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+        home_search_bar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
-            val viewModelSearch = ViewModelProvider(this@HomeFragment)[BuyerProductViewModel::class.java]
+            val viewModelSearch =
+                ViewModelProvider(this@HomeFragment)[BuyerProductViewModel::class.java]
 
             override fun onQueryTextSubmit(query: String?): Boolean {
                 vpHomeImageBanner.isInvisible = true
@@ -252,7 +253,7 @@ class HomeFragment : Fragment() {
 
                 viewModelSearch.getBuyerProductSearchResult(query!!)
 
-                viewModelSearch.searchResult.observe(viewLifecycleOwner){value ->
+                viewModelSearch.searchResult.observe(viewLifecycleOwner) { value ->
                     searchProductResultAdapter.setDataBuyerProductSearch(value)
                     searchProductResultAdapter.notifyDataSetChanged()
                 }
@@ -266,9 +267,9 @@ class HomeFragment : Fragment() {
         })
     }
 
-    private fun banner(){
+    private fun banner() {
         val viewModelbanner = ViewModelProvider(this)[BannerViewModel::class.java]
-        viewModelbanner.banner.observe(requireActivity()){
+        viewModelbanner.banner.observe(requireActivity()) {
             adapterBanner = BannerAdapter(requireContext(), it)
             vpHomeImageBanner.adapter = adapterBanner
         }

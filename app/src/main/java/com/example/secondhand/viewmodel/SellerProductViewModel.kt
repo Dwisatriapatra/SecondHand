@@ -74,9 +74,9 @@ class SellerProductViewModel @Inject constructor(api: ApiServices) : ViewModel()
             })
     }
 
-    fun deleteProductFromDaftarJualSaya(token: String, id: Int){
+    fun deleteProductFromDaftarJualSaya(token: String, id: Int) {
         apiServices.deleteProductFromDaftarJualSaya(token, id)
-            .enqueue(object: Callback<GetSellerProductDeleteItemResponse>{
+            .enqueue(object : Callback<GetSellerProductDeleteItemResponse> {
                 override fun onResponse(
                     call: Call<GetSellerProductDeleteItemResponse>,
                     response: Response<GetSellerProductDeleteItemResponse>
@@ -94,7 +94,11 @@ class SellerProductViewModel @Inject constructor(api: ApiServices) : ViewModel()
             })
     }
 
-    fun updateProductInDaftarJualSaya(token: String, id: Int, sellerProductUpdateRequest: SellerProductUpdateRequest){
+    fun updateProductInDaftarJualSaya(
+        token: String,
+        id: Int,
+        sellerProductUpdateRequest: SellerProductUpdateRequest
+    ) {
         apiServices.updateProduct(
             token,
             id,
@@ -104,7 +108,7 @@ class SellerProductViewModel @Inject constructor(api: ApiServices) : ViewModel()
             //sellerProductUpdateRequest.imageProduct,
             sellerProductUpdateRequest.location!!,
             sellerProductUpdateRequest.name
-        ).enqueue(object: Callback<GetSellerProductUpdateResponse>{
+        ).enqueue(object : Callback<GetSellerProductUpdateResponse> {
             override fun onResponse(
                 call: Call<GetSellerProductUpdateResponse>,
                 response: Response<GetSellerProductUpdateResponse>
@@ -119,12 +123,12 @@ class SellerProductViewModel @Inject constructor(api: ApiServices) : ViewModel()
         })
     }
 
-    fun updateStatusProduct(token: String, id: Int, status: RequestBody){
+    fun updateStatusProduct(token: String, id: Int, status: RequestBody) {
         apiServices.updateStatusProduct(
             token,
             id,
             status
-        ).enqueue(object: Callback<UpdateStatusProductResponse>{
+        ).enqueue(object : Callback<UpdateStatusProductResponse> {
             override fun onResponse(
                 call: Call<UpdateStatusProductResponse>,
                 response: Response<UpdateStatusProductResponse>

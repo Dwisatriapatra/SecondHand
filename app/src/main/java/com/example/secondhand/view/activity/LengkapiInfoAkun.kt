@@ -45,10 +45,10 @@ class LengkapiInfoAkun : AppCompatActivity() {
     private fun initView() {
         val sellerViewModel = ViewModelProvider(this)[SellerViewModel::class.java]
         userLoginTokenManager = UserLoginTokenManager(this)
-        userLoginTokenManager.accessToken.asLiveData().observe(this){
+        userLoginTokenManager.accessToken.asLiveData().observe(this) {
             sellerViewModel.getSellerData(it)
         }
-        sellerViewModel.seller.observe(this){
+        sellerViewModel.seller.observe(this) {
             update_nama_user.setText(it.full_name)
             update_kota_user.setText(it.city)
             update_alamat_user.setText(it.address)
@@ -111,7 +111,11 @@ class LengkapiInfoAkun : AppCompatActivity() {
                                         update_nomor_handphone_user.text.toString()
                                     )
                                 }
-                                Toast.makeText(this, "Update data profile berhasil", Toast.LENGTH_SHORT)
+                                Toast.makeText(
+                                    this,
+                                    "Update data profile berhasil",
+                                    Toast.LENGTH_SHORT
+                                )
                                     .show()
                                 startActivity(Intent(this, MainActivity::class.java))
                             } else {
@@ -128,7 +132,7 @@ class LengkapiInfoAkun : AppCompatActivity() {
         }
     }
 
-    private fun startGallery(){
+    private fun startGallery() {
         getContent.launch("image/*")
     }
 

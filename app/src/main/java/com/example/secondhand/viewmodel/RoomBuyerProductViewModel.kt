@@ -12,11 +12,13 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class RoomBuyerProductViewModel @Inject constructor(buyerProductDao: BuyerProductDao) : ViewModel(){
+class RoomBuyerProductViewModel @Inject constructor(buyerProductDao: BuyerProductDao) :
+    ViewModel() {
     private val liveDataRoomBuyerProduct = MutableLiveData<RoomBuyerProduct>()
-    val roomBuyerProduct : LiveData<RoomBuyerProduct> = liveDataRoomBuyerProduct
+    val roomBuyerProduct: LiveData<RoomBuyerProduct> = liveDataRoomBuyerProduct
 
     private val dao = buyerProductDao
+
     init {
         viewModelScope.launch {
             val dataBuyerProduct = buyerProductDao.roomGetAllBuyerProductList()
@@ -24,7 +26,7 @@ class RoomBuyerProductViewModel @Inject constructor(buyerProductDao: BuyerProduc
         }
     }
 
-    fun insertBuyerProductList(list: RoomBuyerProduct){
+    fun insertBuyerProductList(list: RoomBuyerProduct) {
         viewModelScope.launch {
             dao.roomInsertBuyerProductList(list)
         }

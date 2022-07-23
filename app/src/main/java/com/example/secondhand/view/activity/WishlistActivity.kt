@@ -1,7 +1,7 @@
 package com.example.secondhand.view.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,18 +31,19 @@ class WishlistActivity : AppCompatActivity() {
         rv_wishlist.adapter = adapter
 
         val sellerViewModel = ViewModelProvider(this)[SellerViewModel::class.java]
-        val roomWishlistProductViewModel = ViewModelProvider(this)[RoomWishlistProductViewModel::class.java]
+        val roomWishlistProductViewModel =
+            ViewModelProvider(this)[RoomWishlistProductViewModel::class.java]
         userLoginTokenManager = UserLoginTokenManager(this)
-        userLoginTokenManager.accessToken.asLiveData().observe(this){
+        userLoginTokenManager.accessToken.asLiveData().observe(this) {
             sellerViewModel.getSellerData(it)
         }
-        sellerViewModel.seller.observe(this){sellerData ->
+        sellerViewModel.seller.observe(this) { sellerData ->
             wishlist_user_name.text = sellerData.full_name + "\'s wishlist"
-            roomWishlistProductViewModel.roomWishlistProduct.observe(this){wishlistValue ->
-                if(wishlistValue.isNotEmpty()){
+            roomWishlistProductViewModel.roomWishlistProduct.observe(this) { wishlistValue ->
+                if (wishlistValue.isNotEmpty()) {
                     val listValue = mutableListOf<RoomWishlistItem>()
-                    for(i in wishlistValue.indices){
-                        if(wishlistValue[i].nameUser == sellerData.full_name){
+                    for (i in wishlistValue.indices) {
+                        if (wishlistValue[i].nameUser == sellerData.full_name) {
                             listValue.add(wishlistValue[i])
                         }
                     }

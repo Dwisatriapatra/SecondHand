@@ -12,12 +12,17 @@ import com.example.secondhand.model.RoomNotification
 @TypeConverters(NotificatiomTypeConverters::class)
 abstract class NotificationDatabase : RoomDatabase() {
     abstract fun notificationDao(): NotificationDao
-    companion object{
+
+    companion object {
         private var INSTANCE: NotificationDatabase? = null
-        fun getInstance(context: Context) : NotificationDatabase?{
-            if(INSTANCE == null){
-                synchronized(NotificationDatabase::class){
-                    INSTANCE = Room.databaseBuilder(context.applicationContext, NotificationDatabase::class.java, "Notification").allowMainThreadQueries().build()
+        fun getInstance(context: Context): NotificationDatabase? {
+            if (INSTANCE == null) {
+                synchronized(NotificationDatabase::class) {
+                    INSTANCE = Room.databaseBuilder(
+                        context.applicationContext,
+                        NotificationDatabase::class.java,
+                        "Notification"
+                    ).allowMainThreadQueries().build()
 
                 }
             }

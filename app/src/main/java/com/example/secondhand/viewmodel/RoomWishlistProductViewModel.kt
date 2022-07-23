@@ -14,9 +14,10 @@ import javax.inject.Inject
 @HiltViewModel
 class RoomWishlistProductViewModel @Inject constructor(wishlistDao: WishlistDao) : ViewModel() {
     private val liveDataRoomWishlistProduct = MutableLiveData<List<RoomWishlistItem>>()
-    val roomWishlistProduct : LiveData<List<RoomWishlistItem>> = liveDataRoomWishlistProduct
+    val roomWishlistProduct: LiveData<List<RoomWishlistItem>> = liveDataRoomWishlistProduct
 
     private val dao = wishlistDao
+
     init {
         viewModelScope.launch {
             val dataWishlist = wishlistDao.getWishlistData()
@@ -24,7 +25,7 @@ class RoomWishlistProductViewModel @Inject constructor(wishlistDao: WishlistDao)
         }
     }
 
-    fun insertBuyerProductList(item: RoomWishlistItem){
+    fun insertBuyerProductList(item: RoomWishlistItem) {
         viewModelScope.launch {
             dao.insertWishlist(item)
         }

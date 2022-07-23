@@ -12,23 +12,23 @@ import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
-class BannerViewModel @Inject constructor(api : ApiServices) : ViewModel() {
+class BannerViewModel @Inject constructor(api: ApiServices) : ViewModel() {
 
     private val liveDataBanner = MutableLiveData<List<GetSellerBannerItem>>()
-    val banner : LiveData<List<GetSellerBannerItem>> = liveDataBanner
+    val banner: LiveData<List<GetSellerBannerItem>> = liveDataBanner
 
     private val apiServices = api
 
-    fun getAllBanner(){
+    fun getAllBanner() {
         apiServices.getImageBanner()
-            .enqueue(object : Callback<List<GetSellerBannerItem>>{
+            .enqueue(object : Callback<List<GetSellerBannerItem>> {
                 override fun onResponse(
                     call: Call<List<GetSellerBannerItem>>,
                     response: Response<List<GetSellerBannerItem>>
                 ) {
-                    if (response.isSuccessful){
+                    if (response.isSuccessful) {
                         liveDataBanner.value = response.body()
-                    } else{
+                    } else {
                         //
 
                     }

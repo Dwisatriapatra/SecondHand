@@ -21,9 +21,13 @@ class NotificationViewModel @Inject constructor(api: ApiServices) : ViewModel() 
     private val apiServices = api
     private val responseMsg = MutableLiveData<Boolean>()
 
-    fun updateNotificationStatus(token: String, notificationId: Int, notificationStatus: NotificationStatus){
+    fun updateNotificationStatus(
+        token: String,
+        notificationId: Int,
+        notificationStatus: NotificationStatus
+    ) {
         apiServices.updateNotificationStatus(token, notificationId, notificationStatus)
-            .enqueue(object: Callback<UpdateNotificationStatusResponse>{
+            .enqueue(object : Callback<UpdateNotificationStatusResponse> {
                 override fun onResponse(
                     call: Call<UpdateNotificationStatusResponse>,
                     response: Response<UpdateNotificationStatusResponse>

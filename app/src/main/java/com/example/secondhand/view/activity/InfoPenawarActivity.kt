@@ -104,7 +104,11 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
                     "${dataPenawar.bid_price} telah diterima oleh penjual. Jika anda " +
                     "mengkonfirmasi pembelian, silahkan kirim pesan untuk menghubungi pembeli"
 
-            val url = "https://api.whatsapp.com/send?phone=$buyerPhone"+"&text=" + URLEncoder.encode(message, "UTF-8")
+            val url =
+                "https://api.whatsapp.com/send?phone=$buyerPhone&text=" + URLEncoder.encode(
+                    message,
+                    "UTF-8"
+                )
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(url)
             startActivity(i)
@@ -134,21 +138,23 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
                     viewModelSellerOrder.responseMessage.observe(this) {
                         if (it) {
                             Toast.makeText(this, "Berhasil menerima", Toast.LENGTH_SHORT).show()
-
-                            viewModelSellerOrder.getAllSellerOrder(accessToken)
-                            viewModelSellerOrder.sellerOrder.observe(this){sellerOrder ->
-                                adapter.setListProdukDitawar(sellerOrder)
-                                adapter.notifyDataSetChanged()
-                            }
-
-                            initDialogToWhatsApp(item.Product.image_url, item.price, item.User.phone_number)
+                            initDialogToWhatsApp(
+                                item.Product.image_url,
+                                item.price,
+                                item.User.phone_number
+                            )
                         } else {
                             Toast.makeText(this, "Permintaan anda gagal", Toast.LENGTH_SHORT)
                                 .show()
                         }
                     }
+                    dialogInterface.dismiss()
                 }
-                dialogInterface.dismiss()
+                //reload
+                finish()
+                overridePendingTransition(0, 0)
+                startActivity(intent)
+                overridePendingTransition(0, 0)
             }.show()
 
     }
@@ -174,6 +180,7 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
                     viewModelSellerOrder.responseMessage.observe(this) {
                         if (it) {
                             Toast.makeText(this, "Berhasil menolak", Toast.LENGTH_SHORT).show()
+
                         } else {
                             Toast.makeText(this, "Permintaan anda gagal", Toast.LENGTH_SHORT)
                                 .show()
@@ -205,60 +212,59 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
             userLoginTokenManager.accessToken.asLiveData().observe(this) { accessToken ->
                 val statusValue =
                     dialogView.findViewById<RadioButton>(dialogView.rdgStatus.checkedRadioButtonId)
-                if (statusValue.text == "Berhasil terjual") {
-                    viewModelSellerOrder.updateOrderStatus(
-                        accessToken,
-                        item.id,
-                        "sold".toRequestBody("multipart/form-data".toMediaType())
-                    )
-                    viewModelSellerProduct.updateStatusProduct(
-                        accessToken,
-                        item.product_id,
-                        "sold".toRequestBody("multipart/form-data".toMediaType())
-                    )
-                    viewModelSellerOrder.responseMessage.observe(this) {
-                        if (it) {
-                            Toast.makeText(
-                                this,
-                                "Status produk berhasil diperbarui",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        } else {
-                            Toast.makeText(
-                                this,
-                                "Status produk gagal diperbarui",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                when (statusValue.text) {
+                    "Berhasil terjual" -> {
+                        viewModelSellerOrder.updateOrderStatus(
+                            accessToken,
+                            item.id,
+                            "accepted".toRequestBody("multipart/form-data".toMediaType())
+                        )
+                        viewModelSellerOrder.responseMessage.observe(this) {
+                            if (it) {
+                                Toast.makeText(
+                                    this,
+                                    "Status produk berhasil diperbarui",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            } else {
+                                Toast.makeText(
+                                    this,
+                                    "Status produk gagal diperbarui",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                         }
                     }
-                } else if (statusValue.text == "Batalkan transaksi") {
-                    viewModelSellerOrder.updateOrderStatus(
-                        accessToken,
-                        item.id,
-                        "bid".toRequestBody("multipart/form-data".toMediaType())
-                    )
-                    viewModelSellerProduct.updateStatusProduct(
-                        accessToken,
-                        item.product_id,
-                        "available".toRequestBody("multipart/form-data".toMediaType())
-                    )
-                    viewModelSellerOrder.responseMessage.observe(this) {
-                        if (it) {
-                            Toast.makeText(
-                                this,
-                                "Status produk berhasil diperbarui",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        } else {
-                            Toast.makeText(
-                                this,
-                                "Status produk gagal diperbarui",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                    "Batalkan transaksi" -> {
+                        viewModelSellerOrder.updateOrderStatus(
+                            accessToken,
+                            item.id,
+                            "bid".toRequestBody("multipart/form-data".toMediaType())
+                        )
+                        viewModelSellerProduct.updateStatusProduct(
+                            accessToken,
+                            item.product_id,
+                            "available".toRequestBody("multipart/form-data".toMediaType())
+                        )
+                        viewModelSellerOrder.responseMessage.observe(this) {
+                            if (it) {
+                                Toast.makeText(
+                                    this,
+                                    "Status produk berhasil diperbarui",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            } else {
+                                Toast.makeText(
+                                    this,
+                                    "Status produk gagal diperbarui",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                         }
                     }
-                }else{
-                    //nothing
+                    else -> {
+                        // nothing to do
+                    }
                 }
 
                 //reload

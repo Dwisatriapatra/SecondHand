@@ -5,7 +5,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class GetSearchProductResponseItem(
-    val Categories: List<CategoryProducrSearch>,
+    val Categories: List<CategoryProductSearch>,
     val base_price: Int,
     val createdAt: String,
     val description: String,

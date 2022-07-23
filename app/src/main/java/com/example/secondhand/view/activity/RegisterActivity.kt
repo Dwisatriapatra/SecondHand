@@ -27,9 +27,9 @@ class RegisterActivity : AppCompatActivity() {
                 edtEmail.text!!.isNotEmpty() &&
                 edtPassword.text!!.isNotEmpty()
             ) {
-                if(edtPassword.text!!.toString().length < 6){
+                if (edtPassword.text!!.toString().length < 6) {
                     Toast.makeText(this, "Password minimal 6 karakter", Toast.LENGTH_SHORT).show()
-                }else{
+                } else {
                     dataRegister()
                 }
             }
@@ -38,9 +38,11 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun dataRegister() {
 
-        val fullName = edtNamaLengkap.text.toString().toRequestBody("multipart/form-data".toMediaType())
+        val fullName =
+            edtNamaLengkap.text.toString().toRequestBody("multipart/form-data".toMediaType())
         val email = edtEmail.text.toString().toRequestBody("multipart/form-data".toMediaType())
-        val password = edtPassword.text.toString().toRequestBody("multipart/form-data".toMediaType())
+        val password =
+            edtPassword.text.toString().toRequestBody("multipart/form-data".toMediaType())
 
         //fake data
         val phone = 6282144.toString().toRequestBody("multipart/form-data".toMediaType())
@@ -49,7 +51,8 @@ class RegisterActivity : AppCompatActivity() {
 
         val viewModel = ViewModelProvider(this)[UserViewModel::class.java]
 
-        viewModel.userRegister(email,
+        viewModel.userRegister(
+            email,
             fullName,
             password,
             address,
@@ -58,11 +61,11 @@ class RegisterActivity : AppCompatActivity() {
             //imageMultiPart!!
         )
 
-        viewModel.responseMessage.observe(this){
-            if(it!!){
+        viewModel.responseMessage.observe(this) {
+            if (it!!) {
                 Toast.makeText(this, "Registrasi berhasil", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, LoginActivity::class.java))
-            }else{
+            } else {
                 Toast.makeText(this, "Registrasi gagal", Toast.LENGTH_SHORT).show()
             }
         }

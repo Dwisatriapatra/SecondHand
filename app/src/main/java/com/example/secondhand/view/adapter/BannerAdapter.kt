@@ -12,7 +12,8 @@ import com.example.secondhand.R
 import com.example.secondhand.model.GetSellerBannerItem
 import java.util.*
 
-class BannerAdapter(val context : Context, private var imagebanner : List<GetSellerBannerItem>) : PagerAdapter(){
+class BannerAdapter(val context: Context, private var imagebanner: List<GetSellerBannerItem>) :
+    PagerAdapter() {
     override fun getCount(): Int {
         return imagebanner.size
     }
@@ -22,9 +23,10 @@ class BannerAdapter(val context : Context, private var imagebanner : List<GetSel
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        val mLayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val itemView : View = mLayoutInflater.inflate(R.layout.banner_view_pager, container, false)
-        val imageView : ImageView = itemView.findViewById<View>(R.id.vpImageBanner) as ImageView
+        val mLayoutInflater =
+            context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val itemView: View = mLayoutInflater.inflate(R.layout.banner_view_pager, container, false)
+        val imageView: ImageView = itemView.findViewById<View>(R.id.vpImageBanner) as ImageView
         imageView.scaleType = ImageView.ScaleType.FIT_XY
         Glide.with(context).load(imagebanner[position].imageUrl).into(imageView)
 

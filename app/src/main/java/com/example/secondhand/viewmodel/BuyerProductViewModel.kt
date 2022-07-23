@@ -70,12 +70,12 @@ class BuyerProductViewModel @Inject constructor(api: ApiServices) : ViewModel() 
 
     fun getBuyerProductSearchResult(productName: String) {
         apiServices.getSearchBuyerProduct(productName)
-            .enqueue(object: Callback<List<GetBuyerProductResponseItem>>{
+            .enqueue(object : Callback<List<GetBuyerProductResponseItem>> {
                 override fun onResponse(
                     call: Call<List<GetBuyerProductResponseItem>>,
                     response: Response<List<GetBuyerProductResponseItem>>
                 ) {
-                    if(response.isSuccessful){
+                    if (response.isSuccessful) {
                         liveDataBuyerProductSearchResult.value = response.body()
                     }
                 }

@@ -34,7 +34,8 @@ class LoginActivity : AppCompatActivity() {
 
         userLoginTokenManager = UserLoginTokenManager(this)
         biometricPrompt = createBiometricPrompt()
-        BiometricManager.from(this).canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)
+        BiometricManager.from(this)
+            .canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)
 
         button_biometric.setOnClickListener {
 
@@ -60,9 +61,9 @@ class LoginActivity : AppCompatActivity() {
         val password = login_input_password.text.toString()
 
         if (email.isNotEmpty() && password.isNotEmpty()) {
-            if(password.length < 6){
+            if (password.length < 6) {
                 Toast.makeText(this, "Password minimal 6 karakter", Toast.LENGTH_SHORT).show()
-            }else{
+            } else {
                 viewModelUser.userLogin(LoginRequestUser(email, password))
                 viewModelUser.responseMessage.observe(this) { responseMessage ->
                     if (responseMessage!!) {
@@ -128,7 +129,8 @@ class LoginActivity : AppCompatActivity() {
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
 
                 // Authentikasi Berhasil
-                Toast.makeText(this@LoginActivity, "Authentication Success", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@LoginActivity, "Authentication Success", Toast.LENGTH_SHORT)
+                    .show()
 
                 super.onAuthenticationSucceeded(result)
             }
@@ -136,7 +138,8 @@ class LoginActivity : AppCompatActivity() {
             override fun onAuthenticationFailed() {
 
                 // Authentikasi Gagal
-                Toast.makeText(this@LoginActivity, "Authentication Failed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@LoginActivity, "Authentication Failed", Toast.LENGTH_SHORT)
+                    .show()
 
                 super.onAuthenticationFailed()
             }

@@ -15,6 +15,7 @@ import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.secondhand.R
@@ -30,10 +31,7 @@ import com.example.secondhand.view.activity.LoginActivity
 import com.example.secondhand.view.adapter.DiminatiAdapter
 import com.example.secondhand.view.adapter.SellerProductAdapter
 import com.example.secondhand.view.adapter.TerjualAdapter
-import com.example.secondhand.viewmodel.NotificationViewModel
-import com.example.secondhand.viewmodel.SellerOrderViewModel
-import com.example.secondhand.viewmodel.SellerProductViewModel
-import com.example.secondhand.viewmodel.SellerViewModel
+import com.example.secondhand.viewmodel.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.custom_edit_data_product_dialog_alert.view.*
 import kotlinx.android.synthetic.main.fragment_daftar_jual.*
@@ -57,17 +55,7 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
 
     private lateinit var selectedCategory: BooleanArray
     private var categoryList = arrayListOf<Int>()
-    private var availableCategory = arrayOf(
-        "Makanan",
-        "Minuman",
-        "Fashion",
-        "Alat dapur",
-        "Kesehatan",
-        "Olahraga",
-        "Hobi",
-        "Kendaraan",
-        "Lainnya"
-    )
+    private var availableCategory = arrayOf<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -144,7 +132,7 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         rv_daftar_jual_saya_produk.adapter = adapter
 
-        diminatiAdapter = DiminatiAdapter{
+        diminatiAdapter = DiminatiAdapter {
             val intent = Intent(activity, InfoPenawarActivity::class.java)
             intent.putExtra("InfoPenawaran", it)
             startActivity(intent)
@@ -159,18 +147,18 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
 
         // init on "semua produk" category
         daftar_jual_saya_filter_produk_product.isSelected = true
-        viewModelSellerProduct.sellerProduct.observe(viewLifecycleOwner) {product ->
+        viewModelSellerProduct.sellerProduct.observe(viewLifecycleOwner) { product ->
             val listProdukTersedia = mutableListOf<GetSellerProductItem>()
             if (product.isNotEmpty()) {
-                for (i in product.indices){
-                    if(product[i].status == "available"){
+                for (i in product.indices) {
+                    if (product[i].status == "available") {
                         listProdukTersedia += product[i]
                     }
                 }
-                if(listProdukTersedia.isEmpty()){
+                if (listProdukTersedia.isEmpty()) {
                     daftar_jual_saya_no_data_animation.isInvisible = false
                     daftar_jual_saya_progress_bar.isInvisible = true
-                }else{
+                } else {
                     adapter.setDataSellerProduct(listProdukTersedia)
                     daftar_jual_saya_progress_bar.isInvisible = true
                     adapter.notifyDataSetChanged()
@@ -193,18 +181,18 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
 
             daftar_jual_saya_progress_bar.isInvisible = false
 
-            viewModelSellerProduct.sellerProduct.observe(viewLifecycleOwner) {product ->
+            viewModelSellerProduct.sellerProduct.observe(viewLifecycleOwner) { product ->
                 val listProdukTersedia = mutableListOf<GetSellerProductItem>()
                 if (product.isNotEmpty()) {
-                    for (i in product.indices){
-                        if(product[i].status == "available"){
+                    for (i in product.indices) {
+                        if (product[i].status == "available") {
                             listProdukTersedia += product[i]
                         }
                     }
-                    if(listProdukTersedia.isEmpty()){
+                    if (listProdukTersedia.isEmpty()) {
                         daftar_jual_saya_no_data_animation.isInvisible = false
                         daftar_jual_saya_progress_bar.isInvisible = true
-                    }else{
+                    } else {
                         adapter.setDataSellerProduct(listProdukTersedia)
                         daftar_jual_saya_progress_bar.isInvisible = true
                         adapter.notifyDataSetChanged()
@@ -229,19 +217,24 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
             daftar_jual_saya_progress_bar.isInvisible = false
 
 
-            viewModelNotification.notification.observe(viewLifecycleOwner){allNotification ->
+            viewModelNotification.notification.observe(viewLifecycleOwner) { allNotification ->
                 val listProdukDiminati = mutableListOf<GetAllNotificationResponseItem>()
-                if(allNotification.isNotEmpty()){
-                    for(i in allNotification.indices){
-                        if(allNotification[i].status == "bid"){
+                if (allNotification.isNotEmpty()) {
+                    for (i in allNotification.indices) {
+                        if (allNotification[i].status == "bid") {
                             listProdukDiminati += allNotification[i]
                         }
                     }
-                    diminatiAdapter.setDiminatiData(listProdukDiminati)
-                    diminatiAdapter.notifyDataSetChanged()
-                    daftar_jual_saya_progress_bar.isInvisible = true
-                    daftar_jual_saya_no_data_animation.isInvisible = true
-                }else {
+                    if (listProdukDiminati.isEmpty()) {
+                        daftar_jual_saya_no_data_animation.isInvisible = false
+                        daftar_jual_saya_progress_bar.isInvisible = true
+                    } else {
+                        diminatiAdapter.setDiminatiData(listProdukDiminati)
+                        diminatiAdapter.notifyDataSetChanged()
+                        daftar_jual_saya_progress_bar.isInvisible = true
+                        daftar_jual_saya_no_data_animation.isInvisible = true
+                    }
+                } else {
                     daftar_jual_saya_progress_bar.isInvisible = true
                     daftar_jual_saya_no_data_animation.isInvisible = false
                 }
@@ -259,19 +252,24 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
 
             daftar_jual_saya_progress_bar.isInvisible = false
 
-            viewModelSellerOrder.sellerOrder.observe(viewLifecycleOwner){allOrder ->
+            viewModelSellerOrder.sellerOrder.observe(viewLifecycleOwner) { allOrder ->
                 val listProductTerjual = mutableListOf<GetSellerOrderResponseItem>()
-                if(allOrder.isNotEmpty()){
-                    for(i in allOrder.indices){
-                        if(allOrder[i].Product.status == "sold"){
+                if (allOrder.isNotEmpty()) {
+                    for (i in allOrder.indices) {
+                        if (allOrder[i].Product.status == "sold") {
                             listProductTerjual += allOrder[i]
                         }
                     }
-                    terjualAdapter.setListProdukTerjual(listProductTerjual)
-                    terjualAdapter.notifyDataSetChanged()
-                    daftar_jual_saya_no_data_animation.isInvisible = true
-                    daftar_jual_saya_progress_bar.isInvisible = true
-                }else{
+                    if (listProductTerjual.isEmpty()) {
+                        daftar_jual_saya_no_data_animation.isInvisible = false
+                        daftar_jual_saya_progress_bar.isInvisible = true
+                    } else {
+                        terjualAdapter.setListProdukTerjual(listProductTerjual)
+                        terjualAdapter.notifyDataSetChanged()
+                        daftar_jual_saya_no_data_animation.isInvisible = true
+                        daftar_jual_saya_progress_bar.isInvisible = true
+                    }
+                } else {
                     daftar_jual_saya_progress_bar.isInvisible = true
                     daftar_jual_saya_no_data_animation.isInvisible = false
                 }
@@ -279,9 +277,24 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
         }
     }
 
-    override fun editProductInDaftarJualSaya(item: GetSellerProductItem, position: Int) {
+    override fun editProductInDaftarJualSaya(
+        item: GetSellerProductItem,
+        position: Int
+    ) {
         userLoginTokenManager = UserLoginTokenManager(requireContext())
         val viewModelSellerProduct = ViewModelProvider(this)[SellerProductViewModel::class.java]
+
+        val viewModelCategory = ViewModelProvider(this)[CategoryViewModel::class.java]
+        userLoginTokenManager.accessToken.asLiveData().observe(viewLifecycleOwner) {
+            viewModelCategory.getAllProductCategoryAvailable()
+        }
+        viewModelCategory.listCategory.observe(viewLifecycleOwner) {
+            val availCategory = emptyList<String>().toMutableList()
+            for (i in it.indices) {
+                availCategory += it[i].name
+            }
+            availableCategory = availCategory.toTypedArray()
+        }
 
         val customDialogEdit = LayoutInflater.from(requireContext()).inflate(
             R.layout.custom_edit_data_product_dialog_alert, null, false
@@ -289,6 +302,37 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
         val editDataDialog = AlertDialog.Builder(requireContext())
             .setView(customDialogEdit)
             .create()
+
+        // initializing
+        customDialogEdit.edit_product_nama.setText(item.name)
+        customDialogEdit.edit_product_deskripsi.setText(item.description)
+        customDialogEdit.edit_product_harga.setText(item.base_price.toString())
+        customDialogEdit.edit_product_lokasi_toko.setText(item.location)
+        Glide.with(customDialogEdit.edit_product_foto.context)
+            .load(item.image_url)
+            .error(R.drawable.ic_launcher_background)
+            .into(customDialogEdit.edit_product_foto)
+        customDialogEdit.edit_product_kategori.text = ""
+        if (item.Categories.isNotEmpty()) {
+            for (i in item.Categories.indices) {
+                if (item.Categories.lastIndex == 0) {
+                    customDialogEdit.edit_product_kategori.text = item.Categories[i].name
+                    break
+                }
+                if (i == 0) {
+                    customDialogEdit.edit_product_kategori.text = "${item.Categories[i].name}, "
+                } else if (i != item.Categories.lastIndex && i > 0) {
+                    customDialogEdit.edit_product_kategori.text =
+                        customDialogEdit.edit_product_kategori.text.toString() + item.Categories[i].name + ", "
+                } else {
+                    customDialogEdit.edit_product_kategori.text =
+                        customDialogEdit.edit_product_kategori.text.toString() + item.Categories[i].name
+                }
+            }
+        } else {
+            customDialogEdit.edit_product_kategori.text = "Kategori: Belum ada kategori"
+        }
+
 
         customDialogEdit.edit_product_kategori.setOnClickListener {
             initMultiChoicesAlertDialog(customDialogEdit)
@@ -300,7 +344,8 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
         }
 
         customDialogEdit.edit_product_update_button.setOnClickListener {
-            val namaBaruProduct = customDialogEdit.edit_product_nama.text.toString().toRequestBody("multipart/form-data".toMediaType())
+            val namaBaruProduct = customDialogEdit.edit_product_nama.text.toString()
+                .toRequestBody("multipart/form-data".toMediaType())
             val hargaBaruProduct = customDialogEdit.edit_product_harga.text.toString()
                 .toRequestBody("multipart/form-data".toMediaType())
             val lokasiBaruToko = customDialogEdit.edit_product_lokasi_toko.text.toString()
@@ -309,18 +354,36 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
                 .toRequestBody("multipart/form-data".toMediaType())
 
             val kategoriList = ArrayList<MultipartBody.Part>()
-            if(categoryList.isNotEmpty()){
-                for(i in categoryList.indices){
-                    kategoriList.add(MultipartBody.Part.createFormData("category_ids", categoryList[i].toString()))
+            if (categoryList.isNotEmpty()) {
+                for (i in categoryList.indices) {
+                    kategoriList.add(
+                        MultipartBody.Part.createFormData(
+                            "category_ids",
+                            (categoryList[i] + 1).toString()
+                        )
+                    )
+                }
+            } else {
+                if (item.Categories.isNotEmpty()) {
+                    for (i in item.Categories.indices) {
+                        kategoriList.add(
+                            MultipartBody.Part.createFormData(
+                                "category_ids",
+                                item.Categories[i].id.toString()
+                            )
+                        )
+                    }
+                } else {
+                    //nothing to do
                 }
             }
 
             if (
-                customDialogEdit.edit_product_harga.text.isNotEmpty() &&
-                customDialogEdit.edit_product_kategori.text.isNotEmpty() &&
-                customDialogEdit.edit_product_lokasi_toko.text.isNotEmpty() &&
-                customDialogEdit.edit_product_deskripsi.text.isNotEmpty() &&
-                customDialogEdit.edit_product_nama.text.isNotEmpty() &&
+//                customDialogEdit.edit_product_harga.text.toString().isNotEmpty() &&
+//                customDialogEdit.edit_product_kategori.text.toString().isNotEmpty() &&
+//                customDialogEdit.edit_product_lokasi_toko.text.toString().isNotEmpty() &&
+//                customDialogEdit.edit_product_deskripsi.text.toString().isNotEmpty() &&
+//                customDialogEdit.edit_product_nama.text.toString().isNotEmpty() &&
                 imageFile != null
             ) {
                 userLoginTokenManager.accessToken.asLiveData().observe(viewLifecycleOwner) {
@@ -340,6 +403,11 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
                             namaBaruProduct
                         )
                     )
+                    viewModelSellerProduct.getAllSellerProduct(it)
+                    viewModelSellerProduct.sellerProduct.observe(viewLifecycleOwner) { sellerProduct ->
+                        adapter.setDataSellerProduct(sellerProduct)
+                        adapter.notifyDataSetChanged()
+                    }
                     viewModelSellerProduct.responseMessage.observe(viewLifecycleOwner) { responseMsg ->
                         if (responseMsg) {
                             Toast.makeText(
@@ -348,18 +416,19 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
                                 Toast.LENGTH_SHORT
                             ).show()
                             editDataDialog.dismiss()
+                            refreshCurrentFragment()
                         } else {
                             Toast.makeText(requireContext(), "Gagal diupdate", Toast.LENGTH_SHORT)
                                 .show()
                             editDataDialog.dismiss()
+                            refreshCurrentFragment()
                         }
                     }
                 }
             } else {
-                Toast.makeText(requireContext(), "Semua field harus diisi", Toast.LENGTH_SHORT)
+                Toast.makeText(requireContext(), "Foto belum diperbaharui", Toast.LENGTH_SHORT)
                     .show()
             }
-
         }
 
         editDataDialog.show()
@@ -386,20 +455,22 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
 
     }
 
-    private fun initMultiChoicesAlertDialog(view: View){
+    private fun initMultiChoicesAlertDialog(view: View) {
         selectedCategory = BooleanArray(availableCategory.size)
         val alertDialogBuilder = AlertDialog.Builder(requireContext())
         alertDialogBuilder.setTitle("Pilih kategori (maks. 4)")
         alertDialogBuilder.setCancelable(false)
-        alertDialogBuilder.setMultiChoiceItems(availableCategory, selectedCategory
+        alertDialogBuilder.setMultiChoiceItems(
+            availableCategory, selectedCategory
         ) { _: DialogInterface, i: Int, b: Boolean ->
             if (b) {
-                if(categoryList.isEmpty()){
+                if (categoryList.isEmpty()) {
                     categoryList.add(i)
-                }else{
-                    if(categoryList.size >= 4){
-                        Toast.makeText(requireContext(), "Maksimal 4 kategori", Toast.LENGTH_SHORT).show()
-                    }else{
+                } else {
+                    if (categoryList.size >= 4) {
+                        Toast.makeText(requireContext(), "Maksimal 4 kategori", Toast.LENGTH_SHORT)
+                            .show()
+                    } else {
                         categoryList.add(i)
                     }
                 }
@@ -407,7 +478,8 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
                 categoryList.remove(Integer.valueOf(i))
             }
         }
-        alertDialogBuilder.setPositiveButton("OK"
+        alertDialogBuilder.setPositiveButton(
+            "OK"
         ) { _, _ ->
             val stringBuilder = StringBuilder()
             for (j in 0 until categoryList.size) {
@@ -419,11 +491,13 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
             view.edit_product_kategori.text = stringBuilder.toString()
         }
 
-        alertDialogBuilder.setNegativeButton("Cancel"
+        alertDialogBuilder.setNegativeButton(
+            "Cancel"
         ) { dialogInterface, _ ->
             dialogInterface.dismiss()
         }
-        alertDialogBuilder.setNeutralButton("Clear All"
+        alertDialogBuilder.setNeutralButton(
+            "Clear All"
         ) { _, _ ->
             for (j in selectedCategory.indices) {
                 selectedCategory[j] = false
@@ -434,7 +508,7 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
         alertDialogBuilder.show()
     }
 
-    private fun openGallery(){
+    private fun openGallery() {
         getContent.launch("image/*")
     }
 
@@ -445,7 +519,7 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
                 val type = contentResolver.getType(it)
                 imageUri = it
 
-                val tempFile = File.createTempFile("temp-", null, null)
+                val tempFile = File.createTempFile("temp-", ".jpg", null)
                 imageFile = tempFile
                 val inputstream = contentResolver.openInputStream(uri)
                 tempFile.outputStream().use { result ->
@@ -457,5 +531,9 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
             }
         }
 
-
+    private fun refreshCurrentFragment() {
+        val id = findNavController().currentDestination!!.id
+        findNavController().popBackStack(id, true)
+        findNavController().navigate(id)
+    }
 }

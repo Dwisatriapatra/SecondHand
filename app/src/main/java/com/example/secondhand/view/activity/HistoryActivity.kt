@@ -1,7 +1,7 @@
 package com.example.secondhand.view.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,19 +34,19 @@ class HistoryActivity : AppCompatActivity() {
         rv_history.layoutManager = LinearLayoutManager(this)
         rv_history.adapter = adapter
 
-        userLoginTokenManager.accessToken.asLiveData().observe(this){
+        userLoginTokenManager.accessToken.asLiveData().observe(this) {
             historyViewModel.getAllUserHistory(it)
             sellerViewModel.getSellerData(it)
         }
 
-        sellerViewModel.seller.observe(this){sellerData ->
-            if(sellerData != null){
+        sellerViewModel.seller.observe(this) { sellerData ->
+            if (sellerData != null) {
                 history_nama_user.text = sellerData.full_name + "\'s History"
             }
         }
 
-        historyViewModel.history.observe(this){
-            if(it.isNotEmpty()){
+        historyViewModel.history.observe(this) {
+            if (it.isNotEmpty()) {
                 adapter.setDataUserHistory(it)
                 adapter.notifyDataSetChanged()
             }

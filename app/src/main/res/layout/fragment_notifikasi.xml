@@ -8,11 +8,22 @@
     android:background="@drawable/custom_app_background"
     tools:context=".view.fragment.NotifikasiFragment">
 
+    <TextView
+        android:id="@+id/notifikasi_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:gravity="center_horizontal"
+        android:text="@string/notifikasi_page"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_notification"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true" />
+        android:layout_below="@id/notifikasi_title" />
 
     <ProgressBar
         android:id="@+id/notifikasi_progress_bar"

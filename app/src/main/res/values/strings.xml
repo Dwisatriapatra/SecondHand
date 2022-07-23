@@ -29,7 +29,7 @@
     <string name="seller">Seller</string>
     <string name="kategori">Kategori:</string>
     <string name="harga_produk">harga produk</string>
-    <string name="daftar_jual_saya">Daftar Jual Saya</string>
+    <string name="daftar_jual_saya">DAFTAR JUAL SAYA</string>
     <string name="text_satu_via_wa">Yeay kamu berhasil mendapat harga yang sesuai</string>
     <string name="text_dua_via_wa">Segera hubungi pembeli melalui whatsapp untuk transaksi selanjutnya</string>
     <string name="text_produk_match">Produk Match</string>
@@ -94,6 +94,7 @@
     <string name="histori">Histori</string>
     <string name="nama_product">Nama product</string>
     <string name="label_transaksi">Label transaksi</string>
+    <string name="notifikasi_page">NOTIFIKASI</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 

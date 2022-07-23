@@ -25,7 +25,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 @AndroidEntryPoint
 class PreviewActivity : AppCompatActivity() {
 
-    private lateinit var userLoginTokenManager : UserLoginTokenManager
+    private lateinit var userLoginTokenManager: UserLoginTokenManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,18 +37,22 @@ class PreviewActivity : AppCompatActivity() {
 
     private fun initPreview() {
         val dataProduk = intent.getSerializableExtra("dataprodukjual") as PostJualProduct
+        val listCategory =
+            intent.getIntegerArrayListExtra("listCategoryToPreview") as ArrayList<Int>
+        val category = intent.getStringExtra("listCategoryNameToPreview")
         val viewModelSeller = ViewModelProvider(this)[SellerViewModel::class.java]
 
         previewImageProduct.setImageURI(Uri.parse(dataProduk.imageUri))
         previewNamaBarang.text = dataProduk.namaBarang
-        previewKategoriBarang.text = dataProduk.kategoriProduk
         previewHargaBarang.text = dataProduk.harga.toString()
         previewDeskripsiProduct.text = dataProduk.deskripsiProduct
+        previewKategoriBarang.text = category
+
         //seller
         userLoginTokenManager = UserLoginTokenManager(this)
-        userLoginTokenManager.accessToken.asLiveData().observe(this){tokenAccess ->
+        userLoginTokenManager.accessToken.asLiveData().observe(this) { tokenAccess ->
             viewModelSeller.getSellerData(tokenAccess)
-            viewModelSeller.seller.observe(this){
+            viewModelSeller.seller.observe(this) {
                 previewNamaSeller.text = it.full_name
                 previewKotaSeller.text = it.city
                 Glide.with(previewImageSeller.context)
@@ -81,9 +85,18 @@ class PreviewActivity : AppCompatActivity() {
             val imageMultiPart =
                 MultipartBody.Part.createFormData("image", file.name, requestBody)
 
+
             val kategoriList = ArrayList<MultipartBody.Part>()
-            kategoriList.add(MultipartBody.Part.createFormData("category_ids", "1"))
-            kategoriList.add(MultipartBody.Part.createFormData("category_ids", "2"))
+            if (listCategory.isNotEmpty()) {
+                for (i in listCategory.indices) {
+                    kategoriList.add(
+                        MultipartBody.Part.createFormData(
+                            "category_ids",
+                            (listCategory[i] + 1).toString()
+                        )
+                    )
+                }
+            }
 
             userLoginTokenManager.accessToken.asLiveData().observe(this) {
                 viewModelSellerProduct.jualProduct(

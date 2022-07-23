@@ -48,11 +48,13 @@ class BuyerProductAdapter(private val onClick: (GetBuyerProductResponseItem) -> 
             if (listBuyerProduct!![position].Categories!!.isNotEmpty()) {
                 for (i in listBuyerProduct!![position].Categories!!.indices) {
                     if (listBuyerProduct!![position].Categories!!.lastIndex == 0) {
-                        card_product_kategori.text = "Kategori: " + listBuyerProduct!![position].Categories!![i].name
+                        card_product_kategori.text =
+                            "Kategori: " + listBuyerProduct!![position].Categories!![i].name
                         break
                     }
                     if (i == 0) {
-                        card_product_kategori.text = "Kategori: " + listBuyerProduct!![position].Categories!![i].name + ", "
+                        card_product_kategori.text =
+                            "Kategori: " + listBuyerProduct!![position].Categories!![i].name + ", "
                     } else if (i != listBuyerProduct!![position].Categories!!.lastIndex && i > 0) {
                         card_product_kategori.text =
                             card_product_kategori.text.toString() + listBuyerProduct!![position].Categories!![i].name + ", "

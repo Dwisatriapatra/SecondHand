@@ -7,7 +7,7 @@ data class GetSellerResponse(
     val email: String,
     val full_name: String,
     val id: Int,
-    val image_url: String,
+    val image_url: String?,
     val password: String,
     val phone_number: String,
     val updatedAt: String

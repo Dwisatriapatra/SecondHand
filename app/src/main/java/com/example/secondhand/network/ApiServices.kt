@@ -51,7 +51,7 @@ interface ApiServices {
     @GET("buyer/product")
     fun getSearchBuyerProduct(
         @Query("search") productName: String
-    ) : Call<List<GetBuyerProductResponseItem>>
+    ): Call<List<GetBuyerProductResponseItem>>
 
     @GET("buyer/product/{id}")
     fun getBuyerProductById(
@@ -75,7 +75,7 @@ interface ApiServices {
         @Header("access_token") token: String,
         @Path("id") notificationId: Int,
         @Body notificationStatus: NotificationStatus
-    ) : Call<UpdateNotificationStatusResponse>
+    ): Call<UpdateNotificationStatusResponse>
 
 
     //ENDPOINT: SELLER/PRODUCT
@@ -98,7 +98,7 @@ interface ApiServices {
     fun deleteProductFromDaftarJualSaya(
         @Header("access_token") token: String,
         @Path("id") id: Int
-    ) : Call<GetSellerProductDeleteItemResponse>
+    ): Call<GetSellerProductDeleteItemResponse>
 
     @PUT("seller/product/{id}")
     @Multipart
@@ -111,7 +111,7 @@ interface ApiServices {
         //@Part ImageProduct: MultipartBody.Part,
         @Part("location") location: RequestBody,
         @Part("name") name: RequestBody
-    ) : Call<GetSellerProductUpdateResponse>
+    ): Call<GetSellerProductUpdateResponse>
 
     @PATCH("seller/product/{id}")
     @Multipart
@@ -119,7 +119,7 @@ interface ApiServices {
         @Header("access_token") token: String,
         @Path("id") id: Int,
         @Part("status") statusProduct: RequestBody
-    ) : Call<UpdateStatusProductResponse>
+    ): Call<UpdateStatusProductResponse>
 
 
     // ENDPOINT: SELLER/ORDER
@@ -137,11 +137,15 @@ interface ApiServices {
     ): Call<List<GetSellerOrderResponseItem>>
 
     @GET("seller/banner")
-    fun getImageBanner() : Call<List<GetSellerBannerItem>>
+    fun getImageBanner(): Call<List<GetSellerBannerItem>>
 
     // ENDPOINT: HISTORY
     @GET("history")
     fun getAllUserHistory(
         @Header("access_token") token: String
-    ) : Call<List<GetAllUserHistoryResponseItem>>
+    ): Call<List<GetAllUserHistoryResponseItem>>
+
+    // ENDPOINT: SELLER/CATEGORY
+    @GET("seller/category")
+    fun getAllProductCategory(): Call<List<MainProductCategoryResponseItem>>
 }

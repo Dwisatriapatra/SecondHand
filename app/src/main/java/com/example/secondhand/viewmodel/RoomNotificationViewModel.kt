@@ -12,11 +12,13 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class RoomNotificationViewModel @Inject constructor(notificationDao: NotificationDao) : ViewModel() {
+class RoomNotificationViewModel @Inject constructor(notificationDao: NotificationDao) :
+    ViewModel() {
     private val liveDataRoomNotification = MutableLiveData<RoomNotification>()
-    val roomNotification : LiveData<RoomNotification> = liveDataRoomNotification
+    val roomNotification: LiveData<RoomNotification> = liveDataRoomNotification
 
     private val dao = notificationDao
+
     init {
         viewModelScope.launch {
             val dataBuyerProduct = notificationDao.roomGetAllNotificationList()
@@ -24,7 +26,7 @@ class RoomNotificationViewModel @Inject constructor(notificationDao: Notificatio
         }
     }
 
-    fun insertNotificationList(list: RoomNotification){
+    fun insertNotificationList(list: RoomNotification) {
         viewModelScope.launch {
             dao.roomInsertNotificationList(list)
         }

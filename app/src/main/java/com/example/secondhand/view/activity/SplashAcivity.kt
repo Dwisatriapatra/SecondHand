@@ -32,7 +32,7 @@ class SplashAcivity : AppCompatActivity() {
 
         Handler(Looper.getMainLooper()).postDelayed({
 
-            if(isOnline(this)){
+            if (isOnline(this)) {
                 userLoginTokenManager.isUser.asLiveData().observe(this) { isUser ->
                     if (isUser) {
                         userLoginTokenManager.booelan.asLiveData().observe(this) {
@@ -43,10 +43,11 @@ class SplashAcivity : AppCompatActivity() {
                                 userLoginTokenManager.email.asLiveData().observe(this) { result ->
                                     email = result.toString()
                                 }
-                                userLoginTokenManager.password.asLiveData().observe(this) { result ->
-                                    password = result.toString()
-                                    requestNewLoginToken(email, password)
-                                }
+                                userLoginTokenManager.password.asLiveData()
+                                    .observe(this) { result ->
+                                        password = result.toString()
+                                        requestNewLoginToken(email, password)
+                                    }
 
                                 //request new token
 
@@ -59,7 +60,7 @@ class SplashAcivity : AppCompatActivity() {
                         startActivity(Intent(this, MainActivity::class.java))
                     }
                 }
-            }else{
+            } else {
                 Toast.makeText(this, "You are offline", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, MainActivity::class.java))
             }

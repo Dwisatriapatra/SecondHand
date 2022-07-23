@@ -77,7 +77,12 @@ class NotifikasiFragment : Fragment(), NotificationItemClickListener {
                             notifikasi_progress_bar.isInvisible = true
                             adapter.notifyDataSetChanged()
                             notifikasi_no_data_animation.isInvisible = true
-                            viewModelNotificationRoom.insertNotificationList(RoomNotification(null, notification))
+                            viewModelNotificationRoom.insertNotificationList(
+                                RoomNotification(
+                                    null,
+                                    notification
+                                )
+                            )
                         } else {
                             notifikasi_no_data_animation.isInvisible = false
                             notifikasi_progress_bar.isInvisible = true
@@ -87,29 +92,28 @@ class NotifikasiFragment : Fragment(), NotificationItemClickListener {
                     rv_notification.isInvisible = true
                     notifikasi_progress_bar.isInvisible = true
                     notifikasi_no_data_animation.isInvisible = true
+                    notifikasi_title.isInvisible = true
 
                     notifikasi_to_login_button.setOnClickListener {
                         startActivity(Intent(activity, LoginActivity::class.java))
                     }
                 }
-            }else{
+            } else {
                 notifikasi_belum_login_section.isInvisible = true
                 val viewModelNotificationRoom =
                     ViewModelProvider(this)[RoomNotificationViewModel::class.java]
-                viewModelNotificationRoom.roomNotification.observe(viewLifecycleOwner){roomNotification ->
-                    if(roomNotification.listNotification.isNotEmpty()){
+                viewModelNotificationRoom.roomNotification.observe(viewLifecycleOwner) { roomNotification ->
+                    if (roomNotification.listNotification.isNotEmpty()) {
                         adapter.setNotificationData(roomNotification.listNotification)
                         notifikasi_progress_bar.isInvisible = true
                         adapter.notifyDataSetChanged()
                         notifikasi_no_data_animation.isInvisible = true
-                    }else{
+                    } else {
                         notifikasi_no_data_animation.isInvisible = false
                         notifikasi_progress_bar.isInvisible = true
                     }
                 }
             }
-
-
         }
 
     }
@@ -151,14 +155,6 @@ class NotifikasiFragment : Fragment(), NotificationItemClickListener {
         position: Int
     ) {
         userLoginTokenManager = UserLoginTokenManager(requireContext())
-//        val notificationViewModel = ViewModelProvider(this)[NotificationViewModel::class.java]
-//
-//        userLoginTokenManager.accessToken.asLiveData().observe(viewLifecycleOwner){accessToken ->
-//            notificationViewModel.updateNotificationStatus(
-//                accessToken,
-//                item.id,
-//                NotificationStatus(true, item.status))
-//        }
         userLoginTokenManager.name.asLiveData().observe(viewLifecycleOwner) { sellerName ->
             if (item.seller_name == sellerName && item.status.lowercase() != "create") {
                 val intent = Intent(activity!!.applicationContext, InfoPenawarActivity::class.java)
@@ -168,7 +164,7 @@ class NotifikasiFragment : Fragment(), NotificationItemClickListener {
         }
     }
 
-    private fun refreshCurrentFragment(){
+    private fun refreshCurrentFragment() {
         val id = findNavController().currentDestination!!.id
         findNavController().popBackStack(id, true)
         findNavController().navigate(id)

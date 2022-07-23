@@ -20,6 +20,7 @@ import com.example.secondhand.datastore.UserLoginTokenManager
 import com.example.secondhand.model.PostJualProduct
 import com.example.secondhand.view.activity.LoginActivity
 import com.example.secondhand.view.activity.PreviewActivity
+import com.example.secondhand.viewmodel.CategoryViewModel
 import com.example.secondhand.viewmodel.SellerProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_jual.*
@@ -38,18 +39,7 @@ class JualFragment : Fragment() {
     private var imageFile: File? = null
     private lateinit var selectedCategory: BooleanArray
     private var categoryList = arrayListOf<Int>()
-    private var availableCategory = arrayOf(
-        "Makanan",
-        "Minuman",
-        "Fashion",
-        "Alat dapur",
-        "Kesehatan",
-        "Olahraga",
-        "Hobi",
-        "Kendaraan",
-        "Lainnya"
-    )
-
+    private var availableCategory = arrayOf<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -94,6 +84,19 @@ class JualFragment : Fragment() {
         title_lengkapi_detail_produk.isInvisible = false
         jual_detail_produk_section.isInvisible = false
 
+        userLoginTokenManager = UserLoginTokenManager(requireContext())
+        val viewModelCategory = ViewModelProvider(this)[CategoryViewModel::class.java]
+        userLoginTokenManager.accessToken.asLiveData().observe(viewLifecycleOwner) {
+            viewModelCategory.getAllProductCategoryAvailable()
+        }
+        viewModelCategory.listCategory.observe(viewLifecycleOwner) {
+            val availCategory = emptyList<String>().toMutableList()
+            for (i in it.indices) {
+                availCategory += it[i].name
+            }
+            availableCategory = availCategory.toTypedArray()
+        }
+
         jual_kategori_barang.setOnClickListener {
             initMultiChoicesAlertDialog()
         }
@@ -106,13 +109,14 @@ class JualFragment : Fragment() {
             val lokasiToko =
                 jual_lokasi_toko.text.toString()
             val deskripsiProduk = jual_deskripsi_produk.text.toString()
-            val kategori = "kategorinya"
+            val kategori = categoryList
 
             if (namaBarang.isNotEmpty() &&
                 hargaBarang.isNotEmpty() &&
                 lokasiToko.isNotEmpty() &&
                 deskripsiProduk.isNotEmpty() &&
-                imageUri != Uri.EMPTY
+                imageUri != Uri.EMPTY &&
+                kategori.isNotEmpty()
             ) {
                 val intent = Intent(activity, PreviewActivity::class.java)
                 intent.putExtra(
@@ -123,10 +127,11 @@ class JualFragment : Fragment() {
                         lokasiToko,
                         deskripsiProduk,
                         imageUri!!.toString(),
-                        kategori,
                         imageFile!!
                     )
                 )
+                intent.putExtra("listCategoryToPreview", kategori)
+                intent.putExtra("listCategoryNameToPreview", jual_kategori_barang.text.toString())
                 startActivity(intent)
             } else {
                 Toast.makeText(requireContext(), "Semua field harus diisi", Toast.LENGTH_SHORT)
@@ -138,7 +143,8 @@ class JualFragment : Fragment() {
                 jual_harga_barang.text.toString().isNotEmpty() &&
                 jual_lokasi_toko.text.toString().isNotEmpty() &&
                 jual_deskripsi_produk.text.toString().isNotEmpty() &&
-                imageMultiPart != null
+                imageMultiPart != null &&
+                jual_kategori_barang.text.isNotEmpty()
             ) {
 
                 //get all input
@@ -159,10 +165,14 @@ class JualFragment : Fragment() {
                     ViewModelProvider(this)[SellerProductViewModel::class.java]
 
                 val kategoriList = ArrayList<MultipartBody.Part>()
-
-                if(categoryList.isNotEmpty()){
-                    for(i in categoryList.indices){
-                        kategoriList.add(MultipartBody.Part.createFormData("category_ids", (i + 1).toString()))
+                if (categoryList.isNotEmpty()) {
+                    for (i in categoryList.indices) {
+                        kategoriList.add(
+                            MultipartBody.Part.createFormData(
+                                "category_ids",
+                                (categoryList[i] + 1).toString()
+                            )
+                        )
                     }
                 }
 
@@ -203,7 +213,7 @@ class JualFragment : Fragment() {
         }
     }
 
-    private fun openGallery(){
+    private fun openGallery() {
         getContent.launch("image/*")
     }
 
@@ -228,21 +238,23 @@ class JualFragment : Fragment() {
             }
         }
 
-    private fun initMultiChoicesAlertDialog(){
+    private fun initMultiChoicesAlertDialog() {
         selectedCategory = BooleanArray(availableCategory.size)
 
         val alertDialogBuilder = AlertDialog.Builder(requireContext())
         alertDialogBuilder.setTitle("Pilih kategori (maks. 4)")
         alertDialogBuilder.setCancelable(false)
-        alertDialogBuilder.setMultiChoiceItems(availableCategory, selectedCategory
+        alertDialogBuilder.setMultiChoiceItems(
+            availableCategory, selectedCategory
         ) { _: DialogInterface, i: Int, b: Boolean ->
             if (b) {
-                if(categoryList.isEmpty()){
+                if (categoryList.isEmpty()) {
                     categoryList.add(i)
-                }else{
-                    if(categoryList.size >= 4){
-                        Toast.makeText(requireContext(), "Maksimal 4 kategori", Toast.LENGTH_SHORT).show()
-                    }else{
+                } else {
+                    if (categoryList.size >= 4) {
+                        Toast.makeText(requireContext(), "Maksimal 4 kategori", Toast.LENGTH_SHORT)
+                            .show()
+                    } else {
                         categoryList.add(i)
                     }
                 }
@@ -250,7 +262,8 @@ class JualFragment : Fragment() {
                 categoryList.remove(Integer.valueOf(i))
             }
         }
-        alertDialogBuilder.setPositiveButton("OK"
+        alertDialogBuilder.setPositiveButton(
+            "OK"
         ) { _, _ -> // Initialize string builder
             val stringBuilder = StringBuilder()
             for (j in 0 until categoryList.size) {
@@ -262,11 +275,13 @@ class JualFragment : Fragment() {
             jual_kategori_barang.text = stringBuilder.toString()
         }
 
-        alertDialogBuilder.setNegativeButton("Cancel"
+        alertDialogBuilder.setNegativeButton(
+            "Cancel"
         ) { dialogInterface, _ ->
             dialogInterface.dismiss()
         }
-        alertDialogBuilder.setNeutralButton("Clear All"
+        alertDialogBuilder.setNeutralButton(
+            "Clear All"
         ) { _, _ ->
             // use for loop
             for (j in selectedCategory.indices) {

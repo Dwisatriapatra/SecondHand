@@ -91,8 +91,9 @@ class UserViewModel @Inject constructor(api: ApiServices) : ViewModel() {
         image: MultipartBody.Part,
         password: RequestBody,
         phoneNumber: RequestBody
-    ){
-        apiServices.updateUserProfile(token,
+    ) {
+        apiServices.updateUserProfile(
+            token,
             address,
             city,
             email,
@@ -101,7 +102,7 @@ class UserViewModel @Inject constructor(api: ApiServices) : ViewModel() {
             password,
             phoneNumber
         )
-            .enqueue(object: Callback<UpdateProfileUserResponse>{
+            .enqueue(object : Callback<UpdateProfileUserResponse> {
                 override fun onResponse(
                     call: Call<UpdateProfileUserResponse>,
                     response: Response<UpdateProfileUserResponse>
