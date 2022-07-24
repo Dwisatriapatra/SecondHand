@@ -2,6 +2,7 @@ package com.example.secondhand.view.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isInvisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -49,6 +50,8 @@ class HistoryActivity : AppCompatActivity() {
             if (it.isNotEmpty()) {
                 adapter.setDataUserHistory(it)
                 adapter.notifyDataSetChanged()
+            }else{
+                history_no_data_animation.isInvisible = false
             }
         }
     }

@@ -145,6 +145,7 @@
         android:layout_height="200dp"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
+        android:visibility="invisible"
         app:lottie_rawRes="@raw/no_data_animation"
         android:id="@+id/daftar_jual_saya_no_data_animation"
         android:layout_below="@id/daftar_jual_saya_filter_produk_section"

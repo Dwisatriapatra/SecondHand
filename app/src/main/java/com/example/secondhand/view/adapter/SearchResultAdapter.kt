@@ -18,6 +18,9 @@ class SearchResultAdapter(private val onClick: (GetBuyerProductResponseItem) -> 
     fun setDataBuyerProductSearch(list: List<GetBuyerProductResponseItem>) {
         this.listBuyerProductSearch = list
     }
+    fun clearBuyerProductSearchData(){
+        listBuyerProductSearch = null
+    }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 

@@ -39,6 +39,7 @@
         android:id="@+id/notifikasi_no_data_animation"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
+        android:visibility="invisible"
         app:lottie_rawRes="@raw/no_data_animation"/>
 
     <LinearLayout

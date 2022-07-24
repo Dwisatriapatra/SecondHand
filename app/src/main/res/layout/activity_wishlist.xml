@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/custom_app_background"
     tools:context=".view.activity.WishlistActivity">
     <TextView
@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:text="@string/nama_user"
+        android:layout_marginBottom="15dp"
         android:id="@+id/wishlist_user_name"
         android:textColor="@color/black"
         android:textStyle="bold"
@@ -18,5 +19,37 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/rv_wishlist"/>
-</LinearLayout>
+        android:id="@+id/rv_wishlist"
+        android:layout_below="@id/wishlist_user_name"/>
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"
+        android:id="@+id/wishlist_no_data_animation"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        android:visibility="invisible"
+        app:lottie_rawRes="@raw/no_data_animation"/>
+    <LinearLayout
+        android:id="@+id/wishlist_belum_login_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/anda_belum_login"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/wishlist_to_login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/login" />
+    </LinearLayout>
+</RelativeLayout>

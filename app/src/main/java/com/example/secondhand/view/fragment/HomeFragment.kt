@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.secondhand.R
 import com.example.secondhand.helper.isOnline
@@ -242,28 +244,44 @@ class HomeFragment : Fragment() {
 
             val viewModelSearch =
                 ViewModelProvider(this@HomeFragment)[BuyerProductViewModel::class.java]
-
             override fun onQueryTextSubmit(query: String?): Boolean {
-                vpHomeImageBanner.isInvisible = true
-                home_telusuri_kategori_section.isInvisible = true
-                rv_product_home_section.isInvisible = true
-                home_list_search_result.isInvisible = false
+                if(query!!.isNotEmpty()) {
+                    vpHomeImageBanner.isInvisible = true
+                    home_telusuri_kategori_section.isInvisible = true
+                    rv_product_home_section.isInvisible = true
+                    home_list_search_result.isInvisible = false
 
-                home_search_bar.clearFocus()
+                    home_search_bar.clearFocus()
 
-                viewModelSearch.getBuyerProductSearchResult(query!!)
+                    viewModelSearch.getBuyerProductSearchResult(query)
 
-                viewModelSearch.searchResult.observe(viewLifecycleOwner) { value ->
-                    searchProductResultAdapter.setDataBuyerProductSearch(value)
-                    searchProductResultAdapter.notifyDataSetChanged()
+                    viewModelSearch.searchResult.observe(viewLifecycleOwner) { value ->
+                        if (value.isNotEmpty()) {
+                            searchProductResultAdapter.setDataBuyerProductSearch(value)
+                            searchProductResultAdapter.notifyDataSetChanged()
+                            home_search_no_data_animation.isInvisible = true
+                        } else {
+                            searchProductResultAdapter.clearBuyerProductSearchData()
+                            searchProductResultAdapter.notifyDataSetChanged()
+                            home_search_no_data_animation.isInvisible = false
+                        }
+                    }
                 }
-                return false
+                return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                return false
+                return if(newText!!.isEmpty()){
+                    vpHomeImageBanner.isInvisible = false
+                    home_telusuri_kategori_section.isInvisible = false
+                    rv_product_home_section.isInvisible = false
+                    home_list_search_result.isInvisible = true
+                    home_search_no_data_animation.isInvisible = true
+                    true
+                }else{
+                    false
+                }
             }
-
         })
     }
 
@@ -274,5 +292,11 @@ class HomeFragment : Fragment() {
             vpHomeImageBanner.adapter = adapterBanner
         }
         viewModelbanner.getAllBanner()
+    }
+
+    private fun refreshCurrentFragment() {
+        val id = findNavController().currentDestination!!.id
+        findNavController().popBackStack(id, true)
+        findNavController().navigate(id)
     }
 }

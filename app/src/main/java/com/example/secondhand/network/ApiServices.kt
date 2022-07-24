@@ -136,6 +136,13 @@ interface ApiServices {
         @Header("access_token") token: String
     ): Call<List<GetSellerOrderResponseItem>>
 
+    @GET("seller/order/{id}")
+    fun getSellerOrderById(
+        @Header("access_token") token: String,
+        @Path("id") id: Int
+    ) : Call<GetSellerOrderResponseItem>
+
+    // ENDPOINT: SELLER/BANNER
     @GET("seller/banner")
     fun getImageBanner(): Call<List<GetSellerBannerItem>>
 

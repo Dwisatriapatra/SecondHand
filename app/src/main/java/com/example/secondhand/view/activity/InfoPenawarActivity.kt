@@ -41,26 +41,20 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_info_penawar)
         val dataPenawar = intent.getParcelableExtra<GetAllNotificationResponseItem>("InfoPenawaran")
-        initRecyclerView(dataPenawar!!.seller_name, dataPenawar.buyer_name, dataPenawar.image_url)
+        initRecyclerView(dataPenawar!!.seller_name, dataPenawar.buyer_name, dataPenawar.image_url, dataPenawar.order_id)
     }
 
-    private fun initRecyclerView(sellerName: String?, buyerName: String?, imageUrl: String?) {
-
-        info_penawar_nama_pembeli.text = buyerName
-        Glide.with(info_penawar_foto_pembeli.context)
-            .load(imageUrl)
-            .error(R.drawable.ic_launcher_background)
-            .override(100, 100)
-            .into(info_penawar_foto_pembeli)
-
+    private fun initRecyclerView(sellerName: String?, buyerName: String?, imageUrl: String?, orderId: Int?) {
         userLoginTokenManager = UserLoginTokenManager(this)
         val viewModelSellerOrder = ViewModelProvider(this)[SellerOrderViewModel::class.java]
         userLoginTokenManager.accessToken.asLiveData().observe(this) {
             viewModelSellerOrder.getAllSellerOrder(it)
+            viewModelSellerOrder.getSellerOrderById(it, orderId!!)
         }
         adapter = ProdukDitawarAdapter(this@InfoPenawarActivity, sellerName!!)
         rv_daftar_barang_ditawar.layoutManager = LinearLayoutManager(this)
         rv_daftar_barang_ditawar.adapter = adapter
+
         viewModelSellerOrder.sellerOrder.observe(this) {
             val list: MutableList<GetSellerOrderResponseItem> = mutableListOf()
             if (it.isNotEmpty()) {
@@ -72,8 +66,16 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
                 adapter.setListProdukDitawar(list)
                 adapter.notifyDataSetChanged()
             }
-
         }
+        viewModelSellerOrder.sellerOrderById.observe(this){
+            info_penawar_kota.text = it.User.city
+        }
+        info_penawar_nama_pembeli.text = buyerName
+        Glide.with(info_penawar_foto_pembeli.context)
+            .load(imageUrl)
+            .error(R.drawable.ic_launcher_background)
+            .override(100, 100)
+            .into(info_penawar_foto_pembeli)
     }
 
     private fun initDialogToWhatsApp(imageUrl: String?, bidPrice: Int?, buyerPhone: String?) {
@@ -101,8 +103,9 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
         dialogView.btnHubungiViaWHatsApp.setOnClickListener {
             //do intent to whatsapp
             val message = "Hai, tawaranmu terhadap produk ${dataPenawar.Product!!.name} seharga " +
-                    "${dataPenawar.bid_price} telah diterima oleh penjual. Jika anda " +
-                    "mengkonfirmasi pembelian, silahkan kirim pesan untuk menghubungi pembeli"
+                    "${dataPenawar.base_price} dengan harga tawar ${dataPenawar.bid_price} telah " +
+                    "diterima oleh penjual. Jika anda mengkonfirmasi pembelian, silahkan kirim " +
+                    "pesan untuk menghubungi pembeli"
 
             val url =
                 "https://api.whatsapp.com/send?phone=$buyerPhone&text=" + URLEncoder.encode(

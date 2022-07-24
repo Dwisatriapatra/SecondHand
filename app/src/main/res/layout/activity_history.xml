@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@drawable/custom_app_background"
     tools:context=".view.activity.HistoryActivity">
@@ -14,9 +15,20 @@
         android:id="@+id/history_nama_user"
         android:textColor="@color/black"
         android:text="@string/nama_user"
+        android:layout_marginBottom="15dp"
         android:gravity="center_horizontal"/>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/rv_history"/>
-</LinearLayout>
+        android:id="@+id/rv_history"
+        android:layout_below="@id/history_nama_user"/>
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"
+        android:id="@+id/history_no_data_animation"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        android:visibility="invisible"
+        app:lottie_rawRes="@raw/no_data_animation"/>
+</RelativeLayout>

@@ -21,6 +21,8 @@ class SellerOrderViewModel @Inject constructor(api: ApiServices) : ViewModel() {
     private val liveDataSellerOrder = MutableLiveData<List<GetSellerOrderResponseItem>>()
     val sellerOrder: LiveData<List<GetSellerOrderResponseItem>> = liveDataSellerOrder
 
+    private val liveDataSellerOrderById = MutableLiveData<GetSellerOrderResponseItem>()
+    val sellerOrderById: LiveData<GetSellerOrderResponseItem> = liveDataSellerOrderById
 
     fun updateOrderStatus(token: String, id: Int, statusOrder: RequestBody) {
         apiServices.updateStatusOrder(token, id, statusOrder)
@@ -50,6 +52,27 @@ class SellerOrderViewModel @Inject constructor(api: ApiServices) : ViewModel() {
 
                 override fun onFailure(call: Call<List<GetSellerOrderResponseItem>>, t: Throwable) {
                     //
+                }
+
+            })
+    }
+
+    fun getSellerOrderById(token: String, id: Int){
+        apiServices.getSellerOrderById(token, id)
+            .enqueue(object: Callback<GetSellerOrderResponseItem>{
+                override fun onResponse(
+                    call: Call<GetSellerOrderResponseItem>,
+                    response: Response<GetSellerOrderResponseItem>
+                ) {
+                    if(response.isSuccessful){
+                        liveDataSellerOrderById.value = response.body()
+                    }else{
+                        // nothing to do
+                    }
+                }
+
+                override fun onFailure(call: Call<GetSellerOrderResponseItem>, t: Throwable) {
+                    // nothing to do
                 }
 
             })

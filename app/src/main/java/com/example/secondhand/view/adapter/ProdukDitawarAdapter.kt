@@ -48,12 +48,14 @@ class ProdukDitawarAdapter(
                 .error(R.drawable.ic_launcher_background)
                 .override(100, 100)
                 .into(card_daftar_produk_ditawar_image)
-            if (listProdukDitawar!![position].status == "accepted" ||
-                listProdukDitawar!![position].status == "declined" ||
-                listProdukDitawar!![position].status == "sold"
-            ) {
+            if (listProdukDitawar!![position].status == "accepted"
+            ){
                 card_daftar_produk_ditawar_terima_tolak_button_section.isInvisible = true
-            } else {
+            }else if(listProdukDitawar!![position].status == "declined"){
+                card_daftar_produk_ditawar_terima_tolak_button_section.isInvisible = true
+                card_daftar_produk_ditawar_status_hubungi_button_section.isInvisible = true
+            }
+            else {
                 card_daftar_produk_ditawar_status_hubungi_button_section.isInvisible = true
             }
             card_daftar_produk_ditawar_tolak_button.setOnClickListener {

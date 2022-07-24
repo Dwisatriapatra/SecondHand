@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/custom_app_background"
     android:padding="10dp"
     tools:context=".view.fragment.HomeFragment">
@@ -15,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/home_search_bar"
-            android:iconifiedByDefault="false"
+            android:iconifiedByDefault="true"
             android:background="@drawable/custom_edit_text_layout"
             android:queryHint="Cari Barang"
             android:queryBackground="@null"
@@ -141,6 +142,14 @@
             android:layout_height="match_parent" />
     </RelativeLayout>
 
-
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"
+        android:id="@+id/home_search_no_data_animation"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        android:visibility="invisible"
+        app:lottie_rawRes="@raw/no_data_animation"/>
 
 </RelativeLayout>
