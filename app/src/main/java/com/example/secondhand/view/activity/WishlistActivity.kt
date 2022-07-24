@@ -25,6 +25,10 @@ class WishlistActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_wishlist)
         initView()
+        swipe_refresh_wishlist.setOnRefreshListener {
+            swipe_refresh_wishlist.isRefreshing = false
+            refreshCurrentActivity()
+        }
     }
 
     private fun initView() {
@@ -73,5 +77,13 @@ class WishlistActivity : AppCompatActivity() {
                 wishlist_user_name.isInvisible = true
             }
         }
+    }
+
+    // reload current activity function
+    private fun refreshCurrentActivity(){
+        finish()
+        overridePendingTransition(0, 0)
+        startActivity(intent)
+        overridePendingTransition(0, 0)
     }
 }

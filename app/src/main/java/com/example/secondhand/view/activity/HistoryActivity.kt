@@ -24,6 +24,11 @@ class HistoryActivity : AppCompatActivity() {
         setContentView(R.layout.activity_history)
 
         iniView()
+
+        swipe_refresh_history.setOnRefreshListener {
+            swipe_refresh_history.isRefreshing = false
+            refreshCurrentActivity()
+        }
     }
 
     private fun iniView() {
@@ -54,5 +59,13 @@ class HistoryActivity : AppCompatActivity() {
                 history_no_data_animation.isInvisible = false
             }
         }
+    }
+
+    // reload current activity function
+    private fun refreshCurrentActivity(){
+        finish()
+        overridePendingTransition(0, 0)
+        startActivity(intent)
+        overridePendingTransition(0, 0)
     }
 }

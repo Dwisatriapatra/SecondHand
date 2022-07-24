@@ -44,8 +44,7 @@ class DetailActivity : AppCompatActivity() {
         if (intent.hasExtra("detailbarang")) {
             detailBarang = intent.getParcelableExtra("detailbarang")!!
         } else if (intent.hasExtra("detailbarangsearchresult")) {
-            detailBarang =
-                intent.getParcelableExtra("detailbarangsearchresult")!!
+            detailBarang = intent.getParcelableExtra("detailbarangsearchresult")!!
         }
 
         val viewModelBuyerProduct = ViewModelProvider(this)[BuyerProductViewModel::class.java]

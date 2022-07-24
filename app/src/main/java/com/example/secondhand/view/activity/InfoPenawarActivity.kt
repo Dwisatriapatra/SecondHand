@@ -40,6 +40,12 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_info_penawar)
+
+        swipe_refresh_info_penawar.setOnRefreshListener {
+            swipe_refresh_info_penawar.isRefreshing = false
+            refreshCurrentActivity()
+        }
+
         val dataPenawar = intent.getParcelableExtra<GetAllNotificationResponseItem>("InfoPenawaran")
         initRecyclerView(dataPenawar!!.seller_name, dataPenawar.buyer_name, dataPenawar.image_url, dataPenawar.order_id)
     }
@@ -153,11 +159,7 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
                     }
                     dialogInterface.dismiss()
                 }
-                //reload
-                finish()
-                overridePendingTransition(0, 0)
-                startActivity(intent)
-                overridePendingTransition(0, 0)
+                refreshCurrentActivity()
             }.show()
 
     }
@@ -191,11 +193,7 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
                     }
                     dialogInterface.dismiss()
                 }
-                //reload
-                finish()
-                overridePendingTransition(0, 0)
-                startActivity(intent)
-                overridePendingTransition(0, 0)
+                refreshCurrentActivity()
             }.show()
     }
 
@@ -269,12 +267,7 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
                         // nothing to do
                     }
                 }
-
-                //reload
-                finish()
-                overridePendingTransition(0, 0)
-                startActivity(intent)
-                overridePendingTransition(0, 0)
+                refreshCurrentActivity()
             }
             dialog.dismiss()
         }
@@ -286,5 +279,13 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
         val intent = Intent(this, MainActivity::class.java)
         intent.putExtra("isBackFromInfoPenawar", true)
         startActivity(intent)
+    }
+
+    // reload current activity function
+    private fun refreshCurrentActivity(){
+        finish()
+        overridePendingTransition(0, 0)
+        startActivity(intent)
+        overridePendingTransition(0, 0)
     }
 }

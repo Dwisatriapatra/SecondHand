@@ -1,178 +1,182 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/swipe_refresh_daftar_jual"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/custom_app_background"
     tools:context=".view.fragment.DaftarJualFragment">
 
-    <TextView
-        android:id="@+id/daftar_jual_saya_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_margin="20dp"
-        android:gravity="center_horizontal"
-        android:text="@string/daftar_jual_saya"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
     <RelativeLayout
-        android:id="@+id/daftar_jual_saya_profile_penjual_section"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/daftar_jual_saya_title"
-        android:padding="20dp">
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/daftar_jual_saya_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_margin="20dp"
+            android:gravity="center_horizontal"
+            android:text="@string/daftar_jual_saya"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/daftar_jual_saya_image_penjual"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            android:layout_marginEnd="10dp"
-            android:src="@drawable/ic_launcher_background" />
+        <RelativeLayout
+            android:id="@+id/daftar_jual_saya_profile_penjual_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/daftar_jual_saya_title"
+            android:padding="20dp">
 
-        <LinearLayout
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/daftar_jual_saya_image_penjual"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/ic_launcher_background" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/daftar_jual_saya_image_penjual"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/daftar_jual_saya_nama_penjual"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nama Penjual"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/daftar_jual_saya_kota_penjual"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Kota"
+                    android:textColor="@color/black"
+                    tools:ignore="HardcodedText" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/daftar_jual_saya_edit_profile_penjual_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:text="Edit"
+                tools:ignore="HardcodedText" />
+
+        </RelativeLayout>
+
+        <HorizontalScrollView
+            android:id="@+id/daftar_jual_saya_filter_produk_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/daftar_jual_saya_profile_penjual_section"
+            android:layout_marginBottom="5dp"
+            android:padding="20dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/daftar_jual_saya_filter_produk_product"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:backgroundTint="@color/custom_telusuri_kategori_button_background_color"
+                    android:text="Produk"
+                    android:textAllCaps="false"
+                    android:textColor="@color/custom_telusuri_kategori_button_text_color"
+                    tools:ignore="HardcodedText" />
+
+                <Button
+                    android:id="@+id/daftar_jual_saya_filter_produk_diminati"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:backgroundTint="@color/custom_telusuri_kategori_button_background_color"
+                    android:text="Diminati"
+                    android:textAllCaps="false"
+                    android:textColor="@color/custom_telusuri_kategori_button_text_color"
+                    tools:ignore="ButtonStyle,HardcodedText" />
+
+                <Button
+                    android:id="@+id/daftar_jual_saya_filter_produk_terjual"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/custom_telusuri_kategori_button_background_color"
+                    android:text="Terjual"
+                    android:textAllCaps="false"
+                    android:textColor="@color/custom_telusuri_kategori_button_text_color"
+                    tools:ignore="ButtonStyle,HardcodedText" />
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_daftar_jual_saya_produk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_below="@id/daftar_jual_saya_filter_produk_section" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:id="@+id/rv_daftar_jual_saya_diminati"
+            android:layout_below="@id/daftar_jual_saya_filter_produk_section"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:id="@+id/rv_daftar_jual_saya_terjual"
+            android:layout_below="@id/daftar_jual_saya_filter_produk_section"/>
+        <ProgressBar
+            android:id="@+id/daftar_jual_saya_progress_bar"
+            style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/daftar_jual_saya_image_penjual"
+            android:layout_centerInParent="true" />
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            android:visibility="invisible"
+            app:lottie_rawRes="@raw/no_data_animation"
+            android:id="@+id/daftar_jual_saya_no_data_animation"
+            android:layout_below="@id/daftar_jual_saya_filter_produk_section"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"/>
+
+        <LinearLayout
+            android:id="@+id/daftar_jual_saya_belum_login_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/daftar_jual_saya_nama_penjual"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nama Penjual"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/anda_belum_login"
                 android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                tools:ignore="HardcodedText" />
+                android:textSize="24sp" />
 
-            <TextView
-                android:id="@+id/daftar_jual_saya_kota_penjual"
+            <Button
+                android:id="@+id/daftar_jual_saya_to_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Kota"
-                android:textColor="@color/black"
-                tools:ignore="HardcodedText" />
+                android:layout_gravity="center_horizontal"
+                android:text="@string/login" />
         </LinearLayout>
-
-        <Button
-            android:id="@+id/daftar_jual_saya_edit_profile_penjual_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:text="Edit"
-            tools:ignore="HardcodedText" />
-
     </RelativeLayout>
-
-    <HorizontalScrollView
-        android:id="@+id/daftar_jual_saya_filter_produk_section"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/daftar_jual_saya_profile_penjual_section"
-        android:layout_marginBottom="5dp"
-        android:padding="20dp">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/daftar_jual_saya_filter_produk_product"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:backgroundTint="@color/custom_telusuri_kategori_button_background_color"
-                android:text="Produk"
-                android:textAllCaps="false"
-                android:textColor="@color/custom_telusuri_kategori_button_text_color"
-                tools:ignore="HardcodedText" />
-
-            <Button
-                android:id="@+id/daftar_jual_saya_filter_produk_diminati"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:backgroundTint="@color/custom_telusuri_kategori_button_background_color"
-                android:text="Diminati"
-                android:textAllCaps="false"
-                android:textColor="@color/custom_telusuri_kategori_button_text_color"
-                tools:ignore="ButtonStyle,HardcodedText" />
-
-            <Button
-                android:id="@+id/daftar_jual_saya_filter_produk_terjual"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/custom_telusuri_kategori_button_background_color"
-                android:text="Terjual"
-                android:textAllCaps="false"
-                android:textColor="@color/custom_telusuri_kategori_button_text_color"
-                tools:ignore="ButtonStyle,HardcodedText" />
-        </LinearLayout>
-    </HorizontalScrollView>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_daftar_jual_saya_produk"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_below="@id/daftar_jual_saya_filter_produk_section" />
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:id="@+id/rv_daftar_jual_saya_diminati"
-        android:layout_below="@id/daftar_jual_saya_filter_produk_section"/>
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:id="@+id/rv_daftar_jual_saya_terjual"
-        android:layout_below="@id/daftar_jual_saya_filter_produk_section"/>
-    <ProgressBar
-        android:id="@+id/daftar_jual_saya_progress_bar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
-    <com.airbnb.lottie.LottieAnimationView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        android:visibility="invisible"
-        app:lottie_rawRes="@raw/no_data_animation"
-        android:id="@+id/daftar_jual_saya_no_data_animation"
-        android:layout_below="@id/daftar_jual_saya_filter_produk_section"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"/>
-
-    <LinearLayout
-        android:id="@+id/daftar_jual_saya_belum_login_section"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/anda_belum_login"
-            android:textColor="@color/black"
-            android:textSize="24sp" />
-
-        <Button
-            android:id="@+id/daftar_jual_saya_to_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/login" />
-    </LinearLayout>
-
-</RelativeLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

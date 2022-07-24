@@ -72,6 +72,11 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
 
         userLoginTokenManager = UserLoginTokenManager(requireContext())
 
+        swipe_refresh_daftar_jual.setOnRefreshListener {
+            swipe_refresh_daftar_jual.isRefreshing = false
+            refreshCurrentFragment()
+        }
+
         userLoginTokenManager.isUser.asLiveData().observe(viewLifecycleOwner) { isUser ->
             if (isUser) {
                 daftar_jual_saya_belum_login_section.isInvisible = true

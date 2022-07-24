@@ -46,6 +46,10 @@ class NotifikasiFragment : Fragment(), NotificationItemClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         initView()
+        swipe_refresh_notifikasi.setOnRefreshListener {
+            swipe_refresh_notifikasi.isRefreshing = false
+            refreshCurrentFragment()
+        }
     }
 
     private fun initView() {
