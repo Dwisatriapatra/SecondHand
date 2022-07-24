@@ -40,14 +40,14 @@
         android:layout_marginBottom="10dp"
         android:id="@+id/vpHomeImageBanner"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="150dp"
         android:layout_above="@+id/home_telusuri_kategori_section" />
     <LinearLayout
         android:id="@+id/home_telusuri_kategori_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/rv_product_home_section"
-        android:layout_marginBottom="35dp"
+        android:layout_marginBottom="5dp"
         android:orientation="vertical"
         tools:ignore="ObsoleteLayoutParam">
 

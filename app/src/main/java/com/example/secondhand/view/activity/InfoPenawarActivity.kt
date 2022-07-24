@@ -47,10 +47,20 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
         }
 
         val dataPenawar = intent.getParcelableExtra<GetAllNotificationResponseItem>("InfoPenawaran")
-        initRecyclerView(dataPenawar!!.seller_name, dataPenawar.buyer_name, dataPenawar.image_url, dataPenawar.order_id)
+        initRecyclerView(
+            dataPenawar!!.seller_name,
+            dataPenawar.buyer_name,
+            dataPenawar.image_url,
+            dataPenawar.order_id
+        )
     }
 
-    private fun initRecyclerView(sellerName: String?, buyerName: String?, imageUrl: String?, orderId: Int?) {
+    private fun initRecyclerView(
+        sellerName: String?,
+        buyerName: String?,
+        imageUrl: String?,
+        orderId: Int?
+    ) {
         userLoginTokenManager = UserLoginTokenManager(this)
         val viewModelSellerOrder = ViewModelProvider(this)[SellerOrderViewModel::class.java]
         userLoginTokenManager.accessToken.asLiveData().observe(this) {
@@ -73,7 +83,7 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
                 adapter.notifyDataSetChanged()
             }
         }
-        viewModelSellerOrder.sellerOrderById.observe(this){
+        viewModelSellerOrder.sellerOrderById.observe(this) {
             info_penawar_kota.text = it.User.city
         }
         info_penawar_nama_pembeli.text = buyerName
@@ -282,7 +292,7 @@ class InfoPenawarActivity : AppCompatActivity(), PenawaranItemClickListener {
     }
 
     // reload current activity function
-    private fun refreshCurrentActivity(){
+    private fun refreshCurrentActivity() {
         finish()
         overridePendingTransition(0, 0)
         startActivity(intent)

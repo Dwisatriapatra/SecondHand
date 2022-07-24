@@ -140,7 +140,7 @@ interface ApiServices {
     fun getSellerOrderById(
         @Header("access_token") token: String,
         @Path("id") id: Int
-    ) : Call<GetSellerOrderResponseItem>
+    ): Call<GetSellerOrderResponseItem>
 
     // ENDPOINT: SELLER/BANNER
     @GET("seller/banner")
@@ -155,4 +155,23 @@ interface ApiServices {
     // ENDPOINT: SELLER/CATEGORY
     @GET("seller/category")
     fun getAllProductCategory(): Call<List<MainProductCategoryResponseItem>>
+
+    // ENDPOINT: BUYER/WISHLIST
+    @GET("buyer/wishlist")
+    fun getAllBuyerWishlist(
+        @Header("access_token") token: String
+    ): Call<List<GetBuyerWishlistResponseItem>>
+
+    @POST("buyer/wishlist")
+    @Multipart
+    fun postBuyerWishlist(
+        @Header("access_token") token: String,
+        @Part("product_id") id: RequestBody
+    ): Call<PostBuyerWishlistResponse>
+
+    @DELETE("buyer/wishlist/{id}")
+    fun deleteBuyerWishlist(
+        @Header("access_token") token: String,
+        @Path("id") id: Int
+    ): Call<Any>
 }

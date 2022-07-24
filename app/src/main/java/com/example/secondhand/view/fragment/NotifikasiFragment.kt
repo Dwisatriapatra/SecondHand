@@ -160,7 +160,7 @@ class NotifikasiFragment : Fragment(), NotificationItemClickListener {
     ) {
         userLoginTokenManager = UserLoginTokenManager(requireContext())
         userLoginTokenManager.name.asLiveData().observe(viewLifecycleOwner) { sellerName ->
-            if (item.seller_name == sellerName && item.status.lowercase() != "create") {
+            if (item.seller_name == sellerName && item.status.lowercase() != "create" && item.Product != null) {
                 val intent = Intent(activity!!.applicationContext, InfoPenawarActivity::class.java)
                 intent.putExtra("InfoPenawaran", item)
                 startActivity(intent)

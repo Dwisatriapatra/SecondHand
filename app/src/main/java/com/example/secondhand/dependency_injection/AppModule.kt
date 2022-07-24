@@ -2,7 +2,10 @@ package com.example.secondhand.dependency_injection
 
 import android.content.Context
 import com.example.secondhand.network.ApiServices
-import com.example.secondhand.roomdatabase.*
+import com.example.secondhand.roomdatabase.BuyerProductDao
+import com.example.secondhand.roomdatabase.BuyerProductDatabase
+import com.example.secondhand.roomdatabase.NotificationDao
+import com.example.secondhand.roomdatabase.NotificationDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -62,14 +65,4 @@ object AppModule {
     @Singleton
     fun provideNotificationDao(notificationDatabase: NotificationDatabase): NotificationDao =
         notificationDatabase.notificationDao()
-
-    @Provides
-    @Singleton
-    fun provideWishlistRoomDatabase(@ApplicationContext context: Context): WishlistProductDatabase =
-        WishlistProductDatabase.getInstance(context)
-
-    @Provides
-    @Singleton
-    fun provideWishlistDao(wishlistProductDatabase: WishlistProductDatabase): WishlistDao =
-        wishlistProductDatabase.wishlistDao()
 }

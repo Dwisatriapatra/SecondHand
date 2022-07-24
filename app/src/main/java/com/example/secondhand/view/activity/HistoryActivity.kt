@@ -55,14 +55,14 @@ class HistoryActivity : AppCompatActivity() {
             if (it.isNotEmpty()) {
                 adapter.setDataUserHistory(it)
                 adapter.notifyDataSetChanged()
-            }else{
+            } else {
                 history_no_data_animation.isInvisible = false
             }
         }
     }
 
     // reload current activity function
-    private fun refreshCurrentActivity(){
+    private fun refreshCurrentActivity() {
         finish()
         overridePendingTransition(0, 0)
         startActivity(intent)

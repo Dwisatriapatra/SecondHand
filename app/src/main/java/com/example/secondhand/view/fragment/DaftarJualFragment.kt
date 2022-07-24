@@ -226,7 +226,7 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
                 val listProdukDiminati = mutableListOf<GetAllNotificationResponseItem>()
                 if (allNotification.isNotEmpty()) {
                     for (i in allNotification.indices) {
-                        if (allNotification[i].status == "bid") {
+                        if (allNotification[i].status == "bid" && allNotification[i].Product != null) {
                             listProdukDiminati += allNotification[i]
                         }
                     }

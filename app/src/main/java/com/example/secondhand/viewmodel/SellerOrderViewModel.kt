@@ -57,16 +57,16 @@ class SellerOrderViewModel @Inject constructor(api: ApiServices) : ViewModel() {
             })
     }
 
-    fun getSellerOrderById(token: String, id: Int){
+    fun getSellerOrderById(token: String, id: Int) {
         apiServices.getSellerOrderById(token, id)
-            .enqueue(object: Callback<GetSellerOrderResponseItem>{
+            .enqueue(object : Callback<GetSellerOrderResponseItem> {
                 override fun onResponse(
                     call: Call<GetSellerOrderResponseItem>,
                     response: Response<GetSellerOrderResponseItem>
                 ) {
-                    if(response.isSuccessful){
+                    if (response.isSuccessful) {
                         liveDataSellerOrderById.value = response.body()
-                    }else{
+                    } else {
                         // nothing to do
                     }
                 }

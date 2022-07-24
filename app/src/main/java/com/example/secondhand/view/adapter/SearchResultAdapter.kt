@@ -18,7 +18,8 @@ class SearchResultAdapter(private val onClick: (GetBuyerProductResponseItem) -> 
     fun setDataBuyerProductSearch(list: List<GetBuyerProductResponseItem>) {
         this.listBuyerProductSearch = list
     }
-    fun clearBuyerProductSearchData(){
+
+    fun clearBuyerProductSearchData() {
         listBuyerProductSearch = null
     }
 

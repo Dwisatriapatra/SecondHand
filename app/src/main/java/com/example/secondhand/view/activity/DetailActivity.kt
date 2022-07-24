@@ -15,15 +15,16 @@ import com.example.secondhand.R
 import com.example.secondhand.datastore.UserLoginTokenManager
 import com.example.secondhand.model.GetBuyerProductResponseItem
 import com.example.secondhand.model.PostBuyerOrder
-import com.example.secondhand.model.RoomWishlistItem
 import com.example.secondhand.viewmodel.BuyerOrderViewModel
 import com.example.secondhand.viewmodel.BuyerProductViewModel
-import com.example.secondhand.viewmodel.RoomWishlistProductViewModel
+import com.example.secondhand.viewmodel.BuyerWishlistViewModel
 import com.example.secondhand.viewmodel.SellerViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.tawar_harga_bottom_sheet_dialog.view.*
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
 
 @AndroidEntryPoint
 class DetailActivity : AppCompatActivity() {
@@ -99,32 +100,25 @@ class DetailActivity : AppCompatActivity() {
                     dialogInterface.dismiss()
                 }
                 .setPositiveButton("Ya") { _: DialogInterface, _: Int ->
-                    val viewModelWishlistProduct =
-                        ViewModelProvider(this)[RoomWishlistProductViewModel::class.java]
-                    val sellerViewModel = ViewModelProvider(this)[SellerViewModel::class.java]
+                    val viewModelWishlist =
+                        ViewModelProvider(this)[BuyerWishlistViewModel::class.java]
                     userLoginTokenManager = UserLoginTokenManager(this)
-
                     userLoginTokenManager.accessToken.asLiveData().observe(this) {
-                        sellerViewModel.getSellerData(it)
+                        viewModelWishlist.postBuyerWishlist(
+                            it,
+                            detailBarang.id.toString()
+                                .toRequestBody("multipart/form-data".toMediaType())
+                        )
                     }
-                    viewModelBuyerProduct.getBuyerProductById(detailBarang.id!!)
-
-                    sellerViewModel.seller.observe(this) { sellerData ->
-                        viewModelBuyerProduct.buyerProductById.observe(this) { product ->
-                            viewModelWishlistProduct.insertBuyerProductList(
-                                RoomWishlistItem(
-                                    null,
-                                    sellerData.full_name,
-                                    product.name,
-                                    product.base_price,
-                                    product.image_url
-                                )
-                            )
+                    viewModelWishlist.responseMessage.observe(this) { msg ->
+                        if (msg) {
                             Toast.makeText(
-                                this@DetailActivity,
-                                "Berhasil ditambahkan ke wishlist",
+                                this,
+                                "Produk berhasil ditambahkan ke wishlist",
                                 Toast.LENGTH_SHORT
                             ).show()
+                        } else {
+                            Toast.makeText(this, "Gagal", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }

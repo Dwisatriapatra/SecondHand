@@ -242,8 +242,9 @@ class HomeFragment : Fragment() {
 
             val viewModelSearch =
                 ViewModelProvider(this@HomeFragment)[BuyerProductViewModel::class.java]
+
             override fun onQueryTextSubmit(query: String?): Boolean {
-                if(query!!.isNotEmpty()) {
+                if (query!!.isNotEmpty()) {
                     vpHomeImageBanner.isInvisible = true
                     home_telusuri_kategori_section.isInvisible = true
                     rv_product_home_section.isInvisible = true
@@ -269,14 +270,14 @@ class HomeFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                return if(newText!!.isEmpty()){
+                return if (newText!!.isEmpty()) {
                     vpHomeImageBanner.isInvisible = false
                     home_telusuri_kategori_section.isInvisible = false
                     rv_product_home_section.isInvisible = false
                     home_list_search_result.isInvisible = true
                     home_search_no_data_animation.isInvisible = true
                     true
-                }else{
+                } else {
                     false
                 }
             }

@@ -45,8 +45,8 @@ class NotificationAdapter(private val notificationItemClickListener: Notificatio
             card_notification_read_status.isInvisible = listNotification!![position].read
             if (listNotification!![position].status == "create") {
                 card_notification_buyer.text = "Harga: ${listNotification!![position].base_price}"
-                card_notification_status.isInvisible = true
-                card_notification_harga_tawar.isInvisible = true
+                card_notification_status.text = ""
+                card_notification_harga_tawar.text = ""
                 card_notification_label_transaksi.text = "Penambahan Produk Baru"
             } else {
                 card_notification_buyer.text = "Pembeli: ${listNotification!![position].buyer_name}"

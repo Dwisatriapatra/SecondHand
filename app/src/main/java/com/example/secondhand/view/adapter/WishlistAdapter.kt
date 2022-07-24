@@ -1,17 +1,19 @@
 package com.example.secondhand.view.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.secondhand.R
-import com.example.secondhand.model.RoomWishlistItem
+import com.example.secondhand.model.GetBuyerWishlistResponseItem
 import kotlinx.android.synthetic.main.item_adapter_wishlist.view.*
 
-class WishlistAdapter : RecyclerView.Adapter<WishlistAdapter.ViewHolder>() {
-    private var wishlist: List<RoomWishlistItem>? = null
-    fun setWishlistData(list: List<RoomWishlistItem>) {
+class WishlistAdapter(private val onClick: (GetBuyerWishlistResponseItem) -> Unit) :
+    RecyclerView.Adapter<WishlistAdapter.ViewHolder>() {
+    private var wishlist: List<GetBuyerWishlistResponseItem>? = null
+    fun setWishlistData(list: List<GetBuyerWishlistResponseItem>) {
         this.wishlist = list
     }
 
@@ -23,14 +25,21 @@ class WishlistAdapter : RecyclerView.Adapter<WishlistAdapter.ViewHolder>() {
         return ViewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder.itemView) {
-            card_wishlist_product_nama.text = wishlist!![position].name
-            card_wishlist_product_harga.text = wishlist!![position].base_price.toString()
+            card_wishlist_product_nama.text = wishlist!![position].Product.name
+            card_wishlist_product_harga.text =
+                "Harga produk: ${wishlist!![position].Product.base_price}"
+            card_wishlist_product_lokasi_seller.text =
+                "Lokasi seller: ${wishlist!![position].Product.location}"
             Glide.with(card_image_wishlist_produk.context)
-                .load(wishlist!![position].image_url)
+                .load(wishlist!![position].Product.image_url)
                 .error(R.drawable.ic_launcher_background)
                 .into(card_image_wishlist_produk)
+            card_wishlist_product_delete_button.setOnClickListener {
+                onClick(wishlist!![position])
+            }
         }
     }
 
