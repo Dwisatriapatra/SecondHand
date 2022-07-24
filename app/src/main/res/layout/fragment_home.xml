@@ -21,13 +21,14 @@
             android:queryHint="Cari Barang"
             android:queryBackground="@null"
             android:layout_toStartOf="@+id/home_to_wishlist_button"/>
+
         <ImageView
             android:id="@+id/home_to_wishlist_button"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentEnd="true"
-            android:src="@drawable/ic_wishlist"
-            android:contentDescription="@string/img" />
+            android:contentDescription="@string/img"
+            android:src="@drawable/ic_wishlist" />
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -134,7 +135,9 @@
             android:id="@+id/rv_product_home_progress_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
+            android:layout_centerInParent="true"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/telusuri_kategori_button_selected_item"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_product_home"

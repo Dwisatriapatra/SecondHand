@@ -143,7 +143,7 @@
             android:layout_marginTop="38dp"
             android:layout_marginRight="32dp"
             android:layout_marginBottom="24dp"
-            android:background="@drawable/custom_button_layout"
+            android:background="@drawable/custom_button_layout_2"
             android:text="@string/text_hubungi_via_whatsapp"
             android:textAllCaps="false" />
     </RelativeLayout>

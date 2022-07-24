@@ -67,6 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:background="@drawable/custom_button_layout_2"
                 android:text="Edit"
                 tools:ignore="HardcodedText" />
 
@@ -141,6 +142,8 @@
         <ProgressBar
             android:id="@+id/daftar_jual_saya_progress_bar"
             style="?android:attr/progressBarStyle"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/telusuri_kategori_button_selected_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true" />

@@ -124,14 +124,14 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginBottom="50dp"
-                android:background="@color/telusuri_kategori_button_selected_item">
+                android:background="@color/image_picker_background">
 
                 <ImageView
                     android:id="@+id/jual_foto_produk"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:scaleType="centerCrop"
-                    android:contentDescription="@string/img" />
+                    android:contentDescription="@string/img"
+                    android:scaleType="centerCrop" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -148,25 +148,17 @@
                 android:id="@+id/jual_preview_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/preview"
                 android:layout_marginBottom="5dp"
-                android:background="@drawable/custom_button_layout"/>
+                android:background="@drawable/custom_button_layout_2"
+                android:text="@string/preview" />
 
             <Button
                 android:id="@+id/jual_terbitkan_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/terbitkan"
-                android:background="@drawable/custom_button_layout"/>
+                android:background="@drawable/custom_button_layout_2"
+                android:text="@string/terbitkan" />
         </LinearLayout>
-
-        <Button
-            android:id="@+id/jual_jual_produk_baru_button"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:backgroundTint="@color/telusuri_kategori_button_selected_item"
-            android:layout_centerInParent="true"
-            android:text="@string/jual_produk_baru" />
 
         <LinearLayout
             android:id="@+id/jual_belum_login_section"
@@ -188,8 +180,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="@string/login"
-                android:background="@drawable/custom_button_layout"/>
+                android:text="@string/login"/>
         </LinearLayout>
     </RelativeLayout>
 

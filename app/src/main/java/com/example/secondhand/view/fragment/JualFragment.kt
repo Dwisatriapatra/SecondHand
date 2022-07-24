@@ -59,10 +59,7 @@ class JualFragment : Fragment() {
 
                 jual_belum_login_section.isInvisible = true
 
-                jual_jual_produk_baru_button.setOnClickListener {
-                    jual_jual_produk_baru_button.isInvisible = true
-                    initView()
-                }
+                initView()
 
                 jual_foto_produk.setOnClickListener {
                     openGallery()
@@ -70,7 +67,6 @@ class JualFragment : Fragment() {
 
 
             } else {
-                jual_jual_produk_baru_button.isInvisible = true
                 jual_to_login_button.setOnClickListener {
                     startActivity(Intent(activity, LoginActivity::class.java))
                 }

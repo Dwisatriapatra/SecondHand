@@ -155,7 +155,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/custom_button_layout"
+        android:background="@drawable/custom_button_layout_2"
         android:text="Saya Tertarik dan ingin Nego"
         android:textAllCaps="false"
         tools:ignore="HardcodedText" />
@@ -165,12 +165,9 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/custom_button_layout"
+        android:background="@drawable/custom_button_layout_2"
         android:text="Tambahkan ke wishlist"
         android:textAllCaps="false"
         android:id="@+id/btnTambahkanKeWishlist"
         tools:ignore="HardcodedText" />
-
-
-
 </LinearLayout>

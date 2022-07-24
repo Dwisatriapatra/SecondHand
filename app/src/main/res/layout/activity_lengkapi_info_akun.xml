@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     tools:context=".view.activity.LengkapiInfoAkun"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:background="@drawable/custom_app_background">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -32,7 +33,7 @@
                 android:layout_margin="20dp"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/update_image_user_button"
-                android:background="@color/telusuri_kategori_button_selected_item">
+                android:background="@color/image_picker_background">
                 <ImageView
                     android:layout_width="100dp"
                     android:layout_height="100dp"
@@ -127,7 +128,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/simpan"
                 android:id="@+id/update_button_simpan"
-                android:background="@drawable/custom_button_layout"/>
+                android:background="@drawable/custom_button_layout_2"/>
         </LinearLayout>
     </RelativeLayout>
 </ScrollView>

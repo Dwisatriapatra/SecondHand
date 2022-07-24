@@ -92,15 +92,6 @@
             android:text="Batal"
             android:textAllCaps="false" />
 
-<!--        <Button-->
-<!--            android:id="@+id/tawarDialogLengkapiProfilButton"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@id/tawarDialogBatalkanButton"-->
-<!--            android:layout_marginHorizontal="10dp"-->
-<!--            android:text="Lengkapi profil anda"-->
-<!--            android:textAllCaps="false" />-->
-
         <TextView
             android:id="@+id/tawarDialogBelumLoginLabel"
             android:layout_width="match_parent"

@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
             android:text="@string/notifikasi_page"
             android:textColor="@color/black"
             android:textSize="24sp"
@@ -34,7 +35,9 @@
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
+            android:layout_centerInParent="true"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/telusuri_kategori_button_selected_item"/>
 
         <com.airbnb.lottie.LottieAnimationView
             android:layout_width="200dp"
