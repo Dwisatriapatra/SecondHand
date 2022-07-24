@@ -6,11 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
-import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.secondhand.R
 import com.example.secondhand.helper.isOnline
@@ -294,9 +292,4 @@ class HomeFragment : Fragment() {
         viewModelbanner.getAllBanner()
     }
 
-    private fun refreshCurrentFragment() {
-        val id = findNavController().currentDestination!!.id
-        findNavController().popBackStack(id, true)
-        findNavController().navigate(id)
-    }
 }
