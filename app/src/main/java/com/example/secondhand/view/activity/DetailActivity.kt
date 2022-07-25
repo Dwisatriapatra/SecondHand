@@ -188,7 +188,7 @@ class DetailActivity : AppCompatActivity() {
                     viewModelSellerData.seller.observe(this) { seller ->
                         val productId = detailBarang.id
                         val edtTawar =
-                            dialogView.tawarDialogInputHargaTawaran.text.toString().toInt()
+                            dialogView.tawarDialogInputHargaTawaran.getNumericValue().toInt()
 
                         if (seller.image_url == null) {
                             Toast.makeText(
