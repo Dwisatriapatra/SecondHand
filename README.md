@@ -8,6 +8,13 @@ e-commerce app called "SecondHand". We are from group 2, AND-5 class with the fo
 3. Greta Septy Purwiantono (Developer Team 2)
 4. Diana Mita Amalia (Scrum Master, Developer Team 3)
 
+![a 1](https://user-images.githubusercontent.com/57025172/180880364-26a2f10d-b59d-4edd-8c15-738818456f6f.jpeg)
+![a 2](https://user-images.githubusercontent.com/57025172/180880374-b1a3149a-4cde-4749-9ec3-b899284a3eed.jpeg)
+![a 3](https://user-images.githubusercontent.com/57025172/180880376-fdc8a73f-28d5-4595-adb1-041ee84fc152.jpeg)
+![a 4](https://user-images.githubusercontent.com/57025172/180880377-b24a1274-a028-4325-93ed-3cb2b41728b6.jpeg)
+![a 5](https://user-images.githubusercontent.com/57025172/180880378-4c6c2812-e402-46a0-991d-e5d5a2d862db.jpeg)
+
+
 Features of this app: 
 - There is 2 roles that available in SecondHand App, seller and buyer. These 2 roles can be occupy
 by just one account
