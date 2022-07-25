@@ -110,7 +110,7 @@ class AkunFragment : Fragment() {
         }
 
         akun_pengaturan_section.setOnClickListener {
-            throw RuntimeException("Crashlytics demo")
+            // nothing to do
         }
     }
 }

@@ -351,8 +351,9 @@ class DaftarJualFragment : Fragment(), DaftarJualProductSayaItemClickListener {
         customDialogEdit.edit_product_update_button.setOnClickListener {
             val namaBaruProduct = customDialogEdit.edit_product_nama.text.toString()
                 .toRequestBody("multipart/form-data".toMediaType())
-            val hargaBaruProduct = customDialogEdit.edit_product_harga.getNumericValue().toInt().toString()
-                .toRequestBody("multipart/form-data".toMediaType())
+            val hargaBaruProduct =
+                customDialogEdit.edit_product_harga.getNumericValue().toInt().toString()
+                    .toRequestBody("multipart/form-data".toMediaType())
             val lokasiBaruToko = customDialogEdit.edit_product_lokasi_toko.text.toString()
                 .toRequestBody("multipart/form-data".toMediaType())
             val deskripsiBaruProduct = customDialogEdit.edit_product_deskripsi.text.toString()
