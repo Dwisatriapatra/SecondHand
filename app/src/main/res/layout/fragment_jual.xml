@@ -53,18 +53,18 @@
                 android:layout_height="wrap_content"
                 android:text="@string/harga_barang" />
 
-            <EditText
-                android:id="@+id/jual_harga_barang"
+            <com.cottacush.android.currencyedittext.CurrencyEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/custom_edit_text_layout"
-                android:hint="Rp. 0.0"
-                android:importantForAutofill="no"
-                android:inputType="number"
-                android:padding="10dp"
                 android:textColor="@color/black"
-                tools:ignore="HardcodedText" />
+                android:padding="10dp"
+                app:maxNumberOfDecimalDigits="2"
+                tools:ignore="HardcodedText"
+                android:id="@+id/jual_harga_barang"
+                app:currencySymbol="Rp"
+                app:useCurrencySymbolAsHint="true"
+                android:background="@drawable/custom_edit_text_layout"
+                android:layout_marginBottom="20dp"/>
 
             <TextView
                 android:layout_width="wrap_content"

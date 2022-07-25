@@ -101,7 +101,7 @@ class JualFragment : Fragment() {
             val namaBarang =
                 jual_nama_barang.text.toString()
             val hargaBarang =
-                jual_harga_barang.text.toString()
+                jual_harga_barang.getNumericValue().toInt().toString()
             val lokasiToko =
                 jual_lokasi_toko.text.toString()
             val deskripsiProduk = jual_deskripsi_produk.text.toString()
@@ -136,7 +136,7 @@ class JualFragment : Fragment() {
         }
         jual_terbitkan_button.setOnClickListener {
             if (jual_nama_barang.text.toString().isNotEmpty() &&
-                jual_harga_barang.text.toString().isNotEmpty() &&
+                jual_harga_barang.text!!.isNotEmpty() &&
                 jual_lokasi_toko.text.toString().isNotEmpty() &&
                 jual_deskripsi_produk.text.toString().isNotEmpty() &&
                 imageMultiPart != null &&
@@ -148,7 +148,7 @@ class JualFragment : Fragment() {
                     jual_nama_barang.text.toString()
                         .toRequestBody("multipart/form-data".toMediaType())
                 val hargaBarang =
-                    jual_harga_barang.text.toString()
+                    jual_harga_barang.getNumericValue().toInt().toString()
                         .toRequestBody("multipart/form-data".toMediaType())
                 val lokasiBarang =
                     jual_lokasi_toko.text.toString()
@@ -192,7 +192,7 @@ class JualFragment : Fragment() {
 
                             //clear
                             jual_nama_barang.text.clear()
-                            jual_harga_barang.text.clear()
+                            jual_harga_barang.setText("")
                             jual_lokasi_toko.text.clear()
                             jual_deskripsi_produk.text.clear()
                             jual_kategori_barang.text = ""

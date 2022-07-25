@@ -30,16 +30,18 @@
         android:textStyle="bold"
         android:textSize="16sp"
         tools:ignore="HardcodedText" />
-    <EditText
+    <com.cottacush.android.currencyedittext.CurrencyEditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="number"
-        android:hint="Rp. 0.0"
-        android:background="@drawable/custom_edit_text_layout"
-        android:id="@+id/edit_product_harga"
+        android:textColor="@color/black"
         android:padding="10dp"
-        android:importantForAutofill="no"
-        tools:ignore="HardcodedText" />
+        app:maxNumberOfDecimalDigits="2"
+        tools:ignore="HardcodedText"
+        android:id="@+id/edit_product_harga"
+        app:currencySymbol="Rp"
+        app:useCurrencySymbolAsHint="true"
+        android:background="@drawable/custom_edit_text_layout"
+        android:layout_marginBottom="20dp"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -97,6 +99,7 @@
     <RelativeLayout
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_marginBottom="8dp"
         android:id="@+id/edit_product_foto_button">
         <ImageView
             android:layout_width="100dp"
@@ -114,10 +117,12 @@
             android:textSize="20sp"
             android:textStyle="bold"/>
     </RelativeLayout>
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/perbarui_produk"
+        android:textColor="@color/white"
         android:textAllCaps="false"
+        android:background="@drawable/custom_button_layout_2"
         android:id="@+id/edit_product_update_button"/>
 </LinearLayout>
