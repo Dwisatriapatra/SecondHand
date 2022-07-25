@@ -108,9 +108,5 @@ class AkunFragment : Fragment() {
         akun_history_section.setOnClickListener {
             startActivity(Intent(activity, HistoryActivity::class.java))
         }
-
-        akun_pengaturan_section.setOnClickListener {
-            // nothing to do
-        }
     }
 }
