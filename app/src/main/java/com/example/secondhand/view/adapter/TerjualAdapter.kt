@@ -32,9 +32,9 @@ class TerjualAdapter : RecyclerView.Adapter<TerjualAdapter.ViewHolder>() {
             card_daftar_jual_terjual_nama_buyer.text =
                 "Nama pembeli: ${listProdukTerjual!![position].User.full_name}"
             card_daftar_jual_terjual_harga_tawar.text =
-                "Harga tawar: ${listProdukTerjual!![position].price}"
+                "Harga tawar: Rp. ${listProdukTerjual!![position].price}"
             card_daftar_jual_terjual_status.text =
-                "Status produk: ${listProdukTerjual!![position].Product.status}"
+                "Status produk: sudah terjual"
             card_daftar_jual_terjual_nama_produk.text =
                 "Nama produk: ${listProdukTerjual!![position].Product.name}"
             Glide.with(card_daftar_jual_terjual_image.context)

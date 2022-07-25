@@ -117,7 +117,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/update_produk"
+        android:text="@string/perbarui_produk"
         android:textAllCaps="false"
         android:id="@+id/edit_product_update_button"/>
 </LinearLayout>

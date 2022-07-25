@@ -123,9 +123,10 @@
                 android:layout_marginBottom="15dp"
                 android:importantForAutofill="no"
                 android:inputType="phone" />
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white"
                 android:text="@string/simpan"
                 android:id="@+id/update_button_simpan"
                 android:background="@drawable/custom_button_layout_2"/>

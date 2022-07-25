@@ -62,7 +62,7 @@
     <string name="jual">Jual</string>
     <string name="daftar_jual">Daftar Jual</string>
     <string name="akun">Akun</string>
-    <string name="hobbi">Hobbi</string>
+    <string name="hobi">Hobi</string>
     <string name="kendaraan">Kendaraan</string>
     <string name="tolak">Tolak</string>
     <string name="terima">Terima</string>
@@ -95,6 +95,9 @@
     <string name="nama_product">Nama product</string>
     <string name="label_transaksi">Label transaksi</string>
     <string name="notifikasi_page">NOTIFIKASI</string>
+    <string name="perbarui_produk">Perbarui Produk</string>
+    <string name="informasi_produk">Informasi Produk</string>
+    <string name="keluar">Keluar</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 

@@ -19,9 +19,9 @@
             android:layout_toStartOf="@id/card_daftar_jual_saya_action_section">
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/card_daftar_jual_produk_image"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_margin="10dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_margin="8dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_launcher_background" />
 

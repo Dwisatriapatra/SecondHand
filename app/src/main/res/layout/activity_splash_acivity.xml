@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/splash_screen_progress_bar"
         android:layout_centerHorizontal="true"
-        android:text="Loading..."
+        android:text="Memuat..."
         android:textColor="@color/black"
         android:textSize="22sp"
         android:textStyle="bold"

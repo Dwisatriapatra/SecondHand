@@ -32,16 +32,16 @@ class DiminatiAdapter(private val onClick: (GetAllNotificationResponseItem) -> U
                 "Penjual: ${listData!![position].seller_name}"
             card_daftar_jual_diminati_nama_buyer.text =
                 "Pembeli: ${listData!![position].buyer_name}"
-            card_daftar_jual_diminati_status.text = "Status: ${listData!![position].status}"
+            card_daftar_jual_diminati_status.text = "Status: Ditawar"
             card_daftar_jual_diminati_harga_tawar.text =
-                "Harga tawar: ${listData!![position].bid_price}"
+                "Harga tawar: Rp. ${listData!![position].bid_price}"
             card_daftar_jual_diminati_tanggal_transaksi.text = listData!![position].transaction_date
             if (listData!![position].Product == null) {
                 card_daftar_jual_diminati_nama_product.text =
-                    "Product: (Produk sudah tidak ada / di hapus)"
+                    "Produk: (Produk sudah tidak dijual)"
             } else {
                 card_daftar_jual_diminati_nama_product.text =
-                    "Product: ${listData!![position].Product!!.name}"
+                    "Produk: ${listData!![position].Product!!.name}"
             }
             if (listData!![position].status == "bid") {
                 card_daftar_jual_diminati_label_transaksi.text = "Penawaran produk"

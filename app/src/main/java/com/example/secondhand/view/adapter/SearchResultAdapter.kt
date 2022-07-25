@@ -45,7 +45,7 @@ class SearchResultAdapter(private val onClick: (GetBuyerProductResponseItem) -> 
 
             card_product_search_nama.text = listBuyerProductSearch!![position].name
             card_product_search_harga.text =
-                listBuyerProductSearch!![position].base_price.toString()
+                "Harga: Rp. ${listBuyerProductSearch!![position].base_price}"
 
             if (listBuyerProductSearch!![position].Categories!!.isNotEmpty()) {
                 for (i in listBuyerProductSearch!![position].Categories!!.indices) {

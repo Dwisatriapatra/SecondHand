@@ -74,21 +74,26 @@
             android:textColor="@color/black"
             android:textSize="15sp" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/tawarDialogTawarkanHargaButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:layout_below="@id/tawarDialogInputHargaTawaran"
             android:layout_marginHorizontal="10dp"
             android:text="Kirim"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:background="@drawable/custom_button_layout_2"
+            android:textColor="@color/white"/>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/tawarDialogBatalkanButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tawarDialogTawarkanHargaButton"
             android:layout_marginHorizontal="10dp"
+            android:background="@drawable/custom_button_layout_2"
+            android:textColor="@color/white"
             android:text="Batal"
             android:textAllCaps="false" />
 

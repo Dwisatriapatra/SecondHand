@@ -47,7 +47,7 @@ class HistoryActivity : AppCompatActivity() {
 
         sellerViewModel.seller.observe(this) { sellerData ->
             if (sellerData != null) {
-                history_nama_user.text = sellerData.full_name + "\'s History"
+                history_nama_user.text = "Histori Transaksi ${sellerData.full_name}"
             }
         }
 

@@ -40,8 +40,8 @@
             android:indeterminateTint="@color/telusuri_kategori_button_selected_item"/>
 
         <com.airbnb.lottie.LottieAnimationView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
             android:layout_centerInParent="true"
             android:id="@+id/notifikasi_no_data_animation"
             app:lottie_autoPlay="true"
@@ -64,10 +64,12 @@
                 android:textColor="@color/black"
                 android:textSize="24sp" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/notifikasi_to_login_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/custom_button_layout_2"
+                android:textColor="@color/white"
                 android:layout_gravity="center_horizontal"
                 android:text="@string/login" />
         </LinearLayout>

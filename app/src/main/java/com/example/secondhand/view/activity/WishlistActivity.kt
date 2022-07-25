@@ -63,7 +63,7 @@ class WishlistActivity : AppCompatActivity() {
                         wishlistViewModel.getAllBuyerWishlist(it)
                     }
                     sellerViewModel.seller.observe(this) { sellerData ->
-                        wishlist_user_name.text = sellerData.full_name + "\'s wishlist"
+                        wishlist_user_name.text = "Wishlist ${sellerData.full_name}"
                     }
                     wishlistViewModel.buyerWishlist.observe(this) { wishlist ->
                         if (wishlist.isNotEmpty()) {

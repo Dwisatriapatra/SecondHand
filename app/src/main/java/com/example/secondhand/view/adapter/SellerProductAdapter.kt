@@ -1,5 +1,6 @@
 package com.example.secondhand.view.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,24 +35,29 @@ class SellerProductAdapter(private val clickListener: DaftarJualProductSayaItemC
         return ViewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder.itemView) {
             card_daftar_jual_produk_nama.text = listSellerProduct!![position].name
-            card_daftar_jual_produk_harga.text = listSellerProduct!![position].base_price.toString()
+            card_daftar_jual_produk_harga.text =
+                "Harga: Rp. ${listSellerProduct!![position].base_price}"
             Glide.with(card_daftar_jual_produk_image.context)
                 .load(listSellerProduct!![position].image_url)
                 .error(R.drawable.ic_launcher_background)
                 .override(72, 72)
                 .into(card_daftar_jual_produk_image)
-            card_daftar_jual_produk_lokasi.text = listSellerProduct!![position].location
+            card_daftar_jual_produk_lokasi.text =
+                "Lokasi Penjual: ${listSellerProduct!![position].location}"
             card_daftar_jual_produk_status.text = listSellerProduct!![position].status
 
             if (listSellerProduct!![position].status == "sold") {
                 card_daftar_jual_edit_button.isInvisible = true
                 card_daftar_jual_hapus_button.isInvisible = true
+                card_daftar_jual_produk_status.text = "Status: Produk sudah terjual"
             } else if (listSellerProduct!![position].status == "available") {
                 card_daftar_jual_edit_button.isInvisible = false
                 card_daftar_jual_hapus_button.isInvisible = false
+                card_daftar_jual_produk_status.text = "Status: Stok tersedia"
             }
 
             card_daftar_jual_edit_button.setOnClickListener {

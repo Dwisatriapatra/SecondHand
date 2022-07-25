@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="312dp"
         android:scaleType="centerCrop"
+        android:contentDescription="@string/img"
         android:src="@drawable/ic_launcher_background" />
 
 
@@ -145,12 +146,13 @@
     </ScrollView>
 
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/previewTerbitkanButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
+        android:textColor="@color/white"
         android:layout_marginBottom="16dp"
         android:background="@drawable/custom_button_layout_2"
         android:text="Terbitkan"

@@ -32,7 +32,7 @@ class WishlistAdapter(private val onClick: (GetBuyerWishlistResponseItem) -> Uni
             card_wishlist_product_harga.text =
                 "Harga produk: ${wishlist!![position].Product.base_price}"
             card_wishlist_product_lokasi_seller.text =
-                "Lokasi seller: ${wishlist!![position].Product.location}"
+                "Lokasi penjual: ${wishlist!![position].Product.location}"
             Glide.with(card_image_wishlist_produk.context)
                 .load(wishlist!![position].Product.image_url)
                 .error(R.drawable.ic_launcher_background)

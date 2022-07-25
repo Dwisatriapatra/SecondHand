@@ -40,8 +40,6 @@ class ProdukDitawarAdapter(
                 "Pembeli: ${listProdukDitawar!![position].User.full_name}"
             card_daftar_produk_ditawar_harga_tawar.text =
                 "Harga tawar: ${listProdukDitawar!![position].price}"
-            card_daftar_produk_ditawar_status.text =
-                "Status: ${listProdukDitawar!![position].status}"
             card_daftar_produk_ditawar_nama_seller.text = "Penjual: $namaSeller"
             Glide.with(card_daftar_produk_ditawar_image.context)
                 .load(listProdukDitawar!![position].Product.image_url)
@@ -49,13 +47,22 @@ class ProdukDitawarAdapter(
                 .override(100, 100)
                 .into(card_daftar_produk_ditawar_image)
             when (listProdukDitawar!![position].status) {
-                "accepted" -> card_daftar_produk_ditawar_terima_tolak_button_section.isInvisible =
-                    true
+                "accepted" -> {
+                    card_daftar_produk_ditawar_terima_tolak_button_section.isInvisible =
+                        true
+                    card_daftar_produk_ditawar_status.text =
+                        "Status: Penawaran Diterima"
+                }
                 "declined" -> {
+                    card_daftar_produk_ditawar_status.text =
+                        "Status: Penawaran Ditolak"
                     card_daftar_produk_ditawar_terima_tolak_button_section.isInvisible = true
                     card_daftar_produk_ditawar_status_hubungi_button_section.isInvisible = true
                 }
-                else -> card_daftar_produk_ditawar_status_hubungi_button_section.isInvisible = true
+                else -> {
+                    card_daftar_produk_ditawar_status.text = "Status: Menunggu Persetujuan"
+                    card_daftar_produk_ditawar_status_hubungi_button_section.isInvisible = true
+                }
             }
             card_daftar_produk_ditawar_tolak_button.setOnClickListener {
                 penawaranItemClickListener.tolakButton(listProdukDitawar!![position], position)

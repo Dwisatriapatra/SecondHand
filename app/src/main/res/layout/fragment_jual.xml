@@ -78,6 +78,7 @@
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/custom_edit_text_layout"
                 android:padding="10dp"
+                android:text="@string/pilih"
                 android:textColor="@color/black"
                 app:drawableEndCompat="@drawable/ic_drop_down_arrow" />
 
@@ -144,18 +145,20 @@
                     tools:ignore="HardcodedText" />
             </RelativeLayout>
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/jual_preview_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/custom_button_layout_2"
-                android:text="@string/preview" />
+                android:text="@string/preview"
+                android:textColor="@color/white"/>
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/jual_terbitkan_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white"
                 android:background="@drawable/custom_button_layout_2"
                 android:text="@string/terbitkan" />
         </LinearLayout>
@@ -175,10 +178,12 @@
                 android:textColor="@color/black"
                 android:textSize="24sp" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/jual_to_login_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/custom_button_layout_2"
+                android:textColor="@color/white"
                 android:layout_gravity="center_horizontal"
                 android:text="@string/login"/>
         </LinearLayout>

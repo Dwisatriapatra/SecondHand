@@ -79,7 +79,7 @@
                     android:layout_marginEnd="10dp"
                     android:textColor="@color/white"
                     android:layout_weight="0.5"
-                    android:backgroundTint="@color/telusuri_kategori_button_not_selected_item"
+                    android:backgroundTint="@color/bottom_nav_background"
                     style="?android:attr/buttonBarButtonStyle" />
                 <Button
                     android:id="@+id/card_daftar_produk_ditawar_terima_button"
@@ -113,7 +113,7 @@
                     android:text="@string/hubungi"
                     android:textColor="@color/white"
                     android:layout_weight="0.5"
-                    android:backgroundTint="@color/purple_700"
+                    android:backgroundTint="@color/purple_200"
                     style="?android:attr/buttonBarButtonStyle" />
             </LinearLayout>
         </RelativeLayout>

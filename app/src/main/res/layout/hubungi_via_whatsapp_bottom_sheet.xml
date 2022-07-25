@@ -39,7 +39,7 @@
             android:layout_below="@+id/txtKeterangan"
             android:layout_marginTop="32dp"
             android:gravity="center"
-            android:text="@string/text_produk_match"
+            android:text="@string/informasi_produk"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -134,9 +134,10 @@
             android:textColor="@color/black"
             android:textSize="14sp" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnHubungiViaWHatsApp"
             android:layout_width="match_parent"
+            android:textColor="@color/white"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imgBarangWhatsApp"
             android:layout_marginLeft="32dp"

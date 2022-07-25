@@ -42,6 +42,8 @@
         <entry key="app/src/main/res/drawable/ic_baseline_logout_outline_24.xml" value="0.2115" />
         <entry key="app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.1785" />
         <entry key="app/src/main/res/drawable/ic_drop_down_arrow.xml" value="0.2115" />
+        <entry key="app/src/main/res/drawable/ic_edit_product_saya.xml" value="0.2115" />
+        <entry key="app/src/main/res/drawable/ic_hapus_product_saya.xml" value="0.2115" />
         <entry key="app/src/main/res/drawable/ic_wishlist.xml" value="0.2115" />
         <entry key="app/src/main/res/drawable/tawar_harga_bottom_sheet_dialog.xml" value="0.2115" />
         <entry key="app/src/main/res/layout/activity_detail.xml" value="0.34010416666666665" />

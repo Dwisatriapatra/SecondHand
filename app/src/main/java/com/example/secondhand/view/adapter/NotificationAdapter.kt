@@ -37,7 +37,7 @@ class NotificationAdapter(private val notificationItemClickListener: Notificatio
             card_notification_seller.text = "Penjual: ${listNotification!![position].seller_name}"
             if (listNotification!![position].Product == null) {
                 card_notification_nama_produk.text =
-                    "Nama produk: (Produk sudah tidak ada/di hapus)"
+                    "Nama produk: (Produk sudah tidak di jual)"
             } else {
                 card_notification_nama_produk.text =
                     "Nama produk: ${listNotification!![position].Product!!.name}"
@@ -50,7 +50,7 @@ class NotificationAdapter(private val notificationItemClickListener: Notificatio
                 card_notification_label_transaksi.text = "Penambahan Produk Baru"
             } else {
                 card_notification_buyer.text = "Pembeli: ${listNotification!![position].buyer_name}"
-                card_notification_status.text = "Status: ${listNotification!![position].status}"
+                card_notification_status.text = "Status: Ditawar"
                 card_notification_harga_tawar.text =
                     "Harga tawar: ${listNotification!![position].bid_price}"
                 card_notification_label_transaksi.text = "Penawaran Produk"
